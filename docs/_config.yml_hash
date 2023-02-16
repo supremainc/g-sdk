@@ -19,7 +19,7 @@ email:
 description: >- # this means to ignore newlines until "baseurl:"
   Device Gateway is a new way of communicating with BioStar devices. It is a lightweight, scalable, and cross-platform solution which will expedite your development. 
   Based on gRPC, it will support most widely-used programming languages such as Java, C#, Python, node.js, etc.
-github_username: biostar-dev
+github_username: supremainc
 minimal_mistakes_skin: default
 search: true
 search_full_content: true
@@ -74,7 +74,7 @@ author:
       url: "http://kb.supremainc.com/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/biostar-dev/device-sdk-client/"
+      url: "http://192.168.1.18:8080/gsdk/device-sdk-client/"
 
 footer:
   links:
@@ -86,7 +86,7 @@ footer:
       url: "http://kb.supremainc.com/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/biostar-dev/device-sdk-client/"
+      url: "http://192.168.1.18:8080/gsdk/device-sdk-client/"
 
 collections:
   apis:
