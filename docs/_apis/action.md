@@ -346,12 +346,16 @@ delay
 ```protobuf
 message BuzzerAction {
   repeated BuzzerSignal signals;
+  uint32 count;
 }
 ```
 {: #BuzzerAction }
 
 [signals](#BuzzerSignal)
 : The signals to be played on the buzzer.
+
+count
+: The number of repeats.
 
 ```protobuf
 message BuzzerSignal {

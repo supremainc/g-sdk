@@ -26,6 +26,8 @@ message DisplayConfig {
 
   bool useUserPhrase;
   bool queryUserPhrase;
+
+  bool useScreenSaver;
 }
 ```
 {: #DisplayConfig }
@@ -69,6 +71,8 @@ useUserPhrase
 queryUserPhrase
 : If __useUserPhrase__ is true, ask the device gateway of the phrase to be displayed. Refer to [Server API]({{'/api/server/' | relative_url}}) for details.
 
+useScreenSaver
+: If true, the screen saver will be used.
 
 ```protobuf
 enum LanguageType {

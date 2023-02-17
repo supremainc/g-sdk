@@ -91,6 +91,8 @@ api:
         url: /api/tna/
       - title: User
         url: /api/user/
+      - title: RTSP
+        url: /api/rtsp/
       - title: VoIP
         url: /api/voip/
       - title: Wiegand

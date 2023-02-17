@@ -121,6 +121,9 @@ enum Type {
   FACESTATION_F2 = 0x1E;
   XSTATION_2_QR = 0x1F;
   XSTATION_2 = 0x20;
+  IM_120 = 0x21;
+  XSTATION_2_FP = 0x22;
+  BIOSTATION_3 = 0x23;
 }
 ```
 {: #Type }
@@ -174,6 +177,140 @@ enum BuzzerTone {
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
 | info | [CapabilityInfo](#CapabilityInfo) | The capability information of the device type |
+
+
+### GetCapability
+
+Each device type has its own functionalities. For example, "Extended Auth" is supported by BioStation 3 and FaceStation F2, but not by BioStation 2 and FaceStation 2. 
+
+```protobuf
+message DeviceCapability {
+	uint32 maxUsers;
+	uint32 maxEventLogs;
+	uint32 maxImageLogs;
+	uint32 maxBlacklists;
+	uint32 maxOperators;
+	uint32 maxCards;
+	uint32 maxFaces;
+	uint32 maxFingerprints;
+	uint32 maxUserNames;
+	uint32 maxUserImages;
+	uint32 maxUserJobs;
+	uint32 maxUserPhrases;
+	uint32 maxCardsPerUser;
+	uint32 maxFacesPerUser;
+	uint32 maxFingerprintsPerUser;
+	uint32 maxInputPorts;
+	uint32 maxOutputPorts;
+	uint32 maxRelays;
+	uint32 maxRS485Channels;
+	
+	bool cameraSupported;
+	bool tamperSupported;
+	bool wlanSupported;
+	bool displaySupported;
+	bool thermalSupported;
+	bool maskSupported;
+	bool faceExSupported;
+	
+	bool EMCardSupported;
+	bool HIDProxCardSupported;
+	bool MifareFelicaCardSupported;
+	bool iClassCardSupported;
+	bool ClassicPlusCardSupported;
+	bool DesFireEV1CardSupported;
+	bool SRSECardSupported;
+	bool SEOSCardSupported;
+	bool NFCSupported;
+	bool BLESupported;
+	bool useCardOperation;
+
+	bool extendedAuthSupported;
+	
+	bool cardInputSupported;
+	bool fingerprintInputSupported;
+	bool faceInputSupported;
+	bool idInputSupported;
+	bool PINInputSupported;
+	
+	bool biometricOnlySupported;
+	bool biometricPINSupported;
+
+	bool cardOnlySupported;
+	bool cardBiometricSupported;
+	bool cardPINSupported;
+	bool cardBiometricOrPINSupported;
+	bool cardBiometricPINSupported;
+	
+	bool idBiometricSupported;
+	bool idPINSupported;
+	bool idBiometricOrPINSupported;
+	bool idBiometricPINSupported;
+	
+	bool extendedFaceOnlySupported;
+	bool extendedFaceFingerprintSupported;
+	bool extendedFacePINSupported;
+	bool extendedFaceFingerprintOrPINSupported;
+	bool extendedFaceFingerprintPINSupported;
+	
+	bool extendedFingerprintOnlySupported;
+	bool extendedFingerprintFaceSupported;
+	bool extendedFingerprintPINSupported;
+	bool extendedFingerprintFaceOrPINSupported;
+	bool extendedFingerprintFacePINSupported;
+	
+	bool extendedCardOnlySupported;
+	bool extendedCardFaceSupported;
+	bool extendedCardFingerprintSupported;
+	bool extendedCardPINSupported;
+	bool extendedCardFaceOrFingerprintSupported;
+	bool extendedCardFaceOrPINSupported;
+	bool extendedCardFingerprintOrPINSupported;
+	bool extendedCardFaceOrFingerprintOrPINSupported;
+	bool extendedCardFaceFingerprintSupported;
+	bool extendedCardFacePINSupported;
+	bool extendedCardFingerprintFaceSupported;
+	bool extendedCardFingerprintPINSupported;
+	bool extendedCardFaceOrFingerprintPINSupported;
+	bool extendedCardFaceFingerprintOrPINSupported;
+	bool extendedCardFingerprintFaceOrPINSupported;
+
+	bool extendedIdFaceSupported;
+	bool extendedIdFingerprintSupported;
+	bool extendedIdPINSupported;
+	bool extendedIdFaceOrFingerprintSupported;
+	bool extendedIdFaceOrPINSupported;
+	bool extendedIdFingerprintOrPINSupported;
+	bool extendedIdFaceOrFingerprintOrPINSupported;
+	bool extendedIdFaceFingerprintSupported;
+	bool extendedIdFacePINSupported;
+	bool extendedIdFingerprintFaceSupported;
+	bool extendedIdFingerprintPINSupported;
+	bool extendedIdFaceOrFingerprintPINSupported;
+	bool extendedIdFaceFingerprintOrPINSupported;
+	bool extendedIdFingerprintFaceOrPINSupported;
+
+	bool intelligentPDSupported;
+	bool updateUserSupported;
+	bool simulatedUnlockSupported;
+	bool smartCardByteOrderSupported;
+	bool qrAsCSNSupported;
+}
+```
+{: #DeviceCapability }
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+
+| Response |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| info | [DeviceCapability](#DeviceCapability) | The capability information of the device type |
+
 
 ## Management
 

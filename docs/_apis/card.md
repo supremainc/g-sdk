@@ -241,6 +241,9 @@ message CardConfig {
   SEOSConfig SEOSConfig;
 
   uint32 formatID;
+
+  bool cipher;
+  CardByteOrder smartCardByteOrder;
 }
 ```
 {: #CardConfig }
@@ -271,6 +274,12 @@ useSecondaryKey
 
 formatID
 : You can assign an ID for managing multiple card configurations in your application. It is not used by the device.
+
+cipher
+: If true, CardID entry via keypad on XPASS D2 will be accepted.
+
+[smartCardByteOrder](#CardByteOrder)
+: The byte ordering of the data stored on the SmartCard. The default is __MSB__.
 
 ```protobuf
 enum CardByteOrder {
@@ -335,6 +344,7 @@ message DESFireConfig {
   bytes appID;
   uint32 fileID;
   DESFireEncryptionType encryptionType;
+  DESFireOperationMode operationMode;
 }
 ```
 {: #DESFireConfig }
@@ -361,6 +371,17 @@ enum DESFireEncryptionType {
 }
 ```
 {: #DESFireEncryptionType }
+
+[operationMode](#DESFireOperationMode)
+:
+
+```protobuf
+enum DESFireOperationMode {
+  OPERATION_LEGACY = 0;
+  OPERATION_APPLEVELKEY = 1;
+}
+```
+{: #DESFireOperationMode }
 
 ```protobuf
 message SEOSConfig {
@@ -494,6 +515,8 @@ X-Station 2 supports QR codes as credentials. A QR code can be composed of up to
 message QRConfig {
   bool useQRCode;
   uint32 scanTimeout;
+  bool bypassData;
+  bool treatAsCSN;
 }
 ```
 {: #QRConfig }
@@ -503,6 +526,12 @@ useQRCode
 
 scanTimeout
 : Timeout in seconds for reading a QR code.
+
+bypassData
+: If true, the QR data will be transfered to the device gateway.
+
+treatAsCSN
+: If true, the QR data will be treated as CSN.
 
 | Request |
 

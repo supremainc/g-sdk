@@ -3,9 +3,9 @@ title: "Face API"
 toc_label: "Face"  
 ---
 
-Face authentication is provided by FaceStation 2, FaceLite, and FaceStation F2. The newest model, FaceStation F2, uses a fusion matching algorithm to improve its authentication performance. Due to this, there are a couple of differences between them.
+Face authentication is provided by FaceStation 2, FaceLite, FaceStation F2, and BioStation 3. The newest model, FaceStation F2 and BioStation 3 uses a fusion matching algorithm to improve its authentication performance. Due to this, there are a couple of differences between them.
 
-|      |       | FaceStation 2 & FaceLite | FaceStation F2 |
+|      |       | FaceStation 2 & FaceLite | FaceStation F2 & BioStation 3 |
 | ---- | ----- | ------------------------ | -----------    |
 | FaceData | flag  | BS2_FACE_FLAG_NONE  |  BS2_FACE_FLAG_F2 |
 |          | templates  | Maximum 30  | Maximum 10 |
@@ -30,7 +30,7 @@ message FaceData {
   repeated bytes templates;
   bytes imageData;
 
-  // Only for FaceStation F2
+  // Only for FaceStation F2 and BioStation 3
   repeated bytes irTemplates;
   bytes irImageData;
 }
@@ -41,16 +41,16 @@ index
 : Can be used for managing face data in your applications. Not used by the device.
 
 flag
-: If BS2_FACE_FLAG_F2 is set, it means that the face data is acquired by FaceStation F2. And, the data will include __irTemplates__ and __irImageData__. Otherwise, it is from FaceStation 2 or FaceLite, and there will be neither __irTemplates__ nor __irImageData__. 
+: If BS2_FACE_FLAG_F2 is set, it means that the face data is acquired by FaceStation F2 or BioStation 3. And, the data will include __irTemplates__ and __irImageData__. Otherwise, it is from FaceStation 2 or FaceLite, and there will be neither __irTemplates__ nor __irImageData__. 
 
 templates
-: Maximum 30 face templates can be returned from FaceStation 2 or FaceLite. For FaceStation F2, the maximum number is 10.
+: Maximum 30 face templates can be returned from FaceStation 2 or FaceLite. For FaceStation F2 or BioStation 3, the maximum number is 10.
 
 imageData
 : A BMP image of the face will be returned.
 
 irTemplates
-: Maximum 10 IR templates can be returned from FaceStation F2.
+: Maximum 10 IR templates can be returned from FaceStation F2 or BioStation 3.
 
 irImageData
 : An IR image of the face will be returned.
@@ -102,7 +102,7 @@ Scan a face and get its template data. With higher __enrollThreshold__, you can 
 
 Extract face templates from image files. 
 
-Only supported by FaceStation F2. If the image file is not acquired by a FaceStation F2, the image data should be in JPG file format. 
+Only supported by FaceStation F2 and BioStation 3. If the image file is not acquired by FaceStation F2 or BioStation 3, the image data should be in JPG file format. 
 {: .notice--warning}
 
 | Request |
@@ -110,8 +110,8 @@ Only supported by FaceStation F2. If the image file is not acquired by a FaceSta
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
 | deviceID | uint32 | The ID of the device |
-| imageData | byte[] | If the image file is acquired by a FaceStation F2, it will be in BMP file format. Otherwise, only JPG file format is supported. |
-| isWarped | bool  | If the image file is acquired by a FaceStation F2, it should be true. Otherwise, it should be false. |
+| imageData | byte[] | If the image file is acquired by FaceStation F2 or BioStation 3, it will be in BMP file format. Otherwise, only JPG file format is supported. |
+| isWarped | bool  | If the image file is acquired by FaceStation F2 or BioStation 3, it should be true. Otherwise, it should be false. |
 
 | Response |
 
@@ -230,7 +230,7 @@ The more the number of face templates, the higher the False Acceptance Ratio(FAR
 * Set [UserHdr.authGroupID]({{'/api/user/' | relative_url}}#UserHdr).
 * Enroll or update users using [Enroll]({{'/api/user/' | relative_url}}#enroll) or [EnrollMulti]({{'/api/user/' | relative_url}}#enrollmulti).
 
-Authentication groups are not supported by FaceStation F2. 
+Authentication groups are not supported by FaceStation F2 and BioStation 3. 
 {: .notice--warning}
 
 ```protobuf

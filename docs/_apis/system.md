@@ -18,6 +18,7 @@ message SystemConfig {
   bool useAlphanumericID;
   CameraFrequency cameraFrequency;
   bool useSecureTamper;
+  uint32 useCardOperationMask;
 }
 ```
 {: #SystemConfig}
@@ -45,6 +46,29 @@ useAlphanumericID
 
 useSecureTamper
 : If true, delete sensitive data such as users, logs, keys, and certificates from the device when its tamper switch is on.
+
+useCardOperationMask
+: Provides a card selective option not to read all kinds of cards from the device. 
+You can select multiple cards using MASK. The user can select or deselect of a specific card reading option using this option. 
+However, it can be applied to the card types the device supporting. If you add a card type which isn't supported from the device would be ignored. 
+Also, the required card type MASK should be combined with CARD_OPERATION_USE. 
+For example, useCardOperationMask needs to be configured 0x80000001 when EM card is selected only.
+
+| Value | Description |
+| --------- | ----------- |
+| 0xFFFFFFFF | CARD_OPERATION_MASK_DEFAULT |
+| 0x80000000 | CARD_OPERATION_MASK_USE |
+| 0x00000200 | CARD_OPERATION_MASK_BLE |
+| 0x00000100 | CARD_OPERATION_MASK_NFC |
+| 0x00000080 | CARD_OPERATION_MASK_SEOS |
+| 0x00000040 | CARD_OPERATION_MASK_SR_SE |
+| 0x00000020 | CARD_OPERATION_MASK_DESFIRE_EV1 |
+| 0x00000010 | CARD_OPERATION_MASK_CLASSIC_PLUS |
+| 0x00000008 | CARD_OPERATION_MASK_ICLASS |
+| 0x00000004 | CARD_OPERATION_MASK_MIFARE_FELICA |
+| 0x00000002 | CARD_OPERATION_MASK_HIDPROX |
+| 0x00000001 | CARD_OPERATION_MASK_EM |
+
 
 ```protobuf
 enum CameraFrequency {

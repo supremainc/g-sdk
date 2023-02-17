@@ -96,6 +96,7 @@ message FingerConfig {
   bool advancedEnrollment;
   bool showImage;
   LFDLevel LFDLevel;
+  bool checkDuplicate;
 }
 ```
 {: #FingerConfig }
@@ -126,6 +127,9 @@ showImage
 
 [LFDLevel](#LFDLevel)
 : Specify the level of Live Finger Detection(LFD). The default is __NOT_USED__.
+
+checkDuplicate
+: If true, the user with duplicate fingerprints cannot be enrolled.
 
 ```protobuf
 enum SecurityLevel {

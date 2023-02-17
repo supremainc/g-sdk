@@ -12,7 +12,7 @@ message ThermalConfig {
   CheckMode checkMode;
   CheckOrder checkOrder;
   TemperatureFormat temperatureFormat;
-  uint32 temperatureThreshold;
+  uint32 temperatureThresholdHigh;
 
   bool auditTemperature;
   bool useRejectSound;
@@ -20,9 +20,13 @@ message ThermalConfig {
 
   ThermalCamera camera;
 
-  // Only for FaceStation F2
+  // Only for FaceStation F2 and BioStation 3
   CheckMode maskCheckMode;
   MaskDetectionLevel maskDetectionLevel;
+
+  bool useDynamicROI;
+
+  uint32 temperatureThresholdLow;
 }
 ```
 {: #ThermalConfig}
@@ -36,8 +40,8 @@ message ThermalConfig {
 [temperatureFormat](#TemperatureFormat)
 : Specify the unit of temperature.
 
-temperatureThreshold
-: Set the threshold temperature in 0.01 Celsius. For instance, if the threshold is 37.5&deg;C, it should be 3750.
+temperatureThresholdHigh
+: Set the high threshold temperature in 0.01 Celsius. For instance, if the threshold is 37.5&deg;C, it should be 3750.
 
 auditTemperature
 : If true, the measured temperature will be written to log records. You can read these logs using [GetTemperatureLog](#gettemperaturelog).
@@ -62,6 +66,13 @@ Please note that there is no separate __maskCheckOrder__. The above __checkOrder
 
 [maskDetectionLevel](#MaskDetectionLevel)
 : The sensitivity of mask detection. If it is __NOT_USE__, mask detection is not used.
+
+useDynamicROI
+: If true, dynamic ROI will be used.
+
+temperatureThresholdLow
+: Set the low threshold temperature in 0.01 Celsius. For instance, if the threshold is 32.5&deg;C, it should be 3250.
+
 
 ```protobuf
 enum CheckMode {

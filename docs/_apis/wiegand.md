@@ -122,6 +122,8 @@ message WiegandConfig {
   repeated WiegandFormat formats;
   repeated WiegandFormat slaveFormats;
   WiegandFormat CSNFormat;
+
+  WiegandOutType useWiegandUserID;
 }
 ```
 {: #WiegandConfig}
@@ -150,6 +152,9 @@ slaveFormats
 CSNFormat
 : The Wiegand format to be applied with [CARD_TYPE_CSN]({{'/api/card/' | relative_url}}#Type).
 
+[useWiegandUserID](#WiegandOutType)
+: 
+
 ```protobuf
 enum WiegandMode {
   WIEGAND_IN_ONLY = 0;
@@ -167,6 +172,16 @@ WIEGAND_OUT_ONLY
 
 WIEGAND_IN_OUT
 : The port will be used both for receiving and sending Wiegand signals. 
+
+
+```protobuf
+enum WiegandOutType {
+  WIEGAND_OUT_UNSPECIFIED = 0;
+  WIEGAND_OUT_CARD_ID = 1;
+  WIEGAND_OUT_USER_ID = 2;
+}
+```
+{: #WiegandOutType}
 
 
 ### GetConfig

@@ -3,7 +3,7 @@ title: "Voice over IP API"
 toc_label: "VoIP"  
 ---
 
-With BioStation A2 and FaceStation 2, you can use VoIP(Voice over IP). Refer to [the article](http://kb.supremainc.com/knowledge/doku.php?id=en:tc_appnote_setting_up_a_voip_server_for_a2&s[]=voip) for details. 
+With BioStation A2, FaceStation 2, X-Station 2, and BioStation 3, you can use VoIP(Voice over IP). Refer to [the article](http://kb.supremainc.com/knowledge/doku.php?id=en:tc_appnote_setting_up_a_voip_server_for_a2&s[]=voip) for details. 
 
 ## Config
 
@@ -18,6 +18,17 @@ message VOIPConfig {
 
   uint32 exitButton;
   uint32 DTMFMode;
+
+  uint32 registrationDuration;
+  uint32 speakerVolume;
+  uint32 micVolume;
+
+  string AuthorizationCode;
+
+  bool showExtensionNumber;
+  bool useOutboundProxy;
+  string proxyURL;
+  uint32 proxyPort;
 
   repeated UserPhone phones;
 }
@@ -55,6 +66,28 @@ DTMFMode
   | ----- | --- | 
   | 0 | RFC2833 |
   | 1 | SIP-INFO |
+
+registrationDuration
+: Specify the cycle of updating the relevant information to the SIP server. 
+Set in seconds and must be between 60 and 600.
+
+speakerVolume
+: Specify the speaker volume information for the intercom in the range 0 to 100. The default value is 50.
+
+micVolume
+: Specify the microphone volume information for the intercom in the range 0 to 100. The default value is 50.
+
+authorizationCode
+: Specify the authentication code value required to connect to the SIP server.
+
+useOutboundProxy
+: Specify whether the Outbound Proxy Server is configured.
+
+proxyURL
+: Specify the IP address of the Outbound Proxy Server.
+
+proxyPort
+: Specify the Outbound Proxy Server port.
 
 [phones](#UserPhone)
 : Up to 32 extension numbers can be configured.

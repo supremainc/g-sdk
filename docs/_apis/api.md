@@ -161,6 +161,9 @@ Configure the options related to thermal cameras.
 ### [Time]({{ 'api/time/' | relative_url }})
 Configure the options such as Daylight Saving Time(DST) and time synchronization. You can also set the clock on the device. 
 
+### [RTSP]({{ 'api/rtsp/' | relative_url }})
+Configure the options related to RTSP.
+
 ### [VoIP]({{ 'api/voip/' | relative_url }})
 Configure the options related to VoIP(Voice over IP).
 
