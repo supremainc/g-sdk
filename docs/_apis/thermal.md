@@ -1,9 +1,9 @@
 ---
-title: "Thermal Camera API"
+title: "Thermal/Mask API"
 toc_label: "Thermal"  
 ---
 
-[Suprema Thermal Camera](https://www.supremainc.com/en/hardware/suprema-thermal-camera.asp) can be used in combination with face recognition terminals to detect users with elevated skin temperature. With [ThermalConfig](#ThermalConfig), you can specify the options related to the camera. You can also read log records with temperature information. 
+[Suprema Thermal Camera](https://www.supremainc.com/en/hardware/suprema-thermal-camera.asp) can be used in combination with face recognition terminals to detect users with elevated skin temperature. With [ThermalConfig](#ThermalConfig), you can specify the options related to the camera and mask detection. You can also read log records with temperature information. 
 
 ## Config
 
