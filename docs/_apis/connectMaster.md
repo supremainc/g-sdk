@@ -405,7 +405,7 @@ Delete the slave device information from the master gateway database.
 | slaveDeviceInfos | [SlaveDeviceInfo[]]({{'/api/connect/' | relative_url}}#SlaveDeviceInfo) | The slave device information to be deleted |
 
 
-### GetSlaveDeviceIDB
+### GetSlaveDeviceDB
 
 Get the slave device information of a device gateway stored on the database.
 

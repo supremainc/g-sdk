@@ -31,6 +31,8 @@ A master gateway manages devices through one or more device gateways. Due to thi
 | [Tenant]({{'/api/tenant/' | relative_url}}) | X | O | manage tenants |
 | [Gateway]({{'/api/gateway/' | relative_url}}) | X | O | manage device gateways |
 | [Server]({{'/api/server/' | relative_url}}) | O | X | implement server matching |
+| [UDP]({{'/api/udp/' | relative_url}}) | O | X | manage devices directly |
+| [UDP Master]({{'/api/udpMaster/' | relative_url}}) | X | O | manage devices via device gateways |
 
 
 ### API definition
@@ -189,6 +191,12 @@ You can configure several types of zones for high-level functions such as anti p
 ### [Lift zone]({{ 'api/zone/lift' | relative_url }})
 
 ## Misc. APIs
+
+### [UDP]({{ 'api/udp/' | relative_url }})
+Manage UDP communication between the device gateway and the devices.
+
+### [UDPMaster]({{ 'api/udpMaster/' | relative_url }})
+Manage UDP communication between the master gateway and the devices through device gateways. 
 
 ### [Admin]({{ 'api/admin/' | relative_url }})
 Get the version of G-SDK.

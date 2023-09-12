@@ -111,10 +111,16 @@ message SmartCardHeader {
   uint32 headerCRC;
   uint32 cardCRC;
   Type type;
-  uint32 numOfTemplate;
+  oneof templateCount {
+    uint32 numOfTemplate;
+    uint32 numOfFaceTemplate;   // Only for FaceStation F2 and BioStation 3
+  }
   uint32 templateSize;
   uint32 issueCount;
   uint32 duressMask;
+  uint32 cardAuthMode;
+  bool useAlphanumericID;
+  uint32 cardAuthModeEx;    // Only for FaceStation F2 and BioStation 3
 }
 ```
 {: #SmartCardHeader }
@@ -128,14 +134,27 @@ type
 numOfTemplate
 : The number of fingerprint templates stored in the card. Maximum 4 templates can be stored on a card.
 
+numOfFaceTemplate
+: The number of face templates stored in the card. Maximum 2 templates can be stored on a card.
+
 templateSize
-: The size of fingerprint template in bytes.
+: The size of fingerprint/face template in bytes. Typically, 384 or 552
 
 issueCount
 : You can issue a card multiple times. In this case, you can differentiate each issue by this parameter. 
 
 duressMask
 : Specify whether any of the fingerprint templates is of a duress finger. For example, if the first template is of a duress finger, it should be 0x01.
+
+useAlphanumericID
+: If true, cardID should be string.
+
+cardAuthMode
+: Specify the private authentication mode for the card.
+
+cardAuthModeEx
+: Specify the extended private authentication mode for the card.
+
 
 
 ```protobuf

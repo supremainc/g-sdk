@@ -13,9 +13,11 @@ A trigger is fired when its specific condition is met. You can configure three t
 message Trigger {
   uint32 deviceID; 
   TriggerType type;
-  EventTrigger event;
-  InputTrigger input;
-  ScheduleTrigger schedule;
+  oneof entity {
+    EventTrigger event;
+    InputTrigger input;
+    ScheduleTrigger schedule;
+  }
 }
 ```
 {: #Trigger }
@@ -126,13 +128,15 @@ message Action {
   StopFlag stopFlag;
   uint32 delay;
 
-  RelayAction relay;
-  OutputPortAction outputPort;
-  DisplayAction display;
-  SoundAction sound;
-  LEDAction LED;
-  BuzzerAction buzzer;
-  LiftAction lift;
+  oneof entity {
+    RelayAction relay;
+    OutputPortAction outputPort;
+    DisplayAction display;
+    SoundAction sound;
+    LEDAction LED;
+    BuzzerAction buzzer;
+    LiftAction lift;
+  }
 }
 ```
 {: #Action }

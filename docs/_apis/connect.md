@@ -50,6 +50,7 @@ With [the asynchronous APIs](#asynchronous-connection) and [the device-to-server
 ```protobuf
 message DeviceInfo {
   uint32 deviceID;
+  device.Type type;
   ConnectionMode connectionMode;
   string IPAddr;
   int32 port;
@@ -256,6 +257,7 @@ If a device is trying to connect to the gateway but is not included in the accep
 ```protobuf
 message PendingDeviceInfo {
   uint32 deviceID;
+  device.Type type;
   string IPAddr;
   uint32 lastTry; 
 }
@@ -312,6 +314,8 @@ message SearchDeviceInfo  {
   ConnectionMode connectionMode; 
   string IPAddr;
   int32 port;
+  bool useSSL;
+  string serverAddr;
 }
 ```
 {: #SearchDeviceInfo }

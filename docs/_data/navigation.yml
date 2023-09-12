@@ -93,6 +93,10 @@ api:
         url: /api/user/
       - title: RTSP
         url: /api/rtsp/
+      - title: UDP
+        url: /api/udp/
+      - title: UDPMaster
+        url: /api/udpMaster/
       - title: VoIP
         url: /api/voip/
       - title: Wiegand

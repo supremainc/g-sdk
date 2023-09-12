@@ -8,11 +8,18 @@ toc_label: "Schedule"
 A schedule is used for access control and other configurations such as authentication mode. You can configure a [DailySchedule](#DailySchedule) or a [WeeklySchedule](#WeeklySchedule). 
 
 ```protobuf
+enum PredefinedSchedule {
+  NEVER = 0;
+  ALWAYS = 1;
+}
+
 message ScheduleInfo {
   uint32 ID;
   string name;
-  DailySchedule daily;
-  WeeklySchedule weekly;
+  oneof ordinary {
+    DailySchedule daily;
+    WeeklySchedule weekly;
+  }
   repeated HolidaySchedule holidays;
 }
 ```

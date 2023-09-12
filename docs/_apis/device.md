@@ -124,6 +124,8 @@ enum Type {
   IM_120 = 0x21;
   XSTATION_2_FP = 0x22;
   BIOSTATION_3 = 0x23;
+	
+  BIOSTANION_2A = 0x26;
 }
 ```
 {: #Type }

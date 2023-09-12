@@ -62,14 +62,22 @@ Get the image of the fingerprint, which was captured by the last [Scan](#scan).
 [FingerData](#FingerData) consists of two templates of a finger. You can verify if the two templates match each other using [Verify](#verify).
 
 ```protobuf
+enum FingerFlag {
+  BS2_FINGER_FLAG_NONE = 0x00;
+  BS2_FINGER_FLAG_DURESS = 0x01;
+}
+
 message FingerData {
   int32 index;
   uint32 flag;
   repeated bytes templates;
 }
 ```
-index/flag
+index
 : Can be used for managing the fingerprint data in your application. Ignored by the device.
+
+flag
+: Indicates the purpose of the fingerprint.
 
 templates
 : Two fingerprint templates of a same finger. The size of the fingerprint template should not be larger than 384 byte.

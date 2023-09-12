@@ -17,7 +17,8 @@ message UserHdr {
   int32 numOfCard;
   int32 numOfFinger;
   int32 numOfFace;
-  uint32 authGroupID; 
+  uint32 authGroupID;
+  uint32 updateMask;    // for Update(Multi)Request only
 }
 ```
 {: #UserHdr}
@@ -36,6 +37,9 @@ numOfFace
 
 authGroupID
 : Used only for group matching of face. Refer to [Face.AuthGroup]({{'/api/face/' | relative_url}}#auth-group).
+
+updateMask
+: Used only for UpdateRequest/UpdateMultiRequest.
 
 ### User Setting
 
@@ -312,6 +316,49 @@ Enroll users to multiple devices.
 | deviceIDs | uint32[] | The IDs of the devices |
 | users | [UserInfo[]](#UserInfo) | The information of the users to be enrolled  |
 | overwrite | bool | If true, overwrite the existing users with the same IDs. If false, return an error |
+
+## Update
+Set the partial user information with specific user IDs. For example, if you want update only the card and PIN, you should specify [updateMask](#UpdateMask) as KEEP_USER_PHRASE | KEEP_USER_JOB_CODE | KEEP_USER_NAME | KEEP_USER_PHOTO | KEEP_USER_FINGER | KEEP_USER_FACE. If the [updateMask](#UpdateMask) is KEEP_NONE, it is works as [Enroll](#Enroll) with overwrite option.
+
+### UpdateMask
+```protobuf
+enum UpdateMask {
+  KEEP_NONE = 0x00;
+
+  KEEP_USER_PHRASE = 0x01;
+  KEEP_USER_JOB_CODE = 0x02;
+  KEEP_USER_NAME = 0x04;
+  KEEP_USER_PHOTO = 0x08;
+  KEEP_USER_PIN = 0x10;
+  KEEP_USER_CARD = 0x20;
+  KEEP_USER_FINGER = 0x40;
+  KEEP_USER_FACE = 0x80;
+
+  KEEP_ALL = 0xFF;
+}
+```
+
+### Update
+
+Update users to a device.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+| users | [UserInfo[]](#UserInfo) | The information of the users to be updated |
+
+### UpdateMulti
+
+Update users to multiple devices.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceIDs | uint32[] | The IDs of the devices |
+| users | [UserInfo[]](#UserInfo) | The information of the users to be updated  |
 
 ## Delete
 
