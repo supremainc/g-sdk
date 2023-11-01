@@ -6,7 +6,7 @@ toc_label: "Operator"
 ## Overview
 
 Sets all device operators.
-When using [AuthConfig](#AuthConfig), there is a limitation that you can set operators up to 10.
+When using [AuthConfig]({{'/api/auth/' | relative_url }}#AuthConfig), there is a limitation that you can set operators up to 10.
 [Operator](#Operator) allows you to create and manage up to 1000 operators.
 Only available higher than BS2 1.8.0, A2 1.7.0, L2 1.5.0, N2 1.2.0, FS 1.3.0, FaceLite 1.0.1, CS40 1.3.0, P2 1.3.0, W2 1.4.0, Xpass 2 1.0.0 + Devices newly released after 3Q 2019.
 
@@ -36,7 +36,7 @@ OPERATOR_LEVEL_USER
 
 ### Operator
 
-Operators registered through [AuthConfig](#AuthConfig) are migrated the moment they call the `Operator` related API, and the device will only manage the operator through `Operator` from then on.
+Operators registered through [AuthConfig]({{'/api/auth/' | relative_url }}#AuthConfig) are migrated the moment they call the `Operator` related API, and the device will only manage the operator through `Operator` from then on.
 {: .notice--warning}
 
 
