@@ -71,6 +71,8 @@ api:
         url: /api/login/
       - title: Network
         url: /api/network/
+      - title: Operator
+        url: /api/operator/
       - title: RS485
         url: /api/rs485/
       - title: Schedule
