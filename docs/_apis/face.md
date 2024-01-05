@@ -7,7 +7,7 @@ Face authentication is provided by FaceStation 2, FaceLite, FaceStation F2, and 
 
 |      |       | FaceStation 2 & FaceLite | FaceStation F2 & BioStation 3 |
 | ---- | ----- | ------------------------ | -----------    |
-| FaceData | flag  | BS2_FACE_FLAG_NONE  |  BS2_FACE_FLAG_F2 / BS_FACE_FLAG_EX |
+| FaceData | flag  | BS2_FACE_FLAG_NONE  |  BS2_FACE_FLAG_WARPED / BS_FACE_FLAG_EX |
 |          | templates  | Maximum 30  | Maximum 10 |
 |          | imageData  | Visual Image  | Visual Image |
 |          | irTemplates | Not Used | Maximum 10 |
