@@ -7,7 +7,7 @@ Face authentication is provided by FaceStation 2, FaceLite, FaceStation F2, and 
 
 |      |       | FaceStation 2 & FaceLite | FaceStation F2 & BioStation 3 |
 | ---- | ----- | ------------------------ | -----------    |
-| FaceData | flag  | BS2_FACE_FLAG_NONE  |  BS2_FACE_FLAG_F2 |
+| FaceData | flag  | BS2_FACE_FLAG_NONE  |  BS2_FACE_FLAG_F2 / BS_FACE_FLAG_EX |
 |          | templates  | Maximum 30  | Maximum 10 |
 |          | imageData  | Visual Image  | Visual Image |
 |          | irTemplates | Not Used | Maximum 10 |
@@ -21,7 +21,8 @@ Face authentication is provided by FaceStation 2, FaceLite, FaceStation F2, and 
 ```protobuf
 enum FaceFlag {
   BS2_FACE_FLAG_NONE = 0x00;
-  BS2_FACE_FLAG_F2 = 0x100;
+  BS2_FACE_FLAG_WARPED = 0x01;
+  BS2_FACE_FLAG_EX = 0x100;
 }
 
 message FaceData {
@@ -41,7 +42,17 @@ index
 : Can be used for managing face data in your applications. Not used by the device.
 
 flag
-: If BS2_FACE_FLAG_F2 is set, it means that the face data is acquired by FaceStation F2 or BioStation 3. And, the data will include __irTemplates__ and __irImageData__. Otherwise, it is from FaceStation 2 or FaceLite, and there will be neither __irTemplates__ nor __irImageData__. 
+: If BS2_FACE_FLAG_EX is set, it means that the face data is acquired by FaceStation F2 or BioStation 3. And, the data will include __irTemplates__ and __irImageData__. Otherwise, it is from FaceStation 2 or FaceLite, and there will be neither __irTemplates__ nor __irImageData__. 
+
+BS2_FACE_FLAG_WARPED indicates that the image has been normalized.
+
+Basically, the IR-based face recognition device (FaceStation 2, FaceLite) is very different from the visual camera-based face recognition device (FaceStation F2, BioStation 3) in its method. 
+G-SDK's FaceData message structure is a single structure designed to transmit face data to both IR-based and visual camera-based devices of different styles.
+This does not mean that template mixing is supported.
+For example, you can set FaceStation 2 face data in the FaceData message and send it to FaceStation 2 or FaceLite.
+That data cannot be transferred to BioStation 3 and used as is.
+{: .notice--warning}
+
 
 templates
 : Maximum 30 face templates can be returned from FaceStation 2 or FaceLite. For FaceStation F2 or BioStation 3, the maximum number is 10.
@@ -100,9 +111,10 @@ Scan a face and get its template data. With higher __enrollThreshold__, you can 
 
 ### Extract
 
-Extract face templates from image files. 
+Extract face templates from normalized images. 
+It can be used to write a face template on a smart card.
 
-Only supported by FaceStation F2 and BioStation 3. If the image file is not acquired by FaceStation F2 or BioStation 3, the image data should be in JPG file format. 
+Only supported by FaceStation F2 and BioStation 3. If the image file is not acquired by FaceStation F2 or BioStation 3, the image data should be in JPG or PNG file format. 
 {: .notice--warning}
 
 | Request |
@@ -118,6 +130,23 @@ Only supported by FaceStation F2 and BioStation 3. If the image file is not acqu
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
 | templateData | byte[] | The template data extracted from the image |
+
+### Normalize
+
+Extract warped images from unwarped images. 
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+| unwrappedImageData | byte[] | Unwarped image data. |
+
+| Response |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| wrappedImageData | byte[] | Warped image data. |
 
 
 ## Config
