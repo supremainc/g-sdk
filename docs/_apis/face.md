@@ -42,8 +42,7 @@ index
 : Can be used for managing face data in your applications. Not used by the device.
 
 flag
-: If BS2_FACE_FLAG_EX is set, it means that the face data is acquired by FaceStation F2 or BioStation 3. And, the data will include __irTemplates__ and __irImageData__. Otherwise, it is from FaceStation 2 or FaceLite, and there will be neither __irTemplates__ nor __irImageData__. 
-BS2_FACE_FLAG_WARPED indicates that the image has been normalized.
+: If BS2_FACE_FLAG_EX is set, it means that the face data is acquired by FaceStation F2 or BioStation 3. And, the data will include __irTemplates__ and __irImageData__. Otherwise, it is from FaceStation 2 or FaceLite, and there will be neither __irTemplates__ nor __irImageData__. BS2_FACE_FLAG_WARPED indicates that the image has been normalized.
 
 Basically, the IR-based face recognition device (FaceStation 2, FaceLite) is very different from the visual camera-based face recognition device (FaceStation F2, BioStation 3) in its method. 
 G-SDK's FaceData message structure is a single structure designed to transmit face data to both IR-based and visual camera-based devices of different styles.
