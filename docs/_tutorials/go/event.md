@@ -124,7 +124,8 @@ When reading event logs, you can specify the starting index and the maximum numb
   eventSvc.GetLog(deviceID, firstEventID, MAX_NUM_OF_EVENT)
   ```
 
-You can also specify a filter to limit your search.
+<!--Deprecated. 2024.04.25  by charlie-->
+<!-- You can also specify a filter to limit your search.
 
   ```go
   eventFilter := &event.EventFilter{
@@ -132,4 +133,4 @@ You can also specify a filter to limit your search.
   }
 
   filteredEvents, _ := eventSvc.GetLogWithFilter(deviceID, firstEventID, MAX_NUM_OF_EVENT, eventFilter)  
-  ```
+  ``` -->

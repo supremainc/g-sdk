@@ -134,7 +134,8 @@ When reading event logs, you can specify the starting index and the maximum numb
   }
   ```
 
-You can also specify a filter to limit your search.
+<!--Deprecated. 2024.04.25  by charlie-->
+<!-- You can also specify a filter to limit your search.
 
   ```cpp
   EventFilter filter;
@@ -145,4 +146,4 @@ You can also specify a filter to limit your search.
   for(int i = 0; i < events.size(); i++) {
     printEvent(svc, events[i]);
   }
-  ```
+  ``` -->

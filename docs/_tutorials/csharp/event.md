@@ -108,7 +108,8 @@ When reading event logs, you can specify the starting index and the maximum numb
   }
   ```
 
-You can also specify a filter to limit your search.
+<!--Deprecated. 2024.04.25  by charlie-->
+<!-- You can also specify a filter to limit your search.
 
   ```csharp
   var filter = new EventFilter{ EventCode = events[0].EventCode }; 
@@ -117,4 +118,4 @@ You can also specify a filter to limit your search.
   for(int i = 0; i < events.Count; i++) {
     PrintEvent(events[i]);
   }
-  ```
+  ``` -->

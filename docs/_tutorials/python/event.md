@@ -96,11 +96,12 @@ When reading event logs, you can specify the starting index and the maximum numb
     self.printEvent(event)
   ```
 
-You can also specify a filter to limit your search.
+<!--Deprecated. 2024.04.25  by charlie-->
+<!-- You can also specify a filter to limit your search.
 
   ```python
   filter = event_pb2.EventFilter(eventCode=events[0].eventCode)
   events = self.eventSvc.getLogWithFilter(deviceID, self.firstEventID, MAX_NUM_EVENT, filter)
   for event in events:
     self.printEvent(event)
-  ```
+  ``` -->

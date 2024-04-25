@@ -210,7 +210,8 @@ At this step, __AuthConfig.usePrivateAuth__ is set to false. In other words, the
 
 ## 6. Get the event logs
 
-You can apply filters when reading log records. In a filter, userID or [eventCode]({{'/api/event' | relative_url}}#EventCode) can be specified.
+<!--Deprecated. 2024.04.25  by charlie-->
+<!-- You can apply filters when reading log records. In a filter, userID or [eventCode]({{'/api/event' | relative_url}}#EventCode) can be specified.
 
   ```go
   userFilter := &event.EventFilter{
@@ -229,7 +230,7 @@ You can apply filters when reading log records. In a filter, userID or [eventCod
   events, _ = eventSvc.GetLogWithFilter(deviceID, 0, 0, eventFilter)
 
   // do something with the events
-  ```
+  ``` -->
 
 You can also subscribe to an event stream for receiving realtime events.
 

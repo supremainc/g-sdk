@@ -74,7 +74,7 @@ author:
       url: "http://kb.supremainc.com/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "http://192.168.1.18:8080/gsdk/device-sdk-client/"
+      url: "https://github.com/supremainc/g-sdk"
 
 footer:
   links:
@@ -86,7 +86,7 @@ footer:
       url: "http://kb.supremainc.com/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "http://192.168.1.18:8080/gsdk/device-sdk-client/"
+      url: "https://github.com/supremainc/g-sdk"
 
 collections:
   apis:

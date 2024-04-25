@@ -302,7 +302,7 @@ Read event logs from a device. You can limit the search range using __startEvent
 | --------- | ---- | ----------- |
 | events | [EventLog[]](#EventLog) | The event logs read from the device |
 
-### GetLogWithFilter
+### [Deprecated] ~~GetLogWithFilter~~   <!--Deprecated. 2024.04.25  by charlie-->
 
 You can filter the event logs to be read by setting [EventFilter](#EventFilter). For example, to read events of a specific user, you can set __EventFilter.userID__.
 

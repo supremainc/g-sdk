@@ -104,7 +104,8 @@ When reading event logs, you can specify the starting index and the maximum numb
   }
   ```
 
-You can also specify a filter to limit your search.
+<!--Deprecated. 2024.04.25  by charlie-->
+<!-- You can also specify a filter to limit your search.
 
   ```javascript
   var eventFilter = new event.eventMessage.EventFilter();
@@ -114,4 +115,4 @@ You can also specify a filter to limit your search.
   for(i = 0; i < filteredEvents.length; i++) {
     printEvent(filteredEvents[i]);
   }
-  ```
+  ``` -->
