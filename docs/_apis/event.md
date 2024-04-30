@@ -304,7 +304,7 @@ Read event logs from a device. You can limit the search range using __startEvent
 
 ### [Deprecated] ~~GetLogWithFilter~~   <!--Deprecated. 2024.04.25  by charlie-->
 
-You can filter the event logs to be read by setting [EventFilter](#EventFilter). For example, to read events of a specific user, you can set __EventFilter.userID__.
+<!-- You can filter the event logs to be read by setting [EventFilter](#EventFilter). For example, to read events of a specific user, you can set __EventFilter.userID__.
 
 ```protobuf
 message EventFilter {
@@ -330,7 +330,9 @@ message EventFilter {
 
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
-| events | [EventLog[]](#EventLog) | The filtered event logs read from the device |
+| events | [EventLog[]](#EventLog) | The filtered event logs read from the device | -->
+
+***It is recommended that logs be received in bulk from the device using the GetLog API, and that logs occurring after the current time be received in real time using the EnableMonitoring and SubscribeRealtimeLog APIs, so that the server stores all logs in an appropriate DBMS and filters the logs from the DBMS.***
 
 ### ClearLog
 
