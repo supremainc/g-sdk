@@ -332,8 +332,7 @@ message EventFilter {
 | --------- | ---- | ----------- |
 | events | [EventLog[]](#EventLog) | The filtered event logs read from the device | -->
 
-#### [Important]
-***It is recommended that logs be received in bulk from the device using the GetLog API, and that logs occurring after the current time be received in real time using the EnableMonitoring and SubscribeRealtimeLog APIs, so that the server stores all logs in an appropriate DBMS and filters the logs from the DBMS.***
+***[Important]<BR>It is recommended that logs be received in bulk from the device using the GetLog API, and that logs occurring after the current time be received in real time using the EnableMonitoring and SubscribeRealtimeLog APIs, so that the server stores all logs in an appropriate DBMS and filters the logs from the DBMS.***
 
 ### ClearLog
 
