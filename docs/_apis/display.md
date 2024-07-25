@@ -33,48 +33,50 @@ message DisplayConfig {
 ```
 {: #DisplayConfig }
 
-[language](#LanguageType) :<BR>
-As default, English and Korean are supported.
+[language](#LanguageType)
+: As default, English and Korean are supported.
 
-[background](#BackgroundType) :<BR>
-The background image of the device. 
+[background](#BackgroundType)
+: The background image of the device. 
 
-theme :<BR>
-Not yet supported.
+theme
+: Not yet supported.
 
-volume :<BR>
-Volume level between 0(no sound) and 100(loudest).
+volume
+: Volume level between 0(no sound) and 100(loudest).
 
-useVoice :<BR>
-Activate the voice instruction.
+useVoice
+: Activate the voice instruction.
 
-[dateFormat](#DateFormat) : 
+[dateFormat](#DateFormat)
+: 
 
-[timeFormat](#TimeFormat) : 
+[timeFormat](#TimeFormat)
+: 
 
-showDateTime :<BR>
-If true, show the clock on the screen.
+showDateTime
+: If true, show the clock on the screen.
 
-menuTimeout :<BR>
-Close the menu after the timeout in seconds. The default is 20 seconds.
+menuTimeout
+: Close the menu after the timeout in seconds. The default is 20 seconds.
 
-msgTimeout :<BR>
-Close the message dialog after the timeout in milliseconds. The default is 2,000 milliseconds.
+msgTimeout
+: Close the message dialog after the timeout in milliseconds. The default is 2,000 milliseconds.
 
-backlightTimeout :<BR>
-Turn off the backlight after the timeout in seconds. The default is 20 seconds.
+backlightTimeout
+: Turn off the backlight after the timeout in seconds. The default is 20 seconds.
 
-useUserPhrase :<BR>
-Show a specific message when a user is authenticated. [CapabilityInfo.userPhraseSupported]({{'/api/device/' | relative_url}}#CapabilityInfo) of the device should be true.
+useUserPhrase
+: Show a specific message when a user is authenticated. [CapabilityInfo.userPhraseSupported]({{'/api/device/' | relative_url}}#CapabilityInfo) of the device should be true.
 
-queryUserPhrase :<BR>
-If __useUserPhrase__ is true, ask the device gateway of the phrase to be displayed. Refer to [Server API]({{'/api/server/' | relative_url}}) for details.
+queryUserPhrase
+: If __useUserPhrase__ is true, ask the device gateway of the phrase to be displayed. Refer to [Server API]({{'/api/server/' | relative_url}}) for details.
 
-useScreenSaver :<BR>
-If true, the screen saver will be used.
+useScreenSaver
+: If true, the screen saver will be used.
 
-[showOSDPResult](#ShowOSDPResult) :<BR>
-[+ 1.7] In environments where Suprema devices are connected as peripheral devices to Intelligent Slaves or third-party controllers, this option allows authentication results to be displayed on the device screen.
+[showOSDPResult](#ShowOSDPResult)
+: [+ 1.7] In environments where Suprema devices are connected as peripheral devices to Intelligent Slaves or third-party controllers, this option allows authentication results to be displayed on the device screen.
 
 ```protobuf
 enum LanguageType {

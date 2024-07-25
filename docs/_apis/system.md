@@ -23,31 +23,31 @@ message SystemConfig {
 ```
 {: #SystemConfig}
 
-timeZone/syncTime :<BR>
-You can configure these options using [TimeConfig]({{'/api/time/' | relative_url}}#TimeConfig).
+timeZone/syncTime
+: You can configure these options using [TimeConfig]({{'/api/time/' | relative_url}}#TimeConfig).
 
-isLocked :<BR>
-If true, it means that the device is locked and does not handle any user input. To unlock a locked device, use [Device.Unlock]({{'/api/device/' | relative_url}}#unlock).
+isLocked
+: If true, it means that the device is locked and does not handle any user input. To unlock a locked device, use [Device.Unlock]({{'/api/device/' | relative_url}}#unlock).
 
-useInterphone :<BR>
-If the device has an interphone, you can enable/disable it with this flag. 
+useInterphone
+: If the device has an interphone, you can enable/disable it with this flag. 
 
-OSDPKeyEncrypted :<BR>
-If true, use the secure OSDP key. 
+OSDPKeyEncrypted
+: If true, use the secure OSDP key. 
 
-useJobCode :<BR>
-If true, ask users to enter a job code. See [JobCode]({{'/api/tna/' | relative_url}}#JobCode).
+useJobCode
+: If true, ask users to enter a job code. See [JobCode]({{'/api/tna/' | relative_url}}#JobCode).
 
-useAlphanumericID :<BR>
-If true, allow alphanumeric IDs. The [CapabilityInfo.alphanumericIDSupported]({{'/api/device/' | relative_url}}#CapabilityInfo) should be true.
+useAlphanumericID
+: If true, allow alphanumeric IDs. The [CapabilityInfo.alphanumericIDSupported]({{'/api/device/' | relative_url}}#CapabilityInfo) should be true.
 
 [cameraFrequency](#CameraFrequency) : 
 
-useSecureTamper :<BR>
-If true, delete sensitive data such as users, logs, keys, and certificates from the device when its tamper switch is on.
+useSecureTamper
+: If true, delete sensitive data such as users, logs, keys, and certificates from the device when its tamper switch is on.
 
-useCardOperationMask :<BR>
-Provides a card selective option not to read all kinds of cards from the device. 
+useCardOperationMask
+: Provides a card selective option not to read all kinds of cards from the device. 
 You can select multiple cards using MASK. The user can select or deselect of a specific card reading option using this option. 
 However, it can be applied to the card types the device supporting. If you add a card type which isn't supported from the device would be ignored. 
 Also, the required card type MASK should be combined with CARD_OPERATION_MASK_USE. 

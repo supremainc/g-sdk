@@ -602,23 +602,23 @@ message CustomConfig {
 ```
 {: #CustomConfig }
 
-[dataType](#CardDataType) :<BR>
-Type of card data.
+[dataType](#CardDataType)
+: Type of card data.
 
-useSecondaryKey :<BR>
-Decides whether to use the secondary encryption key.
+useSecondaryKey
+: Decides whether to use the secondary encryption key.
 
-[mifare](#CustomMifareCard) :<BR>
-Set the Mifare custom card information.
+[mifare](#CustomMifareCard)
+: Set the Mifare custom card information.
 
-[desfire](#CustomDESFireCard) :<BR>
-Set the DESFire custom card information.
+[desfire](#CustomDESFireCard)
+: Set the DESFire custom card information.
 
-[smartCardByteOrder](#CardByteOrder) :<BR>
-The output method can be selected from MSB or LSB.
+[smartCardByteOrder](#CardByteOrder)
+: The output method can be selected from MSB or LSB.
 
-formatID :<BR>
-This is an identifier that can be used when the BioStar 2 application needs to manage the card configuration as a database.
+formatID
+: This is an identifier that can be used when the BioStar 2 application needs to manage the card configuration as a database.
 
 ```protobuf
 message CustomMifareCard {
@@ -631,20 +631,20 @@ message CustomMifareCard {
 ```
 {: #CustomMifareCard }
 
-primaryKey :<BR>
-Primary encryption key to access the Mifare card information.
+primaryKey
+: Primary encryption key to access the Mifare card information.
 
-secondaryKey :<BR>
-Secondary encryption key to access the Mifare card information.
+secondaryKey
+: Secondary encryption key to access the Mifare card information.
 
-startBlockIndex :<BR>
-Start block index on the Mifare data storage.
+startBlockIndex
+: Start block index on the Mifare data storage.
 
-dataSize :<BR>
-The size in bytes of the card data.
+dataSize
+: The size in bytes of the card data.
 
-skipBytes :<BR>
-This is where the card data appears.
+skipBytes
+: This is where the card data appears.
 This is the starting point to read card data. It is 0 when reading from the starting point, and indicates the number of bytes skipped after the first.
 
 ```protobuf
@@ -662,33 +662,33 @@ message CustomDESFireCard {
 ```
 {: #CustomDESFireCard }
 
-primaryKey :<BR>
-Primary encryption key to access the DESFire card information. (General settings)
+primaryKey
+: Primary encryption key to access the DESFire card information. (General settings)
 
-secondaryKey :<BR>
-Secondary encryption key to access the DESFire card information. (General settings)
+secondaryKey
+: Secondary encryption key to access the DESFire card information. (General settings)
 
-appID :<BR>
-Application Id that is stored inside the DESFire card for user authentication.
+appID
+: Application Id that is stored inside the DESFire card for user authentication.
 
-fileID :<BR>
-File ID that is stored inside the DESFire card, which will be used by the application to read and write data.
+fileID
+: File ID that is stored inside the DESFire card, which will be used by the application to read and write data.
 
-[encryptionType](#DESFireEncryptionType) :<BR>
-Type of data encryption.
+[encryptionType](#DESFireEncryptionType)
+: Type of data encryption.
 
-[operationMode](#DESFireOperationMode) :<BR>
-Operation mode.
+[operationMode](#DESFireOperationMode)
+: Operation mode.
 
-dataSize :<BR>
-The size in bytes of the card data.
+dataSize
+: The size in bytes of the card data.
 
-skipBytes :<BR>
-This is where the card data appears.
+skipBytes
+: This is where the card data appears.
 This is the starting point to read card data. It is 0 when reading from the starting point, and indicates the number of bytes skipped after the first.
 
-[desfireAppKey](#DESFireAppLevelKey) :<BR>
-Indicates key information to access DESFire card information. (Advanced settings)
+[desfireAppKey](#DESFireAppLevelKey)
+: Indicates key information to access DESFire card information. (Advanced settings)
 
 ```protobuf
 message DESFireAppLevelKey {
@@ -701,23 +701,23 @@ message DESFireAppLevelKey {
 ```
 {: #DESFireAppLevelKey }
 
-appMasterKey :<BR>
-Application master key of DESFire.
+appMasterKey
+: Application master key of DESFire.
 
-fileReadKey :<BR>
-The key used to read the file.
+fileReadKey
+: The key used to read the file.
 
-fileWriteKey :<BR>
-The key used to write the file.
+fileWriteKey
+: The key used to write the file.
 
-fileReadKeyNumber :<BR>
-The index of the key for reading the file.
+fileReadKeyNumber
+: The index of the key for reading the file.
 
-fileWriteKeyNumber :<BR>
-The index of the key for writing the file.
+fileWriteKeyNumber
+: The index of the key for writing the file.
 
-desfireAppKey :<BR>
-A structure containing DesFire key information.
+desfireAppKey
+: A structure containing DesFire key information.
 
 ### GetCustomConfig
 
