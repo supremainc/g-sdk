@@ -192,10 +192,10 @@ enrollTimeout
 
 LFDLevel
 : Configuration for the LFD(Live Face Detection - fake face detection) sensitivity.
-| Face Type | Default |
-| --------- | ------- |
-| IR based  | 0 |
-| ☆☆☆☆  | 1 |
+| Device Type | Default |
+| ----------- | ------- |
+| IR-Based Face Authentication Device  | 0 |
+| RGB-Based Visual Face Authentication Device  | 1 |
 
 | Value | Description |
 | ----- | ----------- |
