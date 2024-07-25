@@ -226,17 +226,16 @@ Only used to FaceLite.
 checkDuplicate
 : Check whether the scanned face is duplicated in the device.
 
-operationMode
-:
- * __FaceStation F2 V1.0.0__ can be set to the following operation modes, default is Fusion mode.
+__*operationMode*__
+* __FaceStation F2 V1.0.0__ can be set to the following operation modes, default is Fusion mode.
 
-| Value |	Mode | Description | Default |
+| Value | Mode | Description | Default |
 | ----- | ---- | ----------- | ------- |
 | 0 |	Fusion Mode | Visual matching + IR matching	| Default |
 | 1 |	Visual Mode | Visual matching | |
 | 2 |	Visual + IR | Visual matching, IR detects only face | |
 
- * __FaceStation F2 V1.0.1 or later versions__, __RGB-Based Visual Face Authentication Device__ are used in the following sense.
+* __FaceStation F2 V1.0.1 or later versions__, __RGB-Based Visual Face Authentication Device__ are used in the following sense.
 
 | Value |	Mode | Description | Default |
 | ----- | ---- | ----------- | ------- |
@@ -244,9 +243,7 @@ operationMode
 | 1 |	Fast Mode	Visual matching	| |
 
 maxRotation
-:
- * __RGB-Based Visual Face Authentication Device__
-
+: __RGB-Based Visual Face Authentication Device__
 When face is recognized normally it's front side.
 Still, it is possible to determine how many degrees the image has been rotated from the front when device detects a face.
 This enables detection failure in the case of images rotated over a certain angle.
@@ -276,9 +273,7 @@ searchRangeWidth
 : Not used. Replaced by __wideSearch__.
 
 detectDistance ([detectDistanceMin](#detectDistanceMin), [detectDistanceMax](#detectDistanceMax))
-:
- * __RGB-Based Visual Face Authentication Device__
-
+: __RGB-Based Visual Face Authentication Device__
 This configures the minimum and maximun detection range for facial recognition.
 We no longer support faceWidth to pinpoint the face location using pixel units due to its complexity.
 Instead, we set the detection range of the subject(face). The unit is set to cm, and the value must be inputted as a multiple of 10.
@@ -298,9 +293,7 @@ detectDistanceMax
 {: #detectDistanceMax}
 
 wideSearch
-:
- * __RGB-Based Visual Face Authentication Device except FSF2__
-
+: __RGB-Based Visual Face Authentication Device except FSF2__
 This can increase the detection range for face detection.
 We no longer support searchRange to set the x-coordinate and width due to its complexity.
 Instead, we set the face detection setting as default(FALSE), or a wide area(TRUE).
