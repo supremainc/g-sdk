@@ -192,6 +192,7 @@ enrollTimeout
 
 LFDLevel
 : Configuration for the LFD(Live Face Detection - fake face detection) sensitivity.
+
 | Device Type | Default |
 | ----------- | ------- |
 | IR-Based Face Authentication Device  | 0 |
@@ -206,6 +207,7 @@ LFDLevel
 
 quickEnrollment
 : Quick face enrollment process. Please use false if you want to enroll with a high quality of face templates.
+
 | Value | Description |
 | ----- | ----------- |
 | true | Face enrollment process with a single step  |
@@ -214,6 +216,7 @@ quickEnrollment
 previewOption
 : IR camera preview option when you authenticate with the face.
 Only used to FaceLite.
+
 | Value | Description |
 | ----- | ----------- |
 | 0 |	Preview not used |
@@ -225,6 +228,7 @@ checkDuplicate
 
 operationMode
 : __FaceStation F2 V1.0.0__ can be set to the following operation modes, default is Fusion mode.
+
 | Value |	Mode | Description | Default |
 | ----- | ---- | ----------- | ------- |
 | 0 |	Fusion Mode | Visual matching + IR matching	| Default |
@@ -232,6 +236,7 @@ operationMode
 | 2 |	Visual + IR | Visual matching, IR detects only face | |
 
 __FaceStation F2 V1.0.1 or later versions__, __RGB-Based Visual Face Authentication Device__ are used in the following sense.
+
 | Value |	Mode | Description | Default |
 | ----- | ---- | ----------- | ------- |
 | 0 |	Fusion Mode	Visual matching + IR matching	| Default |
@@ -243,6 +248,7 @@ When face is recognized normally it's front side.
 Still, it is possible to determine how many degrees the image has been rotated from the front when device detects a face.
 This enables detection failure in the case of images rotated over a certain angle.
 maxRotation represents the maximum allowable value in this case, and the default value is 15 degrees.
+
 | Definition | Value |
 | ---------- | ----- |
 | BS2_MAX_ROTATION_DEFAULT | 15 |
