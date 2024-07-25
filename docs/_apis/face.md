@@ -226,7 +226,8 @@ Only used to FaceLite.
 checkDuplicate
 : Check whether the scanned face is duplicated in the device.
 
-operationMode :
+operationMode
+:
  * __FaceStation F2 V1.0.0__ can be set to the following operation modes, default is Fusion mode.
 
 | Value |	Mode | Description | Default |
@@ -242,7 +243,8 @@ operationMode :
 | 0 |	Fusion Mode	Visual matching + IR matching	| Default |
 | 1 |	Fast Mode	Visual matching	| |
 
-maxRotation :
+maxRotation
+:
  * __RGB-Based Visual Face Authentication Device__
 
 When face is recognized normally it's front side.
@@ -273,7 +275,8 @@ searchRangeX
 searchRangeWidth
 : Not used. Replaced by __wideSearch__.
 
-detectDistance ([detectDistanceMin](#detectDistanceMin), [detectDistanceMax](#detectDistanceMax)) :
+detectDistance ([detectDistanceMin](#detectDistanceMin), [detectDistanceMax](#detectDistanceMax))
+:
  * __RGB-Based Visual Face Authentication Device__
 
 This configures the minimum and maximun detection range for facial recognition.
@@ -294,9 +297,10 @@ detectDistanceMax
 : The maximum detection range for facial recognition.
 {: #detectDistanceMax}
 
-wideSearch :
+wideSearch
+:
  * __RGB-Based Visual Face Authentication Device except FSF2__
- 
+
 This can increase the detection range for face detection.
 We no longer support searchRange to set the x-coordinate and width due to its complexity.
 Instead, we set the face detection setting as default(FALSE), or a wide area(TRUE).
