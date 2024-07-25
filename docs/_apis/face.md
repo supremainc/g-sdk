@@ -158,6 +158,19 @@ message FaceConfig {
   FaceEnrollThreshold enrollThreshold;
   FaceDetectSensitivity detectSensitivity;
   uint32 enrollTimeout; 
+  FaceLFDLevel LFDLevel;
+  bool quickEnrollment;
+  FacePreviewOption previewOption;
+  bool checkDuplicate;
+  FaceOperationMode operationMode;
+  uint32 maxRotation;
+  uint32 faceWidthMin;
+  uint32 faceWidthMax;
+  uint32 searchRangeX;
+  uint32 searchRangeWidth;
+  uint32 detectDistanceMin;
+  uint32 detectDistanceMax;
+  bool wideSearch;
 }
 ```
 {: #FaceConfig}
@@ -176,6 +189,111 @@ message FaceConfig {
 
 enrollTimeout
 : Timeout in seconds for enrolling a face. The default is 60 seconds.
+
+LFDLevel
+: Configuration for the LFD(Live Face Detection - fake face detection) sensitivity.
+| Face Type | Default |
+| --------- | ------- |
+| IR based  | 0 |
+| ☆☆☆☆  | 1 |
+
+| Value | Description |
+| ----- | ----------- |
+| 0 | Not use  |
+| 1 | Strict |
+| 2 | More Strict |
+| 3 | Most Strict |
+
+quickEnrollment
+: Quick face enrollment process. Please use false if you want to enroll with a high quality of face templates.
+| Value | Description |
+| ----- | ----------- |
+| true | Face enrollment process with a single step  |
+| false | Face enrollment process with 3 steps |
+
+previewOption
+: IR camera preview option when you authenticate with the face.
+Only used to FaceLite.
+| Value | Description |
+| ----- | ----------- |
+| 0 |	Preview not used |
+| 1 |	Preview not used at first of authentication, preview at 1/2 stage |
+| 2 |	Preview of all stages on authentication |
+
+checkDuplicate
+: Check whether the scanned face is duplicated in the device.
+
+operationMode
+: __FaceStation F2 V1.0.0__ can be set to the following operation modes, default is Fusion mode.
+| Value |	Mode | Description | Default |
+| ----- | ---- | ----------- | ------- |
+| 0 |	Fusion Mode | Visual matching + IR matching	| Default |
+| 1 |	Visual Mode | Visual matching | |
+| 2 |	Visual + IR | Visual matching, IR detects only face | |
+
+__FaceStation F2 V1.0.1 or later versions__, __RGB-Based Visual Face Authentication Device__ are used in the following sense.
+| Value |	Mode | Description | Default |
+| ----- | ---- | ----------- | ------- |
+| 0 |	Fusion Mode	Visual matching + IR matching	| Default |
+| 1 |	Fast Mode	Visual matching	| |
+
+maxRotation
+: __RGB-Based Visual Face Authentication Device__ <BR>
+When face is recognized normally it's front side.
+Still, it is possible to determine how many degrees the image has been rotated from the front when device detects a face.
+This enables detection failure in the case of images rotated over a certain angle.
+maxRotation represents the maximum allowable value in this case, and the default value is 15 degrees.
+| Definition | Value |
+| ---------- | ----- |
+| BS2_MAX_ROTATION_DEFAULT | 15 |
+| BS2_MAX_ROTATION_ANGLE_15 | 15 |
+| BS2_MAX_ROTATION_ANGLE_30 | 30 |
+| BS2_MAX_ROTATION_ANGLE_45 | 45 |
+| BS2_MAX_ROTATION_ANGLE_60 | 60 |
+| BS2_MAX_ROTATION_ANGLE_75 | 75 |
+| BS2_MAX_ROTATION_ANGLE_90 | 90 |
+| BS2_MAX_ROTATION_ANGLE_MAX | 90 |
+
+faceWidthMin
+: Not used. Replaced by __detectDistanceMin__.
+
+faceWidthMax
+: Not used. Replaced by __detectDistanceMax__.
+
+searchRangeX
+: Not used. Replaced by __wideSearch__.
+
+searchRangeWidth
+: Not used. Replaced by __wideSearch__.
+
+detectDistance ([detectDistanceMin](#detectDistanceMin), [detectDistanceMax](#detectDistanceMax))
+: __RGB-Based Visual Face Authentication Device__ <BR>
+This configures the minimum and maximun detection range for facial recognition.
+We no longer support faceWidth to pinpoint the face location using pixel units due to its complexity.
+Instead, we set the detection range of the subject(face). The unit is set to cm, and the value must be inputted as a multiple of 10.
+
+| Type | Min limit for min detection range | Max limit for min detection range | Min detection range(Default) | Min limit for max detection range | Max limit for max detection range | Max sensing range(No limit) | Max sensing range(Default) |
+| ---- | -- | --- | -- | -- | --- | --- | --- |
+| FSF2 | 30 | 130 | 30 | 40 | 130 | 255 | 130 |
+| BS3 | 30 | 100 | 30 | 40 | 100 | 255 | 100 |
+| BEW3 | 30 | 100 | 30 | 40 | 100 | 255 | 100 |
+
+detectDistanceMin
+: The minimum detection range for facial recognition.
+{: #detectDistanceMin}
+
+detectDistanceMax
+: The maximum detection range for facial recognition.
+{: #detectDistanceMax}
+
+wideSearch
+: __RGB-Based Visual Face Authentication Device except FSF2__ <BR>
+This can increase the detection range for face detection.
+We no longer support searchRange to set the x-coordinate and width due to its complexity.
+Instead, we set the face detection setting as default(FALSE), or a wide area(TRUE).
+The details of the settings and protocols for the detection of wide area is set within the device, which the user cannot change.
+If this setting is set to TRUE, the camera detects subjects within a large range, and unintentionally detect and authenticate multiple subjects at once.
+Therefore, the default setting is at FALSE.
 
 
 ```protobuf

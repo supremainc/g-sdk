@@ -117,6 +117,8 @@ enum Type {
   XPASS_D2_KEYPAD = 0x18;
   FACELITE = 0x19;
   XPASS2_KEYPAD	= 0x1A;
+  XPASS_D2_REV = 0x1B;
+  XPASS_D2_KEYPAD_REV = 0x1C;
   FACESTATION_F2_FP = 0x1D;
   FACESTATION_F2 = 0x1E;
   XSTATION_2_QR = 0x1F;
@@ -124,8 +126,8 @@ enum Type {
   IM_120 = 0x21;
   XSTATION_2_FP = 0x22;
   BIOSTATION_3 = 0x23;
-	
-  BIOSTANION_2A = 0x26;
+  BIOSTATION_2A = 0x26;
+  BIOENTRY_W3 = 0x2A;
 }
 ```
 {: #Type }
@@ -214,6 +216,7 @@ message DeviceCapability {
 	bool thermalSupported;
 	bool maskSupported;
 	bool faceExSupported;
+	bool voipExSupported;
 	
 	bool EMCardSupported;
 	bool HIDProxCardSupported;
@@ -225,6 +228,11 @@ message DeviceCapability {
 	bool SEOSCardSupported;
 	bool NFCSupported;
 	bool BLESupported;
+	bool CustomClassicPlusSupported;
+	bool CustomDesFireEV1Supported;
+	bool TOM_NFCSupported;
+	bool TOM_BLESupported;
+	bool CustomFelicaSupported;
 	bool useCardOperation;
 
 	bool extendedAuthSupported;
@@ -297,6 +305,26 @@ message DeviceCapability {
 	bool simulatedUnlockSupported;
 	bool smartCardByteOrderSupported;
 	bool qrAsCSNSupported;
+	bool rtspSupported;
+	bool lfdSupported;
+	bool visualQRSupported;
+
+	uint32 maxVoipExtensionNumbers;
+
+	bool osdpStandardCentralSupported;
+	bool enableLicenseFuncSupported;
+	bool keypadBacklightSupported;
+	bool uzWirelessLockDoorSupported;
+	bool customSmartCardSupported;
+	bool tomSupported;
+	bool tomEnrollSupported;
+	bool showOsdpResultbyLED;
+
+	bool customSmartCardFelicaSupported;
+	bool ignoreInputAfterWiegandOut;
+	bool setSlaveBaudrateSupported;
+
+	uint32 visualFaceTemplateVersion;
 }
 ```
 {: #DeviceCapability }

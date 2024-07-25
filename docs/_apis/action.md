@@ -13,6 +13,7 @@ A trigger is fired when its specific condition is met. You can configure three t
 message Trigger {
   uint32 deviceID; 
   TriggerType type;
+  uint32 ignoreSignalTime;
   oneof entity {
     EventTrigger event;
     InputTrigger input;
@@ -22,20 +23,25 @@ message Trigger {
 ```
 {: #Trigger }
 
-deviceID
-: The ID of the device. If it is set to 0, it means that the trigger is from the same device where the configuration is written. 
+deviceID :<BR>
+The ID of the device. If it is set to 0, it means that the trigger is from the same device where the configuration is written. 
 
-[type](#TriggerType)
-: 
+[type](#TriggerType) : 
 
-[event](#EventTrigger)
-: Valid only if the __type__ is __TRIGGER_EVENT__.
+ignoreSignalTime :<BR>
+[+ 1.7] This setting is specified in milliseconds and is used to ignore repetitive input signals within a certain time frame.
+In environments where Suprema devices are connected to third-party controllers via Wiegand,
+if the feedback for authentication is repetitively input to the Suprema device from a specific model of the controller,
+this feature allows you to forcibly ignore the input signal for the specified duration.
 
-[input](#InputTrigger)
-: Valid only if the __type__ is __TRIGGER_INPUT__.
+[event](#EventTrigger) :<BR>
+Valid only if the __type__ is __TRIGGER_EVENT__.
 
-[schedule](#ScheduleTrigger)
-: Valid only if the __type__ is __TRIGGER_SCHEDULE__.
+[input](#InputTrigger) :<BR>
+Valid only if the __type__ is __TRIGGER_INPUT__.
+
+[schedule](#ScheduleTrigger) :<BR>
+Valid only if the __type__ is __TRIGGER_SCHEDULE__.
 
 ```protobuf
 enum TriggerType {
@@ -64,8 +70,8 @@ message EventTrigger {
 ```
 {: #EventTrigger }
 
-[eventCode]({{'/api/event/' | relative_url}}#EventCode)
-: The event type which will trigger the action. 
+[eventCode]({{'/api/event/' | relative_url}}#EventCode) :<BR>
+The event type which will trigger the action.
 
 ```protobuf
 message InputTrigger {
@@ -77,17 +83,17 @@ message InputTrigger {
 ```
 {: #InputTrigger }
 
-port
-: The index of the port.
+port :<BR>
+The index of the port.
 
-[switchType]({{'/api/device/' | relative_url}}#SwitchType)
-: The type of the input port.
+[switchType]({{'/api/device/' | relative_url}}#SwitchType) :<BR>
+The type of the input port.
 
-duration
-: The minimum duration for which the signal should be detected in milliseconds. 
+duration :<BR>
+The minimum duration for which the signal should be detected in milliseconds. 
 
-scheduleID
-: Specify the schedule during which the input port is monitored. If it is 0, the port will be monitored all the time.
+scheduleID :<BR>
+Specify the schedule during which the input port is monitored. If it is 0, the port will be monitored all the time.
 
 ```protobuf
 message ScheduleTrigger {
@@ -97,11 +103,10 @@ message ScheduleTrigger {
 ```
 {: #ScheduleTrigger }
 
-[type](#ScheduleTriggerType)
-: 
+[type](#ScheduleTriggerType) :
 
-scheduleID
-: The ID of the schedule which will fire the trigger. 
+scheduleID :<BR>
+The ID of the schedule which will fire the trigger. 
 
 ```protobuf
 enum ScheduleTriggerType {

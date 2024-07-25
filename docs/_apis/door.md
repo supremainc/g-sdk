@@ -35,6 +35,8 @@ message DoorInfo {
   DualAuthType dualAuthType;
   uint32 dualAuthTimeout;
   repeated uint32 dualAuthGroupIDs;
+
+  apb_zone.ZoneInfo apbZone;
 }
 ```
 {: #DoorInfo }
@@ -58,7 +60,9 @@ There must be one relay per each door. So, you cannot set 0 to [Relay.deviceID](
 {: .notice--warning}
 
 [sensor](#Sensor)
-: The port information of the door sensor. To use door alarms such as __FORCED_OPEN__ or __HELD_OPEN__, you have to configure the door sensor. If there needs to be no door sensor, just set 0 to [Sensor.deviceID](#Sensor).
+: The port information of the door sensor. To use door alarms such as __FORCED_OPEN__ or __HELD_OPEN__, you have to configure the door sensor. If there needs to be no door sensor, just set 0 to [Sensor.deviceID](#Sensor).<br>
+__apbUseDoorSensor__ decides whether to use a door sensor when using Global APB.
+Should be used with useGlobalAPB in [AuthConfig]({{'/api/auth/' | relative_url }}#AuthConfig).
 
 [button](#ExitButton)
 : The port information of the exit button. If there needs to be no exit button, just set 0 to [ExitButton.deviceID](#ExitButton).
@@ -103,6 +107,8 @@ dualAuthTimeout
 dualAuthGroupIDs
 : See [dualAuthType](#DualAuth). Maximum 16 access groups can be set as dual authentication groups.
 
+apbZone
+: Configures [Anti Passback]({{'api/zone/apb/' | relative_url}}) on the door. The Anti Passback zone ID and door ID is equivalent.
 
 ```protobuf
 message Relay {
@@ -117,6 +123,7 @@ message Sensor {
   uint32 deviceID;
   uint32 port;
   device.SwitchType type;
+  bool apbUseDoorSensor = 4;
 }
 ```
 {: #Sensor }

@@ -23,51 +23,52 @@ message SystemConfig {
 ```
 {: #SystemConfig}
 
-timeZone/syncTime
-: You can configure these options using [TimeConfig]({{'/api/time/' | relative_url}}#TimeConfig).
+timeZone/syncTime :<BR>
+You can configure these options using [TimeConfig]({{'/api/time/' | relative_url}}#TimeConfig).
 
-isLocked
-: If true, it means that the device is locked and does not handle any user input. To unlock a locked device, use [Device.Unlock]({{'/api/device/' | relative_url}}#unlock).
+isLocked :<BR>
+If true, it means that the device is locked and does not handle any user input. To unlock a locked device, use [Device.Unlock]({{'/api/device/' | relative_url}}#unlock).
 
-useInterphone
-: If the device has an interphone, you can enable/disable it with this flag. 
+useInterphone :<BR>
+If the device has an interphone, you can enable/disable it with this flag. 
 
-OSDPKeyEncrypted
-: If true, use the secure OSDP key. 
+OSDPKeyEncrypted :<BR>
+If true, use the secure OSDP key. 
 
-useJobCode
-: If true, ask users to enter a job code. See [JobCode]({{'/api/tna/' | relative_url}}#JobCode).
+useJobCode :<BR>
+If true, ask users to enter a job code. See [JobCode]({{'/api/tna/' | relative_url}}#JobCode).
 
-useAlphanumericID
-: If true, allow alphanumeric IDs. The [CapabilityInfo.alphanumericIDSupported]({{'/api/device/' | relative_url}}#CapabilityInfo) should be true.
+useAlphanumericID :<BR>
+If true, allow alphanumeric IDs. The [CapabilityInfo.alphanumericIDSupported]({{'/api/device/' | relative_url}}#CapabilityInfo) should be true.
 
-[cameraFrequency](#CameraFrequency)
-: 
+[cameraFrequency](#CameraFrequency) : 
 
-useSecureTamper
-: If true, delete sensitive data such as users, logs, keys, and certificates from the device when its tamper switch is on.
+useSecureTamper :<BR>
+If true, delete sensitive data such as users, logs, keys, and certificates from the device when its tamper switch is on.
 
-useCardOperationMask
-: Provides a card selective option not to read all kinds of cards from the device. 
+useCardOperationMask :<BR>
+Provides a card selective option not to read all kinds of cards from the device. 
 You can select multiple cards using MASK. The user can select or deselect of a specific card reading option using this option. 
 However, it can be applied to the card types the device supporting. If you add a card type which isn't supported from the device would be ignored. 
-Also, the required card type MASK should be combined with CARD_OPERATION_USE. 
+Also, the required card type MASK should be combined with CARD_OPERATION_MASK_USE. 
 For example, useCardOperationMask needs to be configured 0x80000001 when EM card is selected only.
 
-| Value | Description |
-| --------- | ----------- |
-| 0xFFFFFFFF | CARD_OPERATION_MASK_DEFAULT |
-| 0x80000000 | CARD_OPERATION_MASK_USE |
-| 0x00000200 | CARD_OPERATION_MASK_BLE |
-| 0x00000100 | CARD_OPERATION_MASK_NFC |
-| 0x00000080 | CARD_OPERATION_MASK_SEOS |
-| 0x00000040 | CARD_OPERATION_MASK_SR_SE |
-| 0x00000020 | CARD_OPERATION_MASK_DESFIRE_EV1 |
-| 0x00000010 | CARD_OPERATION_MASK_CLASSIC_PLUS |
-| 0x00000008 | CARD_OPERATION_MASK_ICLASS |
-| 0x00000004 | CARD_OPERATION_MASK_MIFARE_FELICA |
-| 0x00000002 | CARD_OPERATION_MASK_HIDPROX |
-| 0x00000001 | CARD_OPERATION_MASK_EM |
+| Value | Define | Description |
+| --------- | ----------- | ----------- |
+| 0xFFFFFFFF | CARD_OPERATION_MASK_DEFAULT | Please define and use it in your codes |
+| 0x80000000 | CARD_OPERATION_MASK_USE | Please define and use it in your codes |
+| 0x00000800 | CARD_OPERATION_MASK_CUSTOM_DESFIRE_EV1 | |
+| 0x00000400 | CARD_OPERATION_MASK_CUSTOM_CLASSIC_PLUS | |
+| 0x00000200 | CARD_OPERATION_MASK_BLE | |
+| 0x00000100 | CARD_OPERATION_MASK_NFC | |
+| 0x00000080 | CARD_OPERATION_MASK_SEOS | |
+| 0x00000040 | CARD_OPERATION_MASK_SR_SE | |
+| 0x00000020 | CARD_OPERATION_MASK_DESFIRE_EV1 | |
+| 0x00000010 | CARD_OPERATION_MASK_CLASSIC_PLUS | |
+| 0x00000008 | CARD_OPERATION_MASK_ICLASS | |
+| 0x00000004 | CARD_OPERATION_MASK_MIFARE_FELICA | |
+| 0x00000002 | CARD_OPERATION_MASK_HIDPROX | |
+| 0x00000001 | CARD_OPERATION_MASK_EM | |
 
 
 ```protobuf

@@ -586,6 +586,177 @@ Change the QR configurations of multiple devices.
 | deviceIDs | uint32[] | The IDs of the devices |
 | config | [QRConfig](#QRConfig) | The QR configuration to be written to the devices |
 
+## CustomConfig
+
+[+ 1.7] Supports reading of smart card data by arbitrarily specifying its location and size. Please check [DeviceCapability.customSmartCardSupported]({{'/api/device/' | relative_url}}#DeviceCapability) of the device first.
+
+```protobuf
+message CustomConfig {
+  CardDataType dataType = 1;
+  bool useSecondaryKey = 2;
+  CustomMifareCard mifare = 3;
+  CustomDESFireCard desfire = 4;
+  CardByteOrder smartCardByteOrder = 5;
+  uint32 formatID = 6;
+}
+```
+{: #CustomConfig }
+
+[dataType](#CardDataType) :<BR>
+Type of card data.
+
+useSecondaryKey :<BR>
+Decides whether to use the secondary encryption key.
+
+[mifare](#CustomMifareCard) :<BR>
+Set the Mifare custom card information.
+
+[desfire](#CustomDESFireCard) :<BR>
+Set the DESFire custom card information.
+
+[smartCardByteOrder](#CardByteOrder) :<BR>
+The output method can be selected from MSB or LSB.
+
+formatID :<BR>
+This is an identifier that can be used when the BioStar 2 application needs to manage the card configuration as a database.
+
+```protobuf
+message CustomMifareCard {
+  bytes primaryKey = 1;
+  bytes secondaryKey = 2;
+  uint32 startBlockIndex = 3;
+  uint32 dataSize = 4;
+  uint32 skipBytes = 5;
+}
+```
+{: #CustomMifareCard }
+
+primaryKey :<BR>
+Primary encryption key to access the Mifare card information.
+
+secondaryKey :<BR>
+Secondary encryption key to access the Mifare card information.
+
+startBlockIndex :<BR>
+Start block index on the Mifare data storage.
+
+dataSize :<BR>
+The size in bytes of the card data.
+
+skipBytes :<BR>
+This is where the card data appears.
+This is the starting point to read card data. It is 0 when reading from the starting point, and indicates the number of bytes skipped after the first.
+
+```protobuf
+message CustomDESFireCard {
+  bytes primaryKey = 1;
+  bytes secondaryKey = 2;
+  bytes appID = 3;
+  uint32 fileID = 4;
+  DESFireEncryptionType encryptionType = 5;
+  DESFireOperationMode operationMode = 6;
+  uint32 dataSize = 7;
+  uint32 skipBytes = 8;
+  DESFireAppLevelKey desfireAppKey = 9;
+}
+```
+{: #CustomDESFireCard }
+
+primaryKey :<BR>
+Primary encryption key to access the DESFire card information. (General settings)
+
+secondaryKey :<BR>
+Secondary encryption key to access the DESFire card information. (General settings)
+
+appID :<BR>
+Application Id that is stored inside the DESFire card for user authentication.
+
+fileID :<BR>
+File ID that is stored inside the DESFire card, which will be used by the application to read and write data.
+
+[encryptionType](#DESFireEncryptionType) :<BR>
+Type of data encryption.
+
+[operationMode](#DESFireOperationMode) :<BR>
+Operation mode.
+
+dataSize :<BR>
+The size in bytes of the card data.
+
+skipBytes :<BR>
+This is where the card data appears.
+This is the starting point to read card data. It is 0 when reading from the starting point, and indicates the number of bytes skipped after the first.
+
+[desfireAppKey](#DESFireAppLevelKey) :<BR>
+Indicates key information to access DESFire card information. (Advanced settings)
+
+```protobuf
+message DESFireAppLevelKey {
+  bytes appMasterKey = 1;
+  bytes fileReadKey = 2;
+  bytes fileWriteKey = 3;
+  uint32 fileReadKeyNumber = 4;
+  uint32 fileWriteKeyNumber = 5;
+}
+```
+{: #DESFireAppLevelKey }
+
+appMasterKey :<BR>
+Application master key of DESFire.
+
+fileReadKey :<BR>
+The key used to read the file.
+
+fileWriteKey :<BR>
+The key used to write the file.
+
+fileReadKeyNumber :<BR>
+The index of the key for reading the file.
+
+fileWriteKeyNumber :<BR>
+The index of the key for writing the file.
+
+desfireAppKey :<BR>
+A structure containing DesFire key information.
+
+### GetCustomConfig
+
+Get the custom card configuration of a device.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+
+| Response |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| config | [CustomConfig](#CustomConfig) | The custom smart card configuration of the device  |
+
+### SetCustomConfig
+
+Change the custom smart card configuration of a device.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+| config | [CustomConfig](#CustomConfig) | The custom smart card configuration to be written to the device |
+
+### SetCustomConfigMulti
+
+Change the custom smart card configurations of multiple devices.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceIDs | uint32[] | The IDs of the devices |
+| config | [CustomConfig](#CustomConfig) | The custom smart card configuration to be written to the devices |
+
 ## Blacklist
 
 In some cases, you have to disable cards already assigned to users. For example, if a user lost a card, you have to disable it for security. Each device manages a blacklist for this purpose.
