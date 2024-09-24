@@ -69,9 +69,9 @@ autoReconnect
 
 | Connection type | autoReconnect |
 | --------------- | ------------- |
-| When using asynchronous APIs <BR>(for example. [AddAsyncConnection](#AddAsyncConnection)) | True |
-| When using synchronous APIs <BR>(for example. [Connect](#Connect)) | False |
-| When using device to server connection <BR>(for example. [SetAcceptFilter](#SetAcceptFilter)) | False |
+| When using asynchronous APIs <BR>(for example. [AddAsyncConnection](#addasyncconnection)) | True |
+| When using synchronous APIs <BR>(for example. [Connect](#connect)) | False |
+| When using device to server connection <BR>(for example. [SetAcceptFilter](#setacceptfilter)) | False |
 
 
 ```protobuf
