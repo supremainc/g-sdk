@@ -67,6 +67,12 @@ status
 autoReconnect
 : True only if the device is connected by [AddAsyncConnection](#addasyncconnection).
 
+| Connection type | autoReconnect |
+| --------------- | ------------- |
+| When using asynchronous APIs <BR>(for example. [AddAsyncConnection](#AddAsyncConnection)) | True |
+| When using synchronous APIs <BR>(for example. [Connect](#Connect)) | False |
+| When using device to server connection <BR>(for example. [SetAcceptFilter](#SetAcceptFilter)) | False |
+
 
 ```protobuf
 enum Status {
