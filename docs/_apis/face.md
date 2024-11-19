@@ -48,7 +48,7 @@ index
 
 flag
 : If __BS2_FACE_FLAG_EX__ is set, it means that the face data is acquired by RGB-based visual face authentication devices. And, the data will include __irTemplates__ and __irImageData__. Otherwise, it is from IR-based authentication devices, and there will be neither __irTemplates__ nor __irImageData__. __BS2_FACE_FLAG_WARPED__ indicates that the image has been normalized. <BR>
-[+ 1.7.1] When registered users, The __BS2_FACE_FLAG_TEMPLATE_ONLY__ flag is supported so that only templates can be transmitted.
+__[+ 1.7.1]__ When registered users, The __BS2_FACE_FLAG_TEMPLATE_ONLY__ flag is supported so that only templates can be transmitted.
 Templates are specified via the __templates__ field.
 
 Basically, the IR-based face recognition device (FaceStation 2, FaceLite) is very different from the visual camera-based face recognition device (FaceStation F2, BioStation 3) in its method. 
@@ -61,7 +61,7 @@ That data cannot be transferred to BioStation 3 and used as is.
 
 templates
 : Maximum 30 face templates can be returned from IR-based authentication devices. For RGB-based visual face authentication devices, the maximum number is 10. <BR>
-[+ 1.7.1] You can register users with only templates by setting templates with the __BS2_FACE_FLAG_TEMPLATE_ONLY__ flag.
+__[+ 1.7.1]__ You can register users with only templates by setting templates with the __BS2_FACE_FLAG_TEMPLATE_ONLY__ flag.
 
 imageData
 : A BMP image of the face will be returned.
@@ -311,7 +311,7 @@ If this setting is set to TRUE, the camera detects subjects within a large range
 Therefore, the default setting is at FALSE.
 
 unableToSaveImageOfVisualFace
-: [+ 1.7.1] Indicates whether devices that use visual face as a credential will store facial images on the device.
+: __[+ 1.7.1]__ Indicates whether devices that use visual face as a credential will store facial images on the device.
 Enabling this setting will immediately delete image information from all user's facial data stored in the device, leaving only the templates.
 Additionally, even if face information containing user images is obtained through the [User.Enroll]({{'/api/user/' | relative_url}}#enroll) API, the device will ignore it.
 The default value is false, which means both facial data and images are stored.
