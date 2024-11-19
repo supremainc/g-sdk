@@ -49,7 +49,8 @@ The gateway consists of two servers, the device server and the gRPC server. The 
     "ip": "",
     "port": 51212,
     "ssl_port": 51213,
-    "reconnect_interval": 30000
+    "reconnect_interval": 30000,
+    "detect_network_interval": 10000
   }
 }
 ```
@@ -60,6 +61,7 @@ The gateway consists of two servers, the device server and the gRPC server. The 
 | port | The port of the device server. The default is 51212 |
 | ssl_port | The SSL port of the device server. The default is 51213 |
 | reconnect_interval | If you use [the asynchronous API]({{'/api/connect/' | relative_url}}#asynchronous-connection), the gateway will try to reconnect to a disconnected device after this interval in milliseconds. |
+| detect_network_interval | __[+ 1.7.1]__ The interval at which the gateway detects changes on the network (connected, disconnected, etc.). Set in millisec, reducing this time will result in faster detection, but may cause significant network load. The recommended setting is 10 seconds or longer. |
 
 
 ### RPC server
