@@ -11,7 +11,7 @@ There are some differences between these two types.
 
 |      |       | IR-based authentication devices | RGB-based visual face authentication devices |
 | ---- | ----- | ------------------------ | -----------    |
-| FaceData | flag  | BS2_FACE_FLAG_NONE  |  BS2_FACE_FLAG_WARPED / BS_FACE_FLAG_EX / BS2_FACE_FLAG_TEMPLATE_ONLY |
+| FaceData | flag  | BS2_FACE_FLAG_NONE  |  BS2_FACE_FLAG_WARPED / BS2_FACE_FLAG_EX / BS2_FACE_FLAG_TEMPLATE_ONLY |
 |          | templates  | Maximum 30  | Maximum 10 |
 |          | imageData  | Visual Image  | Visual Image |
 |          | irTemplates | Not Used | Maximum 10 |
