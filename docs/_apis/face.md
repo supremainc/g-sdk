@@ -3,11 +3,15 @@ title: "Face API"
 toc_label: "Face"  
 ---
 
-Face authentication is provided by FaceStation 2, FaceLite, FaceStation F2, and BioStation 3. The newest model, FaceStation F2 and BioStation 3 uses a fusion matching algorithm to improve its authentication performance. Due to this, there are a couple of differences between them.
+There are IR-based authentication devices and RGB-based visual face authentication devices for face authentication devices.
+IR-based devices include FaceStation 2 and FaceLite.
+RGB-based visual face authentication devices include FaceStation F2, BioStation 3, BioEntry W3, etc.
+There are some differences between these two types.
+<!-- Face authentication is provided by FaceStation 2, FaceLite, FaceStation F2, and BioStation 3. The newest model, FaceStation F2 and BioStation 3 uses a fusion matching algorithm to improve its authentication performance. Due to this, there are a couple of differences between them. -->
 
-|      |       | FaceStation 2 & FaceLite | FaceStation F2 & BioStation 3 |
+|      |       | IR-based authentication devices | RGB-based visual face authentication devices |
 | ---- | ----- | ------------------------ | -----------    |
-| FaceData | flag  | BS2_FACE_FLAG_NONE  |  BS2_FACE_FLAG_WARPED / BS_FACE_FLAG_EX |
+| FaceData | flag  | BS2_FACE_FLAG_NONE  |  BS2_FACE_FLAG_WARPED / BS_FACE_FLAG_EX / BS2_FACE_FLAG_TEMPLATE_ONLY |
 |          | templates  | Maximum 30  | Maximum 10 |
 |          | imageData  | Visual Image  | Visual Image |
 |          | irTemplates | Not Used | Maximum 10 |
@@ -22,16 +26,17 @@ Face authentication is provided by FaceStation 2, FaceLite, FaceStation F2, and 
 enum FaceFlag {
   BS2_FACE_FLAG_NONE = 0x00;
   BS2_FACE_FLAG_WARPED = 0x01;
+  BS2_FACE_FLAG_TEMPLATE_ONLY = 0x20;
   BS2_FACE_FLAG_EX = 0x100;
 }
 
 message FaceData {
   int32 index;
   uint32 flag;
-  repeated bytes templates;
+  repeated bytes templates;     // When BS2_FACE_FLAG_TEMPLATE_ONLY, only templates is used.
   bytes imageData;
 
-  // Only for FaceStation F2 and BioStation 3
+  // only for RGB-Based Visual Face Authentication Device (flag & BS2_FACE_FLAG_EX is true)
   repeated bytes irTemplates;
   bytes irImageData;
 }
@@ -42,7 +47,10 @@ index
 : Can be used for managing face data in your applications. Not used by the device.
 
 flag
-: If BS2_FACE_FLAG_EX is set, it means that the face data is acquired by FaceStation F2 or BioStation 3. And, the data will include __irTemplates__ and __irImageData__. Otherwise, it is from FaceStation 2 or FaceLite, and there will be neither __irTemplates__ nor __irImageData__. BS2_FACE_FLAG_WARPED indicates that the image has been normalized.
+: If __BS2_FACE_FLAG_EX__ is set, it means that the face data is acquired by RGB-based visual face authentication devices. And, the data will include __irTemplates__ and __irImageData__. Otherwise, it is from IR-based authentication devices, and there will be neither __irTemplates__ nor __irImageData__. __BS2_FACE_FLAG_WARPED__ indicates that the image has been normalized.
+
+[+ 1.7.1] When registered users, The __BS2_FACE_FLAG_TEMPLATE_ONLY__ flag is supported so that only templates can be transmitted.
+Templates are specified via the __templates__ field.
 
 Basically, the IR-based face recognition device (FaceStation 2, FaceLite) is very different from the visual camera-based face recognition device (FaceStation F2, BioStation 3) in its method. 
 G-SDK's FaceData message structure is a single structure designed to transmit face data to both IR-based and visual camera-based devices of different styles.
@@ -53,7 +61,9 @@ That data cannot be transferred to BioStation 3 and used as is.
 
 
 templates
-: Maximum 30 face templates can be returned from FaceStation 2 or FaceLite. For FaceStation F2 or BioStation 3, the maximum number is 10.
+: Maximum 30 face templates can be returned from IR-based authentication devices. For RGB-based visual face authentication devices, the maximum number is 10.
+
+[+ 1.7.1] You can register users with only templates by setting templates with the __BS2_FACE_FLAG_TEMPLATE_ONLY__ flag.
 
 imageData
 : A BMP image of the face will be returned.
@@ -171,6 +181,7 @@ message FaceConfig {
   uint32 detectDistanceMin;
   uint32 detectDistanceMax;
   bool wideSearch;
+  bool unableToSaveImageOfVisualFace;
 }
 ```
 {: #FaceConfig}
@@ -300,6 +311,12 @@ Instead, we set the face detection setting as default(FALSE), or a wide area(TRU
 The details of the settings and protocols for the detection of wide area is set within the device, which the user cannot change.
 If this setting is set to TRUE, the camera detects subjects within a large range, and unintentionally detect and authenticate multiple subjects at once.
 Therefore, the default setting is at FALSE.
+
+unableToSaveImageOfVisualFace
+: [+ 1.7.1] Indicates whether devices that use visual face as a credential will store facial images on the device.
+Enabling this setting will immediately delete image information from all user's facial data stored in the device, leaving only the templates.
+Additionally, even if face information containing user images is obtained through the [User.Enroll]({{'/api/user/' | relative_url}}#enroll) API, the device will ignore it.
+The default value is false, which means both facial data and images are stored.
 
 
 ```protobuf
