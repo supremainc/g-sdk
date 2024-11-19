@@ -47,8 +47,7 @@ index
 : Can be used for managing face data in your applications. Not used by the device.
 
 flag
-: If __BS2_FACE_FLAG_EX__ is set, it means that the face data is acquired by RGB-based visual face authentication devices. And, the data will include __irTemplates__ and __irImageData__. Otherwise, it is from IR-based authentication devices, and there will be neither __irTemplates__ nor __irImageData__. __BS2_FACE_FLAG_WARPED__ indicates that the image has been normalized.
-
+: If __BS2_FACE_FLAG_EX__ is set, it means that the face data is acquired by RGB-based visual face authentication devices. And, the data will include __irTemplates__ and __irImageData__. Otherwise, it is from IR-based authentication devices, and there will be neither __irTemplates__ nor __irImageData__. __BS2_FACE_FLAG_WARPED__ indicates that the image has been normalized. <BR>
 [+ 1.7.1] When registered users, The __BS2_FACE_FLAG_TEMPLATE_ONLY__ flag is supported so that only templates can be transmitted.
 Templates are specified via the __templates__ field.
 
@@ -61,15 +60,14 @@ That data cannot be transferred to BioStation 3 and used as is.
 
 
 templates
-: Maximum 30 face templates can be returned from IR-based authentication devices. For RGB-based visual face authentication devices, the maximum number is 10.
-
+: Maximum 30 face templates can be returned from IR-based authentication devices. For RGB-based visual face authentication devices, the maximum number is 10. <BR>
 [+ 1.7.1] You can register users with only templates by setting templates with the __BS2_FACE_FLAG_TEMPLATE_ONLY__ flag.
 
 imageData
 : A BMP image of the face will be returned.
 
 irTemplates
-: Maximum 10 IR templates can be returned from FaceStation F2 or BioStation 3.
+: Maximum 10 IR templates can be returned from RGB-based visual face authentication devices.
 
 irImageData
 : An IR image of the face will be returned.
