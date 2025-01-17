@@ -88,10 +88,10 @@ The gateway consists of two servers, the device server and the gRPC server. The 
 ```json
 {
   "timeout": {
-    "cmd": 5000,
-    "long_cmd": 10000,
+    "cmd": 10000,
+    "long_cmd": 20000,
     "upgrade_cmd": 30000,
-    "input_cmd": 10000,
+    "input_cmd": 20000,
     "face_input_cmd": 60000,
     "keep_alive": 32000
   }
