@@ -78,10 +78,12 @@ As default, the master gateway writes only warning and error messages. You can s
     "filename": "logs/gateway.log",
     "max_size_MB": 100,
     "max_days": 30,
-    "max_backups": 100
+    "max_backups": 100,
+    "append_mode": false
   }
 }
 ```  
+{: master_gateway_log}
 
 | Name | Description |
 | -----| ----------- |
@@ -91,5 +93,4 @@ As default, the master gateway writes only warning and error messages. You can s
 | max_size_MB | The maximum size of a log file in MB. If the size of the log file exceeds this limit, a new file will be created |
 | max_days | The maximum number of days to retain old log files based on the timestamp encoded in their filename. If it is 0, retain all the log files |
 | max_backups | The maximum number of old log files to retain. If it is 0, retain all the log files |
-
-
+| append_mode | __[+ 1.8.0]__ When use_file is true, append_mode opens the file in append mode if true, or creates the file if it does not exist. If this value is false, the file is always created. The default is false. |
