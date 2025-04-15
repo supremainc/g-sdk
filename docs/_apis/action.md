@@ -486,3 +486,14 @@ Change the trigger & action configurations of multiple devices.
 | deviceIDs | uint32[] | The IDs of the devices |
 | config | [TriggerActionConfig](#TriggerActionConfig) | The trigger & action configuration to be written to the devices |
 
+### RunAction
+
+[+ 1.8.0] Instruct specific action through Action.
+{: #RunAction}
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+| action | [Action](#Action) | Action to execute |
