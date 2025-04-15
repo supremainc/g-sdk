@@ -65,6 +65,8 @@ api:
         url: /api/finger/
       - title: Gateway
         url: /api/gateway/
+      - title: Input
+        url: /api/input/
       - title: Lift
         url: /api/lift/
       - title: Login

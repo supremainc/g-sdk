@@ -172,6 +172,9 @@ Configure the options related to VoIP(Voice over IP).
 ### [Wiegand]({{ 'api/wiegand/' | relative_url }})
 Configure Wiegand formats which will be used for interpreting card data and interfacing with 3rd party readers/controllers. It also provides APIs for managing Wiegand slave devices.
 
+### [Input]({{ 'api/input/' | relative_url }})
+Configure the Inputs of device.
+
 ## [Zone APIs]({{ 'api/zone/' | relative_url }})
 
 You can configure several types of zones for high-level functions such as anti passback and intrusion alarm. G-SDK supports only local zones, where all devices should be within a RS485 network. 
