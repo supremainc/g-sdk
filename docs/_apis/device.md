@@ -323,6 +323,11 @@ message DeviceCapability {
 	bool customSmartCardFelicaSupported;
 	bool ignoreInputAfterWiegandOut;
 	bool setSlaveBaudrateSupported;
+	bool changeRtspResolutionSupported;
+	bool changeVoipResolutionSupported;
+	bool changeVoipTransportSupported;
+	bool showOptionUserInfoSupported;
+	bool changeScrambleKeypadSupported;
 
 	uint32 visualFaceTemplateVersion;
 }
