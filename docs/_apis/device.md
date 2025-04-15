@@ -128,6 +128,8 @@ enum Type {
   BIOSTATION_3 = 0x23;
   BIOSTATION_2A = 0x26;
   BIOENTRY_W3 = 0x2A;
+  CORESTATION_20 = 0x2B;
+  DOOR_INTERFACE_24 = 0x2C;
 }
 ```
 {: #Type }
