@@ -29,6 +29,10 @@ message DisplayConfig {
 
   bool useScreenSaver;
   ShowOSDPResult showOSDPResult;
+
+  ShowOptionUserInfo showOptionUserName;
+  ShowOptionUserInfo showOptionUserId;
+  KeypadType keypadType;
 }
 ```
 {: #DisplayConfig }
@@ -76,7 +80,34 @@ useScreenSaver
 : If true, the screen saver will be used.
 
 [showOSDPResult](#ShowOSDPResult)
-: [+ 1.7] In environments where Suprema devices are connected as peripheral devices to Intelligent Slaves or third-party controllers, this option allows authentication results to be displayed on the device screen.
+: [+ 1.7.0] In environments where Suprema devices are connected as peripheral devices to Intelligent Slaves or third-party controllers, this option allows authentication results to be displayed on the device screen.
+
+[showOptionUserName](#ShowOptionUserInfo)
+: [+ 1.8.0] Change the user name display condition for successful authentication results. It can be used in places where personal information protection is important.
+
+| Value | Description |
+| --------- | ----------- |
+| BS2_SHOW_USER_INFO_ALL | Show full user name |
+| BS2_SHOW_USER_INFO_PARTIAL | Show partial user name |
+| BS2_SHOW_USER_INFO_NOTHING | Hide user name |
+
+[showOptionUserId](#ShowOptionUserInfo)
+: [+ 1.8.0] Change the user ID display condition for successful authentication results. It can be used in places where personal information protection is important.
+
+| Value | Description |
+| --------- | ----------- |
+| BS2_SHOW_USER_INFO_ALL | Show full user ID |
+| BS2_SHOW_USER_INFO_PARTIAL | Show partial user ID |
+| BS2_SHOW_USER_INFO_NOTHING | Hide user ID |
+
+[keypadType](#KeypadType)
+: [+ 1.8.0] Turns the Scramble Keypad on and off. Default is on.
+
+| Value | Description |
+| --------- | ----------- |
+| BS2_KEYPAD_TYPE_SCRAMBLE | Scramble Keypad on. (Security first) |
+| BS2_KEYPAD_TYPE_NORMAL | Scramble Keypad off. (Usability first) |
+
 
 ```protobuf
 enum LanguageType {
@@ -131,6 +162,23 @@ enum ShowOSDPResult {
 }
 ```
 {: #ShowOSDPResult }
+
+```protobuf
+enum ShowOptionUserInfo {
+  BS2_SHOW_USER_INFO_ALL = 0;
+  BS2_SHOW_USER_INFO_PARTIAL = 1;
+  BS2_SHOW_USER_INFO_NOTHING = 2;
+}
+```
+{: #ShowOptionUserInfo }
+
+```protobuf
+enum KeypadType {
+  BS2_KEYPAD_TYPE_SCRAMBLE = 0;
+  BS2_KEYPAD_TYPE_NORMAL = 1;
+}
+```
+{: #KeypadType }
 
 
 ### GetConfig
