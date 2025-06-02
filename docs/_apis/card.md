@@ -879,7 +879,7 @@ Delete all cards from the blacklists of multiple devices.
 
 ## FacilityCodeConfig
 
-[+ 1.8] Set the facility code on the DoorInterface device.
+[+ 1.8.0] Set the facility code on the DoorInterface device.
 
 ```protobuf
 message FacilityCodeConfig {
