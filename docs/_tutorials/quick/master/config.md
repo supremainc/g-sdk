@@ -83,7 +83,7 @@ As default, the master gateway writes only warning and error messages. You can s
   }
 }
 ```  
-{: master_gateway_log}
+{: #master_gateway_log}
 
 | Name | Description |
 | -----| ----------- |

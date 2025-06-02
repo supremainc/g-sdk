@@ -148,7 +148,7 @@ As default, the gateway writes only warning and error messages. You can set the 
   }
 }
 ```  
-{: device_gateway_log}
+{: #device_gateway_log}
 
 | Name | Description |
 | -----| ----------- |
