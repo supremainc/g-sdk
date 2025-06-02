@@ -332,6 +332,19 @@ message DeviceCapability {
 	bool changeScrambleKeypadSupported;
 
 	uint32 visualFaceTemplateVersion;
+
+	bool authOnlyUnMaskSupported;
+	bool mifareExSupported;
+	bool lockOverrideSupported;
+	bool doorModeOverrideSupported;
+	bool alternateAccessTimerSupported;
+	bool realtimeIOStatusReportSupported;
+	bool dynamicSlaveDeviceSupported;
+    bool secureTamperSupported;
+
+	bool customSmartcardSlaveSupported;
+	bool serverPrivateMsgSupported;
+	bool facilityCodeSupported;
 }
 ```
 {: #DeviceCapability }

@@ -263,6 +263,7 @@ message CardConfig {
 
   bool cipher;
   CardByteOrder smartCardByteOrder;
+  MIFARE_ENCRYPTION mifareEncryption;
 }
 ```
 {: #CardConfig }
@@ -300,6 +301,9 @@ cipher
 [smartCardByteOrder](#CardByteOrder)
 : The byte ordering of the data stored on the SmartCard. The default is __MSB__.
 
+[mifareEncryption](#MIFARE_ENCRYPTION)
+: Set the encryption type of MIFARE.
+
 ```protobuf
 enum CardByteOrder {
   MSB = 0;
@@ -317,6 +321,20 @@ enum CardDataType {
 }
 ```
 {: #CardDataType }
+
+```protobuf
+enum MIFARE_ENCRYPTION {
+  MIFARE_ENCRYPTION_CRYPTO1 = 0;
+  MIFARE_ENCRYPTION_AES128 = 1;
+}
+```
+{: #MIFARE_ENCRYPTION }
+
+MIFARE_ENCRYPTION_CRYPTO1
+: Set the encryption type of MIFARE to _crypto1_. The key size can be set up to __6 bytes__.
+
+MIFARE_ENCRYPTION_AES128
+: Set the encryption type of MIFARE to _AES128_. The key size can be set up to __16 bytes__.
 
 ```protobuf
 message MifareConfig {
@@ -592,12 +610,13 @@ Change the QR configurations of multiple devices.
 
 ```protobuf
 message CustomConfig {
-  CardDataType dataType = 1;
-  bool useSecondaryKey = 2;
-  CustomMifareCard mifare = 3;
-  CustomDESFireCard desfire = 4;
-  CardByteOrder smartCardByteOrder = 5;
-  uint32 formatID = 6;
+  CardDataType dataType;
+  bool useSecondaryKey;
+  CustomMifareCard mifare;
+  CustomDESFireCard desfire;
+  CardByteOrder smartCardByteOrder;
+  uint32 formatID;
+  MIFARE_ENCRYPTION mifareEncryption;
 }
 ```
 {: #CustomConfig }
@@ -620,13 +639,16 @@ useSecondaryKey
 formatID
 : This is an identifier that can be used when the BioStar 2 application needs to manage the card configuration as a database.
 
+[mifareEncryption](#MIFARE_ENCRYPTION)
+: Set the encryption type of MIFARE.
+
 ```protobuf
 message CustomMifareCard {
-  bytes primaryKey = 1;
-  bytes secondaryKey = 2;
-  uint32 startBlockIndex = 3;
-  uint32 dataSize = 4;
-  uint32 skipBytes = 5;
+  bytes primaryKey;
+  bytes secondaryKey;
+  uint32 startBlockIndex;
+  uint32 dataSize;
+  uint32 skipBytes;
 }
 ```
 {: #CustomMifareCard }
@@ -649,15 +671,15 @@ This is the starting point to read card data. It is 0 when reading from the star
 
 ```protobuf
 message CustomDESFireCard {
-  bytes primaryKey = 1;
-  bytes secondaryKey = 2;
-  bytes appID = 3;
-  uint32 fileID = 4;
-  DESFireEncryptionType encryptionType = 5;
-  DESFireOperationMode operationMode = 6;
-  uint32 dataSize = 7;
-  uint32 skipBytes = 8;
-  DESFireAppLevelKey desfireAppKey = 9;
+  bytes primaryKey;
+  bytes secondaryKey;
+  bytes appID;
+  uint32 fileID;
+  DESFireEncryptionType encryptionType;
+  DESFireOperationMode operationMode;
+  uint32 dataSize;
+  uint32 skipBytes;
+  DESFireAppLevelKey desfireAppKey;
 }
 ```
 {: #CustomDESFireCard }
@@ -692,11 +714,11 @@ This is the starting point to read card data. It is 0 when reading from the star
 
 ```protobuf
 message DESFireAppLevelKey {
-  bytes appMasterKey = 1;
-  bytes fileReadKey = 2;
-  bytes fileWriteKey = 3;
-  uint32 fileReadKeyNumber = 4;
-  uint32 fileWriteKeyNumber = 5;
+  bytes appMasterKey;
+  bytes fileReadKey;
+  bytes fileWriteKey;
+  uint32 fileReadKeyNumber;
+  uint32 fileWriteKeyNumber;
 }
 ```
 {: #DESFireAppLevelKey }
@@ -854,3 +876,73 @@ Delete all cards from the blacklists of multiple devices.
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
 | deviceIDs | uint32[] | The IDs of the devices |
+
+## FacilityCodeConfig
+
+[+ 1.8] Set the facility code on the DoorInterface device.
+
+```protobuf
+message FacilityCodeConfig {
+  repeated FacilityCode facilityCodes;
+}
+```
+{: #FacilityCodeConfig }
+
+[facilityCodes](#FacilityCode)
+: Specify up to __[16](#FacilityCodeConfigEnum)__ facility codes.
+
+```protobuf
+message FacilityCode {
+  bytes code;
+}
+```
+{: #FacilityCode }
+
+code
+: Specifies a facility code of up to __[4 bytes](#FacilityCodeConfigEnum)__ in size.
+
+```protobuf
+enum Enum {
+  FACILITY_CODE_SIZE = 4;
+  MAX_FACILITY_CODE = 16;
+}
+```
+{: #FacilityCodeConfigEnum }
+
+### GetFacilityCodeConfig
+
+Get the facility code configuration of a device.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+
+| Response |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| config | [FacilityCodeConfig](#FacilityCodeConfig) | The facility code configuration of the device  |
+
+### SetFacilityCodeConfig
+
+Change the facility code configuration of a device.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+| config | [FacilityCodeConfig](#FacilityCodeConfig) | The facility code configuration to be written to the device |
+
+### SetFacilityCodeConfigMulti
+
+Change the facility code configurations of multiple devices.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceIDs | uint32[] | The IDs of the devices |
+| config | [FacilityCodeConfig](#FacilityCodeConfig) | The facility code configuration to be written to the devices |

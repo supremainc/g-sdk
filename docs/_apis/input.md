@@ -138,22 +138,22 @@ message AuxInput {
 {: #AuxInput }
 
 [acFail](#AuxInputPort)
-: Specify the aux input port to be used with __AC Fail__.
+: This is a predefined aux input port, and means __AC Fail__. By setting _AUX_INPUT_PORT_NORMAL_, it can be used as a normal port.
 
 [typeAux0]({{'/api/device/' | relative_url}}#SwitchType)
-: The type of aux input port 0.
+: Specifies the switch type of the aux input port 0, which is predefined as acFail.
 
 [tamper](#AuxInputPort)
-: Specify the aux input port to be used with __Tamper__.
+: This is a preset aux input port, and means __Tamper__. By setting _AUX_INPUT_PORT_NORMAL_, it can be used as a normal port.
 
 [typeAux1]({{'/api/device/' | relative_url}}#SwitchType)
-: The type of aux input port 1.
+: Specifies the switch type of the aux input port 0, which is predefined as tamper.
 
 [fire](#AuxInputPort)
-: Specify the aux input port to be used with __Fire Alarm__.
+: This is a preset aux input port, and means __Fire Alarm__. By setting _AUX_INPUT_PORT_NORMAL_, it can be used as a normal port.
 
 [typeAux2]({{'/api/device/' | relative_url}}#SwitchType)
-: The type of aux input port 2.
+: Specifies the switch type of the aux input port 0, which is predefined as fire.
 
 ```protobuf
 message InputConfig {

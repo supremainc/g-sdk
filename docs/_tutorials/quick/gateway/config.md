@@ -42,7 +42,7 @@ See [Certificate Management]({{'/gateway/certificate/' | relative_url}}) for man
 ### Device server
 
 The gateway consists of two servers, the device server and the gRPC server. The device server handles the connections with BioStar devices, while the gRPC server manages the RPC connections with client applications. 
-
+> **⚠️ Important:** The UDP port is fixed internally. Therefore, if multiple gateways are run on a single physical server, port conflicts may occur. Ensure proper configuration to avoid such conflicts.
 ```json
 {
   "device_server": {

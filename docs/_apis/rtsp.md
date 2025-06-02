@@ -14,7 +14,7 @@ message RTSPConfig {
   string userID;
   string userPW;
   bool enabled;
-}
+  RTSP_RESOLUTION_TYPE resolution;
 ```
 {: #RTSPConfig}
 
@@ -32,6 +32,27 @@ userPW
 
 enabled
 : Indicate whether an RTSP connection is enabled.
+
+[resolution](#RTSP_RESOLUTION_TYPE)
+: Specifies the resolution for RTSP streaming.
+
+```protobuf
+enum RTSP_RESOLUTION_TYPE {
+  RTSP_RESOLUTION_DEFAULT = 0;
+  RTSP_RESOLUTION_TYPE_1 = 0;
+  RTSP_RESOLUTION_TYPE_2 = 1;
+}
+```
+{: #RTSP_RESOLUTION_TYPE }
+
+RTSP_RESOLUTION_DEFAULT
+: Specifies the video resolution of RTSP. It means the default value, and the default value is RTSP_RESOLUTION_TYPE_1.
+
+RTSP_RESOLUTION_TYPE_1
+: Set the resolution to Type1 (360*640).
+
+RTSP_RESOLUTION_TYPE_2
+: Set the resolution to Type2 (720x480).
 
 ### GetConfig
 
