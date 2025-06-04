@@ -15,6 +15,7 @@ message RTSPConfig {
   string userPW;
   bool enabled;
   RTSP_RESOLUTION_TYPE resolution;
+}
 ```
 {: #RTSPConfig}
 
@@ -34,7 +35,7 @@ enabled
 : Indicate whether an RTSP connection is enabled.
 
 [resolution](#RTSP_RESOLUTION_TYPE)
-: Specifies the resolution for RTSP streaming.
+: [+ 1.8.0] Specifies the resolution for RTSP streaming.
 
 ```protobuf
 enum RTSP_RESOLUTION_TYPE {

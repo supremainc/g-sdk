@@ -78,7 +78,7 @@ eventCode
   || BS2_EVENT_DEVICE_INPUT_DETECTED | 0x3F00 | input signal detected |
   || BS2_EVENT_DEVICE_TAMPER_ON | 0x4000 | tamper SW is on |
   || BS2_EVENT_DEVICE_TAMPER_OFF | 0x4100 | tamper SW is off |
-    || BS2_EVENT_DEVICE_EVENT_LOG_CLEARED | 0x4200 | log records cleared |
+  || BS2_EVENT_DEVICE_EVENT_LOG_CLEARED | 0x4200 | log records cleared |
   || BS2_EVENT_DEVICE_FIRMWARE_UPGRADED | 0x4300 | firmware upgraded |
   || BS2_EVENT_DEVICE_RESOURCE_UPGRADED | 0x4400 | resource upgraded |
   || BS2_EVENT_DEVICE_CONFIG_RESET | 0x4500 | system configurations initialized (including network) |
