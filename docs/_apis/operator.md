@@ -10,6 +10,9 @@ When using [AuthConfig]({{'/api/auth/' | relative_url }}#AuthConfig), there is a
 [Operator](#Operator) allows you to create and manage up to 1000 operators.
 Only available higher than BS2 1.8.0, A2 1.7.0, L2 1.5.0, N2 1.2.0, FS 1.3.0, FaceLite 1.0.1, CS40 1.3.0, P2 1.3.0, W2 1.4.0, Xpass 2 1.0.0 + Devices newly released after 3Q 2019.
 
+The device must have at least one administrator(OPERATOR_LEVEL_ADMIN) registered.
+{: .notice--warning}
+
 ### OperatorLevel
 
 You can assign administrators for managing devices. Each administrator has one of three operator levels, which has different privileges.
