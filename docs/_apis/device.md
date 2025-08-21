@@ -345,6 +345,8 @@ message DeviceCapability {
 	bool customSmartcardSlaveSupported;
 	bool serverPrivateMsgSupported;
 	bool facilityCodeSupported;
+	bool masterAdminSupported;
+	bool adminTwoStepAuthSupported;
 }
 ```
 {: #DeviceCapability }
