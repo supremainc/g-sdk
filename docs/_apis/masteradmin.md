@@ -32,7 +32,7 @@ Get the master admin information.
 
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
-| masterAdmin | [UserInfo[]](#UserInfo) | The master admin information on the device |
+| masterAdmin | [UserInfo[]]({{'/api/user/' | relative_url}}#UserInfo) | The master admin information on the device |
 
 
 ## Set
@@ -46,7 +46,7 @@ Set the master admin on a device.
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
 | deviceID | uint32 | The ID of the device |
-| masterAdmin | [UserInfo[]](#UserInfo) | The information of the master admin to be set |
+| masterAdmin | [UserInfo[]]({{'/api/user/' | relative_url}}#UserInfo) | The information of the master admin to be set |
 
 ### SetMulti
 
@@ -57,4 +57,4 @@ Set the master admin to multiple devices.
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
 | deviceIDs | uint32[] | The IDs of the devices |
-| masterAdmin | [UserInfo[]](#UserInfo) | The information of the master admin to be set  |
+| masterAdmin | [UserInfo[]]({{'/api/user/' | relative_url}}#UserInfo) | The information of the master admin to be set  |
