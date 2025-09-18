@@ -71,12 +71,16 @@ api:
         url: /api/lift/
       - title: Login
         url: /api/login/
+      - title: MasterAdmin
+        url: /api/masteradmin/
       - title: Network
         url: /api/network/
       - title: Operator
         url: /api/operator/
       - title: RS485
         url: /api/rs485/
+      - title: RTSP
+        url: /api/rtsp/
       - title: Schedule
         url: /api/schedule/
       - title: Server
@@ -95,8 +99,6 @@ api:
         url: /api/tna/
       - title: User
         url: /api/user/
-      - title: RTSP
-        url: /api/rtsp/
       - title: UDP
         url: /api/udp/
       - title: UDPMaster
