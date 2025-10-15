@@ -24,7 +24,9 @@ enum Type {
   CARD_TYPE_SECURE = 0x02;
   CARD_TYPE_ACCESS = 0x03;
   CARD_TYPE_QR = 0x06;
-  CARD_TYPE_WIEGAND = 0x0A;    
+  CARD_TYPE_WIEGAND = 0x0A;
+  CARD_TYPE_CONFIG_CARD = 0x0B;
+  CARD_TYPE_CUSTOM_SMART = 0x0D;
 }
 ```
 {: #Type }
@@ -43,6 +45,11 @@ CARD_TYPE_QR
 CARD_TYPE_WIEGAND
 : For Wiegand cards, you have to configure the format to decode the data. See [the article](https://support.supremainc.com/en/support/solutions/articles/24000027804--biostar-2-wiegand-configuration-faq) for details. 
 
+CARD_TYPE_CONFIG_CARD
+: Card type used when supporting HID config cards.
+
+CARD_TYPE_CUSTOM_SMART
+: This is the card type used for Custom smart cards.
 
 ### Card data
 
