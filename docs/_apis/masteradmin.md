@@ -15,6 +15,7 @@ Below is information on devices and versions that support MasterAdmin.
 | ----------- | ----------------- |
 | BS3 | V1.4.1 or later |
 | XS2 | V1.4.0 or later |
+| BS2a | V1.2.0 or later |
 | BEW3 | On schedule |
 
 ## Get
