@@ -18,7 +18,7 @@ You can get a trial license using __-lat__ command line option. The trial versio
 
 ### Full license
 
-To get a full license, please contact us at sales_sys@supremainc.com. After receiving a license key, you can activate it using __-la__ option.
+To get a full license, please contact us on [the Suprema website](https://www.supremainc.com/). After receiving a license key, you can activate it using __-la__ option.
 
 ```
 master_gateway -la FF79C9-D1BDD4-4555B9-BF55F3-xxxxxx-xxxxxx
@@ -111,7 +111,7 @@ master-gateway
 | -li    | show the license information | 
 | -la    | activate the license using a license key | 
 | -ld    | deactivate the license. After deactivation, you can use the license key on another computer |
-| -lco   | create an offline activation request using a license key. As for offline activation, contact us at sales_sys@supremainc.com |
+| -lco   | create an offline activation request using a license key. As for offline activation, please contact us on [the Suprema website](https://www.supremainc.com/) |
 | -lao   | activate the license using an offline activation response file |
 | -lat   | activate a trial license | 
 | -v     | show the version of the gateway |
