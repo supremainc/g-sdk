@@ -561,21 +561,52 @@ message QRConfig {
   uint32 scanTimeout;
   bool bypassData;
   bool treatAsCSN;
+
+  bool useVisualQRCode;
+  MotionSensitivity motionSensitivity;
+  uint32 visualQRScanTimeout;
+  bool useVisualQRDetectGuideline;
 }
 ```
 {: #QRConfig }
+
+```protobuf
+enum MotionSensitivity {
+  LOW = 0;
+  NORMAL = 1;
+  HIGH = 2;
+}
+```
+{: #MotionSensitivity }
 
 useQRCode
 : Enable reading QR codes.
 
 scanTimeout
-: Timeout in seconds for reading a QR code.
+: Timeout in seconds for reading a QR code. The default is 4 seconds, and you can set the time between 4 and 10 seconds.
 
 bypassData
 : If true, the QR data will be transfered to the device gateway.
 
 treatAsCSN
 : If true, the QR data will be treated as CSN.
+
+[+ 1.9.0] useVisualQRCode
+: Enable reading QR codes via visual camera.
+
+| Device Type | Supported Version |
+| ----------- | ----------------- |
+| XS2 | V1.2.0 or later |
+| BS3 | V1.1.0 or later |
+
+[+ 1.9.0] [motionSensitivity](#MotionSensitivity)
+: Set the sensitivity of motion sensor for visual barcode.
+
+[+ 1.9.0] visualQRScanTimeout
+: Timeout in seconds for reading a QR code via visual camera. The default is 10 seconds, and you can set the time between 3 and 20 seconds.
+
+[+ 1.9.0] useVisualQRDetectGuideline
+: A QR code detection outline will appear on the screen.
 
 | Request |
 

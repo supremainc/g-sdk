@@ -73,6 +73,8 @@ api:
         url: /api/login/
       - title: MasterAdmin
         url: /api/masteradmin/
+      - title: DeviceLicense
+        url: /api/devicelicense/
       - title: Network
         url: /api/network/
       - title: Operator
