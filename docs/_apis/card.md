@@ -984,3 +984,146 @@ Change the facility code configurations of multiple devices.
 | --------- | ---- | ----------- |
 | deviceIDs | uint32[] | The IDs of the devices |
 | config | [FacilityCodeConfig](#FacilityCodeConfig) | The facility code configuration to be written to the devices |
+
+## LockOverride
+
+[+ 1.9.0] Normally, when a door is locked, authentication attempts will not open the door.  
+* V1.9.0 provides ___a method for emergency door opening___ in __the event of a fire or other disaster__.
+* If a card used for emergency door opening is set to LockOverride and placed on the device, and the door is locked, the door will be opened using the card authentication set to LockOverride. If the door is not locked, normal authentication for the card will be performed (if the card has been pre-assigned to a general user).
+* Emergency door opening is also valid even if a card registered with LockOverride is blacklisted.
+* Furthermore, even if the slave device does not support LockOverride, emergency door opening using LockOverride is possible if the master device supports it.
+* Up to eight LockOverride credentials can be assigned to a user.
+* Up to 1000 LockOverride credentials can be set on a device.
+* Currently, the following authentication methods can be used with LockOverride:
+
+| Supported Credetial |
+| --------- |
+| CSN card |
+| SC card |
+
+
+```protobuf
+message LockOverride {
+  bytes cardID = 1;
+  uint32 issueCount = 2;
+
+  Type type = 3;
+  uint32 size = 4;
+  string userID = 5;
+}
+```
+{: #LockOverride }
+
+cardID
+: 32 byte card ID.
+
+issueCount
+: Valid only for smartcards.
+
+[type](#Type)
+: 
+
+size
+: The value is always 32. Note that you cannot write a CSNCard.
+
+userID
+: If the card has already been assigned to a user, you can set that user's user ID.  
+If you are not assigning the card to a user and intend to use it only for emergency opening, leave this information blank. In this case, if the door is not locked, card authentication will not be performed as normal authentication, and the door will not be opened.
+
+
+### GetLockOverride
+
+Get lock overrides of a device.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+| lockOverrides | [LockOverride[]](#LockOverride) | Lock overrides search filter |
+
+| Response |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| lockOverrides | [LockOverride[]](#LockOverride) | Lock overrides of the device |
+
+### GetAllLockOverride
+
+Get all lock overrides of a device.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+
+| Response |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| lockOverrides | [LockOverride[]](#LockOverride) | Lock overrides of the device |
+
+### SetLockOverride
+
+Set lock overrides on a device.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+| lockOverrides | [LockOverride[]](#LockOverride) | Lock overrides to set on the device |
+
+### SetLockOverrideMulti
+
+Set lock overrides on multiple devices.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceIDs | uint32[] | The IDs of the devices |
+| lockOverrides | [LockOverride[]](#LockOverride) | Lock overrides to set on multiple devices |
+
+### DeleteLockOverride
+
+Delete lock overrides on a device.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+| lockOverrides | [LockOverride[]](#LockOverride) | Lock overrides delete filter |
+
+### DeleteLockOverrideMulti
+
+Delete lock overrides on multiple devices.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceIDs | uint32[] | The IDs of the devices |
+| lockOverrides | [LockOverride[]](#LockOverride) | Lock overrides delete filter |
+
+### DeleteAllLockOverride
+
+Delete all lock overrides on a device.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+
+### DeleteAllLockOverrideMulti
+
+Delete all lock overrides on multiple devices.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceIDs | uint32[] | The IDs of the devices |
