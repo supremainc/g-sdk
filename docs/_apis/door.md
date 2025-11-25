@@ -319,7 +319,7 @@ Lock doors. If the __doorFlag__ has lower priority than [DoorStatus.unlockFlags]
 | Version | Description |
 | :-----: | :---------- |
 | ~ 1.8.1 | The Lock command persists until the next Unlock or Release command. (The administrator may forget to Unlock or Release.) |
-| 1.9.0 ~ | The Lock command can now be timed, and the door automatically returns to normal after the set time. <br>You can use the time setting in normalizeTimer, and it only works ___when doorFlag is set to OPERATOR___. Additionally, you can check who locked/unlocked using the operatorID. |
+| 1.9.0 ~ | The Lock command can now be timed, and the door automatically returns to normal after the set time. <br>You can use the time setting in normalizeTimer, and it only works ___when doorFlag is set to OPERATOR___. |
 
 | Request |
 
@@ -329,7 +329,6 @@ Lock doors. If the __doorFlag__ has lower priority than [DoorStatus.unlockFlags]
 | doorIDs | uint32[] | The IDs of the doors to be locked |
 | doorFlag | uint32 | One of [DoorFlag](#DoorFlag) |
 | normalizeTimer | uint32 | [+ 1.9.0] Wait time until transition to normalize state. Can be set in seconds from 1 to 86400(24h), 0 is infinite. |
-| operatorID | string | [+ 1.9.0] Operator ID that executed the lock |
 
 ### Unlock
 
@@ -338,7 +337,7 @@ Unlock doors. If the __doorFlag__ has lower priority than [DoorStatus.lockFlags]
 | Version | Description |
 | :-----: | :---------- |
 | ~ 1.8.1 | The Unlock command persists until the next Lock or Release command. (The administrator may forget to Lock or Release.) |
-| 1.9.0 ~ | The Unlock command can now be timed, and the door automatically returns to normal after the set time. <br>You can use the time setting in normalizeTimer, and it only works ___when doorFlag is set to OPERATOR___. Additionally, you can check who locked/unlocked using the operatorID. |
+| 1.9.0 ~ | The Unlock command can now be timed, and the door automatically returns to normal after the set time. <br>You can use the time setting in normalizeTimer, and it only works ___when doorFlag is set to OPERATOR___. |
 
 | Request |
 
@@ -348,7 +347,6 @@ Unlock doors. If the __doorFlag__ has lower priority than [DoorStatus.lockFlags]
 | doorIDs | uint32[] | The IDs of the doors to be unlocked |
 | doorFlag | uint32 | One of [DoorFlag](#DoorFlag) |
 | normalizeTimer | uint32 | [+ 1.9.0] Wait time until transition to normalize state. Can be set in seconds from 1 to 86400(24h), 0 is infinite. |
-| operatorID | string | [+ 1.9.0] Operator ID that executed the unlock |
 
 ### Release
 
