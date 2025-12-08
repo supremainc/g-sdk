@@ -528,3 +528,72 @@ deviceIDs
 : If it is not empty, receive the specified events only.
 
 The way of receiving real-time events will vary according to your selected language. Please refer to the quick start guide for details. 
+
+## Device IO States
+
+[+ 1.9.0] You can check the states ​​for the device I/O ports:
+* Input/Output, Aux input/output, Relay, Tamper
+
+```protobuf
+message IOStates {
+  repeated PortValue states = 1;
+}
+```
+{: #IOStates}
+
+[states](#PortValue)
+: States of each ports
+
+```protobuf
+message DeviceIOStates {
+  uint32 deviceID = 1;
+
+  IOStates input = 2;
+  IOStates output = 3;
+  IOStates relay = 4;
+  IOStates tamper = 5;
+  IOStates auxIn = 6;
+  IOStates auxOut = 7;
+
+  repeated uint32 supervisorInputPortIndex = 8;
+}
+```
+{: #DeviceIOStates}
+
+input
+: Input ports including supervised input ports
+
+output
+: States of output ports of device
+
+relay
+: States of relays of device
+
+tamper
+: States of tamper of device
+
+auxIn
+: States of aux input ports of device
+
+auxOut
+: States of aux output ports of device
+
+supervisorInputPortIndex
+: Which of the listed input ports is the supervised input port and has its index.
+
+### GetDeviceIOStates
+
+Get states of device I/O ports
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+| slaveIDs | uint32 | Devices can be identified using slaveIDs. If this information is omitted, the status of master and all slave devices is retrieved. |
+
+| Response |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| states | (#DeviceIOStatus) | I/O port states of devices |

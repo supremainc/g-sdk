@@ -130,6 +130,7 @@ enum Type {
   BIOENTRY_W3 = 0x2A;
   CORESTATION_20 = 0x2B;
   DOOR_INTERFACE_24 = 0x2C;
+  XPASS_Q2 = 0x2F;
 }
 ```
 {: #Type }
@@ -337,10 +338,11 @@ message DeviceCapability {
 	bool mifareExSupported;
 	bool lockOverrideSupported;
 	bool doorModeOverrideSupported;
-	bool alternateAccessTimerSupported;
-	bool realtimeIOStatusReportSupported;
+	bool extendedDoorOpenTimeSupported;
+	bool realtimeDeviceIOStatusSupported;
 	bool dynamicSlaveDeviceSupported;
     bool secureTamperSupported;
+
 
 	bool customSmartcardSlaveSupported;
 	bool serverPrivateMsgSupported;

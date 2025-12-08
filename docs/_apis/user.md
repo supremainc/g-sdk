@@ -687,3 +687,124 @@ For security, PIN is stored as a hash value. __GetPINHash__ converts a pin to 32
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
 | hashVal | byte[] | 32 bytes hash value of the PIN |
+
+## UserOverride
+
+[+ 1.9.0] Support is provided for people who require more time to enter and exit, such as people with disabilities or delivery workers, to use the facility for longer than the set opening hours.
+The extended time is set to the door's [extendedDoorOpenTime]({{'/api/door/' | relative_url }}#DoorInfo), and whether this time is applied to each user can be specified via UserOverride.
+When using extended door opening times, follow these rules:
+* If a user who uses the extended door opening time and a user who does not use it authenticate consecutively, the door opening time will operate based on the user who authenticated later.
+* When using two-factor authentication, if any of the participants uses extended door opening times, the door will be opened with the extended door opening times.
+
+
+```protobuf
+message UserOverride {
+  string userID = 1;
+  bool useExtendedDoorOpenTime = 2;
+}
+```
+{: #UserOverride }
+
+userID
+: This is the user ID that will use the extended door opening times.
+
+useExtendedDoorOpenTime
+: Whether to use extended door opening times.
+
+
+### GetUserOverride
+
+Get user overrides of a device.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+| userIDs | string[] | When retriving specific users |
+
+| Response |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| userOverrides | [UserOverride[]](#UserOverride) | User overrides of the device |
+
+### GetAllUserOverride
+
+Get all user overrides of a device.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+
+| Response |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| userOverrides | [UserOverride[]](#UserOverride) | User overrides of the device |
+
+### SetUserOverride
+
+Set user overrides on a device.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+| userOverrides | [UserOverride[]](#UserOverride) | User overrides to set on the device |
+
+### SetUserOverrideMulti
+
+Set user overrides on multiple devices.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceIDs | uint32[] | The IDs of the devices |
+| userOverrides | [UserOverride[]](#UserOverride) | User overrides to set on multiple devices |
+
+### DeleteUserOverride
+
+Delete user overrides on a device.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+| userIDs | string[] | User IDs for delete |
+
+### DeleteUserOverrideMulti
+
+Delete user overrides on multiple devices.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceIDs | uint32[] | The IDs of the devices |
+| userIDs | string[] | User IDs for delete |
+
+### DeleteAllUserOverride
+
+Delete all user overrides on a device.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+
+### DeleteAllUserOverrideMulti
+
+Delete all user overrides on multiple devices.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceIDs | uint32[] | The IDs of the devices |

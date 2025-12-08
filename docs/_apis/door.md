@@ -37,6 +37,8 @@ message DoorInfo {
   repeated uint32 dualAuthGroupIDs;
 
   apb_zone.ZoneInfo apbZone;
+
+  uint32 extendedDoorOpenTime;
 }
 ```
 {: #DoorInfo }
@@ -109,6 +111,10 @@ dualAuthGroupIDs
 
 apbZone
 : Configures [Anti Passback]({{'api/zone/apb/' | relative_url}}) on the door. The Anti Passback zone ID and door ID is equivalent.
+
+extendedDoorOpenTime
+: [+ 1.9.0] Set the extended door opening time in seconds. The default is 10 seconds.
+
 
 ```protobuf
 message Relay {
