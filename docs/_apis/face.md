@@ -199,13 +199,15 @@ message FaceConfig {
 enrollTimeout
 : Timeout in seconds for enrolling a face. The default is 60 seconds.
 
-[LFDLevel](#FaceLFDLevel)
+LFDLevel
 : Configuration for the LFD(Live Face Detection - fake face detection) sensitivity.
 
-| Device Type | Default |
-| ----------- | ------- |
-| IR-Based Face Authentication Device  | 0 |
-| RGB-Based Visual Face Authentication Device  | 1 |
+| Value | Description | Default |
+| ----- | ----------- | ------- |
+| 0 | Not use  | IR-Based Face Authentication Device |
+| 1 | Secure | RGB-Based Visual Face Authentication Device |
+| 2 | More Secure | |
+| 3 | Most Secure | |
 
 quickEnrollment
 : Quick face enrollment process. Please use false if you want to enroll with a high quality of face templates.
@@ -338,16 +340,6 @@ enum FaceDetectSensitivity {
 }
 ```
 {: #FaceDetectSensitivity}
-
-```protobuf
-enum FaceLFDLevel {
-	BS2_FACE_LFD_LEVEL_OFF = 0x00;
-	BS2_FACE_LFD_LEVEL_LOW = 0x01;
-	BS2_FACE_LFD_LEVEL_MIDDLE = 0x02;
-	BS2_FACE_LFD_LEVEL_HIGH = 0x03;
-}
-```
-{: #FaceLFDLevel}
 
 
 ### GetConfig
