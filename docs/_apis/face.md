@@ -202,17 +202,12 @@ enrollTimeout
 LFDLevel
 : Configuration for the LFD(Live Face Detection - fake face detection) sensitivity.
 
-| Device Type | Default |
-| ----------- | ------- |
-| IR-Based Face Authentication Device  | 0 |
-| RGB-Based Visual Face Authentication Device  | 1 |
-
-| Value | Description |
-| ----- | ----------- |
-| 0 | Not use  |
-| 1 | Strict |
-| 2 | More Strict |
-| 3 | Most Strict |
+| Value | Description | Default |
+| ----- | ----------- | ------- |
+| 0 | Not use  | IR-Based Face Authentication Device |
+| 1 | Secure | RGB-Based Visual Face Authentication Device |
+| 2 | More Secure | |
+| 3 | Most Secure | |
 
 quickEnrollment
 : Quick face enrollment process. Please use false if you want to enroll with a high quality of face templates.
