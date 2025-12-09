@@ -204,7 +204,7 @@ LFDLevel
 
 | Value | Description | Default |
 | ----- | ----------- | ------- |
-| 0 | Not use  | IR-Based Face Authentication Device |
+| 0 | Normal  | IR-Based Face Authentication Device |
 | 1 | Secure | RGB-Based Visual Face Authentication Device |
 | 2 | More Secure | |
 | 3 | Most Secure | |
