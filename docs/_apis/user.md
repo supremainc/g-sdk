@@ -690,11 +690,10 @@ For security, PIN is stored as a hash value. __GetPINHash__ converts a pin to 32
 
 ## UserOverride
 
-[+ 1.9.0] Support is provided for people who require more time to enter and exit, such as people with disabilities or delivery workers, to use the facility for longer than the set opening hours.
-The extended time is set to the door's [extendedDoorOpenTime]({{'/api/door/' | relative_url }}#DoorInfo), and whether this time is applied to each user can be specified via UserOverride.
-When using extended door opening times, follow these rules:
-* If a user who uses the extended door opening time and a user who does not use it authenticate consecutively, the door opening time will operate based on the user who authenticated later.
-* When using two-factor authentication, if any of the participants uses extended door opening times, the door will be opened with the extended door opening times.
+[+ 1.9.0] Support is available to allow users who require more time to enter and exit—such as people with disabilities or delivery workers—to use the door longer than the standard door open time. Set the extended duration with the door’s [extendedDoorOpenTime]({{'/api/door/' | relative_url }}#DoorInfo), and specify per-user applicability with UserOverride.
+When using extended door open time, follow these rules:
+* If a user with extended door open time and a user without it authenticate consecutively, the door open time operate based on the user who authenticated later.
+* When using two-factor authentication, if any of the participants uses extended door open time, the door will be opened with the extended door open time.
 
 
 ```protobuf

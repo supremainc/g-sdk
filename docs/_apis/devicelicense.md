@@ -5,7 +5,7 @@ toc_label: "DeviceLicense"
 
 ## Overview
 
-[+ 1.9.0] DeviceLicense provides a way to activate specific features on a device.
+[+ 1.9.0] Device License provides a way to activate specific features on a device.
 
 | Device Type | Supported Version | Visual QR | Wireless lock |
 | ----------- | ----------------- | :-------: | :-----------: |

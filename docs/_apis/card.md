@@ -989,14 +989,14 @@ Change the facility code configurations of multiple devices.
 
 [+ 1.9.0] Normally, when a door is locked, authentication attempts will not open the door.  
 V1.9.0 provides ___a method for emergency door opening___ in __the event of a fire or other disaster__.  
-If a card used for emergency door opening is set to LockOverride and placed on the device, and the door is locked, the door will be opened using the card authentication set to LockOverride. If the door is not locked, normal authentication for the card will be performed (if the card has been pre-assigned to a general user).  
-Emergency door opening is also valid even if a card registered with LockOverride is blacklisted.
-Furthermore, even if the slave device does not support LockOverride, emergency door opening using LockOverride is possible if the master device supports it.
+If a card used for emergency door opening is set to Lock Override and placed on the device, and the door is locked, the door will be opened using the card authentication set to Lock Override. If the door is not locked, normal authentication for the card will be performed (if the card has been pre-assigned to a general user).  
+Emergency door opening is also valid even if a card registered with Lock Override is blacklisted.
+Furthermore, even if the slave device does not support Lock Override, emergency door opening using Lock Override is possible if the master device supports it.
 Lock override has the following constraints:
-1. Up to eight LockOverride credentials can be assigned to a user.  
-1. Up to 1000 LockOverride credentials can be set on a device.
+1. Up to eight Lock Override credentials can be assigned to a user.  
+1. Up to 1000 Lock Override credentials can be set on a device.
 
-Currently, the following authentication methods can be used with LockOverride:
+Currently, the following authentication methods can be used with Lock Override:
 * CSN card
 * SC card
 

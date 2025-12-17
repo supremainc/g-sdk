@@ -5,15 +5,16 @@ toc_label: "MasterAdmin"
 
 ## Overview
 
-Suprema devices are CE RED (European Radio Equipment Directive) compliant and support MasterAdmin.
-Users cannot start using a device that supports this feature without configuring MasterAdmin.
+Suprema devices are CE RED (European Radio Equipment Directive) compliant and support Master Admin.
+If you use the device without setting up a administrator, anyone can access the administrator menu and change device settings. The Master Admin feature addresses this security vulnerability by enforcing the setup of an overall administrator.
+Users cannot start using a device that supports this feature without configuring Master Admin.
 This differs from the existing Operator.
-Once MasterAdmin is configured, the device becomes available.
-Below is information on devices and versions that support MasterAdmin.
+Once Master Admin is configured, the device becomes available.
+Below is information on devices and versions that support Master Admin.
 
 | Device Type | Supported Version |
 | ----------- | ----------------- |
-| BS3 | V1.4.1 or later |
+| BS3 | V1.4.0 or later |
 | XS2 | V1.4.0 or later |
 | BS2a | V1.2.0 or later |
 | BEW3 | On schedule |
