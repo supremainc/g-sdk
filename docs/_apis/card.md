@@ -606,7 +606,7 @@ treatAsCSN
 : Timeout in seconds for reading a QR code via visual camera. The default is 10 seconds, and you can set the time between 3 and 20 seconds.
 
 [+ 1.9.0] useVisualQRDetectGuideline
-: A QR code detection outline will appear on the screen.
+: __XPass Q2__ A QR code detection outline will appear on the screen.
 
 | Request |
 
