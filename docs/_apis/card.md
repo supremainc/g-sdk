@@ -586,7 +586,7 @@ scanTimeout
 : Timeout in seconds for reading a QR code. The default is 4 seconds, and you can set the time between 4 and 10 seconds.
 
 bypassData
-: If true, the QR data will be transfered to the device gateway.
+: If true, the QR data will be transfered to the device gateway. (___At a later date___)
 
 treatAsCSN
 : If true, the QR data will be treated as CSN.
