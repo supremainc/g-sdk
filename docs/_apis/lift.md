@@ -143,10 +143,10 @@ NONE
 : The floor is activated/deactivated by normal operations. 
 
 SCHEDULED
-: The floor is activated/deactivated by Scheduled Lock/Unlock zones. 
+: The floor is activated/deactivated using the Scheduled function of the Lift Zone.
 
 EMERGENCY
-: The floor is activated/deactivated by Fire Alarm Zone or Intrusion Alarm Zone. 
+: The floor is activated/deactivated by Fire Alarm Zone. 
 
 OPERATOR
 : The floor is activated/deactivated by operators. 
