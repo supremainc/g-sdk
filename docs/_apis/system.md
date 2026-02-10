@@ -74,7 +74,7 @@ For example, useCardOperationMask needs to be configured 0x80000001 when EM card
 adminTwoStepAuth
 : [+ V1.9] Sets whether to perform 2-step master admin authentication.
 This value cannot be changed on new devices that support master admin due to CE RED (European Directive for Radio Equipment). It can only be changed when upgrading from an existing device that does not support it.
-If set to false, only 1-step authentication is performed, and authentication is performed only with the credential information assigned to the master admin, regardless of information such as BS2AuthConfig or BS2AuthConfigEx that affect general user authentication.
+If set to false, only 1-step authentication is performed, and authentication is performed only with the credential information assigned to the master admin, regardless of information such as [AuthConfig]({{'/api/auth/' | relative_url}}#AuthConfig) that affect general user authentication.
 If set to true, 2-step authentication will be performed, and authentication may fail if the device is only capable of performing 1-step authentication due to insufficient credentials or other reasons. See [MasterAdmin]({{'/api/masteradmin/' | relative_url}}#MasterAdmin).
 
 
