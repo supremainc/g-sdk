@@ -9,7 +9,7 @@ title: "Java Installation"
 
 ## Download
 
-1. Download the latest version of Java library from [github]({{ site.last_ver }}).
+1. Download the latest version Client example from [Suprema Download Center](https://download.supremainc.com/download-center/pages/login.asp).
 2. Unzip the archive file.
 
 ## Examples

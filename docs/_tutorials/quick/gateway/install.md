@@ -5,7 +5,7 @@ title: "Device Gateway: Installation"
 
 ## Download
 
-1. Download the latest version of the device gateway from [github]({{ site.last_ver }})
+1. Download the latest version of the device gateway from [Suprema Download Center](https://download.supremainc.com/download-center/pages/login.asp)
 2. Unzip the archive file
 
 ## Create or import certificates
