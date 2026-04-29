@@ -80,6 +80,7 @@ enum Status {
   DISCONNECTED = 0x00;
   TCP_CONNECTED	= 0x01;
   TLS_CONNECTED = 0x02;
+  TRY_TO_CONNECT = 0x04; // Try to connect by async mode
   
   // TCP Connection Error Status
   TCP_CANNOT_CONNECT = 0x100;

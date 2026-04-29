@@ -97,8 +97,11 @@ enum AuthMode {
   AUTH_MODE_ID_BIOMETRIC_OR_PIN = 9;
   AUTH_MODE_ID_BIOMETRIC_PIN = 10;
 
-  // The below modes are only for FaceStation F2 and BioStation 3
-  AUTH_EXT_MODE_FACE_ONLY	= 11;
+  AUTH_MODE_NONE = 0xff;
+  AUTH_MODE_PROHIBITED = 0xfe;
+
+  // The below modes are only for RGB-based visual face authentication devices
+  AUTH_EXT_MODE_FACE_ONLY = 11;
   AUTH_EXT_MODE_FACE_FINGERPRINT = 12;
   AUTH_EXT_MODE_FACE_PIN = 13;
   AUTH_EXT_MODE_FACE_FINGERPRINT_OR_PIN = 14;
@@ -182,9 +185,9 @@ AUTH_MODE_ID_BIOMETRIC_PIN
 Some authentication modes are available only for specific devices. For example, __AUTH_MODE_ID_XXX__ modes are available only for the devices with key pads such as BioStation N2 and BioStation 2. 
 {: .notice--warning}
 
-### Authentication mode for FaceStation F2 and BioStation 3
+### Authentication mode for RGB-based visual face authentication devices
 
-Some models of FaceStation F2 and BioStation 3 provide both face and fingerprint authentication. To make full use of this multimodal function, a new set of authentication modes, __AUTH_EXT_MODE_XXX__, are adopted for FaceStation F2 and BioStation 3. Please note that there is no backward compatibility. You have to use these modes only for FaceStation F2 or BioStation 3. 
+Some models of RGB-based visual face authentication devices provide both face and fingerprint authentication. To make full use of this multimodal function, a new set of authentication modes, __AUTH_EXT_MODE_XXX__, are adopted for RGB-based visual face authentication devices. Please note that there is no backward compatibility. You have to use these modes only for RGB-based visual face authentication devices. 
 
 AUTH_EXT_MODE_FACE_ONLY
 : Face 
@@ -408,7 +411,7 @@ Set the configuration of a device.
 
 Set the configurations of multiple devices.
 
-Since FaceStation F2 and BioStation 3 has its own authentication modes, you can not mix them with other models. 
+Since RGB-based visual face authentication devices has its own authentication modes, you can not mix them with other models. 
 {: .notice--warning}
 
 | Request |

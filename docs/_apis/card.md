@@ -120,14 +120,14 @@ message SmartCardHeader {
   Type type;
   oneof templateCount {
     uint32 numOfTemplate;
-    uint32 numOfFaceTemplate;   // Only for FaceStation F2 and BioStation 3
+    uint32 numOfFaceTemplate;   // Only for RGB-based visual face authentication devices
   }
   uint32 templateSize;
   uint32 issueCount;
   uint32 duressMask;
   uint32 cardAuthMode;
   bool useAlphanumericID;
-  uint32 cardAuthModeEx;    // Only for FaceStation F2 and BioStation 3
+  uint32 cardAuthModeEx;    // Only for RGB-based visual face authentication devices
 }
 ```
 {: #SmartCardHeader }

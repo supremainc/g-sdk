@@ -3,7 +3,7 @@ title: "Voice over IP API"
 toc_label: "VoIP"  
 ---
 
-With BioStation A2, FaceStation 2, X-Station 2, and BioStation 3, you can use VoIP(Voice over IP). Refer to [the article](http://kb.supremainc.com/knowledge/doku.php?id=en:tc_appnote_setting_up_a_voip_server_for_a2&s[]=voip) for details. 
+With BioStation A2, FaceStation 2, X-Station 2, BioStation 3 and BioStation 3 Max you can use VoIP(Voice over IP). Refer to [the article](http://kb.supremainc.com/knowledge/doku.php?id=en:tc_appnote_setting_up_a_voip_server_for_a2&s[]=voip) for details. 
 
 ## Config
 

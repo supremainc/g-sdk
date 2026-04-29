@@ -20,7 +20,7 @@ message ThermalConfig {
 
   ThermalCamera camera;
 
-  // Only for FaceStation F2 and BioStation 3
+  // only for RGB-based visual face authentication devices
   CheckMode maskCheckMode;
   MaskDetectionLevel maskDetectionLevel;
 

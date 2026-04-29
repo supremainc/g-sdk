@@ -120,7 +120,7 @@ Scan a face and get its template data. With higher __enrollThreshold__, you can 
 Extract face templates from normalized images. 
 It can be used to write a face template on a smart card.
 
-Only supported by FaceStation F2 and BioStation 3. If the image file is not acquired by FaceStation F2 or BioStation 3, the image data should be in JPG or PNG file format. 
+Only supported by RGB-based visual face authentication devices. If the image file is not acquired by RGB-based visual face authentication devices, the image data should be in JPG or PNG file format. 
 {: .notice--warning}
 
 | Request |
@@ -128,8 +128,8 @@ Only supported by FaceStation F2 and BioStation 3. If the image file is not acqu
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
 | deviceID | uint32 | The ID of the device |
-| imageData | byte[] | If the image file is acquired by FaceStation F2 or BioStation 3, it will be in BMP file format. Otherwise, only JPG file format is supported. |
-| isWarped | bool  | If the image file is acquired by FaceStation F2 or BioStation 3, it should be true. Otherwise, it should be false. |
+| imageData | byte[] | If the image file is acquired by RGB-based visual face authentication devices, it will be in BMP file format. Otherwise, only JPG file format is supported. |
+| isWarped | bool  | If the image file is acquired by RGB-based visual face authentication devices, it should be true. Otherwise, it should be false. |
 
 | Response |
 
@@ -391,7 +391,7 @@ The more the number of face templates, the higher the False Acceptance Ratio(FAR
 * Set [UserHdr.authGroupID]({{'/api/user/' | relative_url}}#UserHdr).
 * Enroll or update users using [Enroll]({{'/api/user/' | relative_url}}#enroll) or [EnrollMulti]({{'/api/user/' | relative_url}}#enrollmulti).
 
-Authentication groups are not supported by FaceStation F2 and BioStation 3. 
+Authentication groups are not supported by RGB-based visual face authentication devices. 
 {: .notice--warning}
 
 ```protobuf

@@ -43,7 +43,7 @@ updateMask
 
 ### User Setting
 
-You can specify the effective and expiry time of a user using __startTime__ and __endTime__. You can also specify the private authentication modes of the user using __fingerAuthMode__, __cardAuthMode__, and __IDAuthMode__. For the available modes, refer to [authentication modes]({{'/api/auth/' | relative_url}}#AuthMode). Since FaceStation F2 and BioStation 3 provides [different authentication modes]({{'/api/auth/' | relative_url}}#authentication-mode-for-facestation-f2), you have to use __faceAuthExtMode__, __fingerAuthExtMode__, __cardAuthExtMode__, and __IDAuthExtMode__ for it.
+You can specify the effective and expiry time of a user using __startTime__ and __endTime__. You can also specify the private authentication modes of the user using __fingerAuthMode__, __cardAuthMode__, and __IDAuthMode__. For the available modes, refer to [authentication modes]({{'/api/auth/' | relative_url}}#AuthMode). Since RGB-based visual face authentication devices provides [different authentication modes]({{'/api/auth/' | relative_url}}#authentication-mode-for-facestation-f2), you have to use __faceAuthExtMode__, __fingerAuthExtMode__, __cardAuthExtMode__, and __IDAuthExtMode__ for it.
 
 The private authentication modes will be applied only when [AuthConfig.usePrivateAuth]({{'/api/auth/' | relative_url }}#AuthConfig) is true.
 {: .notice--warning}
@@ -59,7 +59,7 @@ message UserSetting {
   uint32 IDAuthMode;
   uint32 securityLevel;
 
-  // Only for FaceStation F2 and BioStation 3
+  // Only for RGB-based visual face authentication devices
   uint32 faceAuthExtMode;
   uint32 fingerAuthExtMode;
   uint32 cardAuthExtMode;
@@ -111,7 +111,7 @@ securityLevel
   | 5 | Most secure | 
 
 faceAuthExtMode
-: FaceStation F2 and BioStation 3 only
+: Only for RGB-based visual face authentication devices
 
   | AUTH_EXT_MODE_FACE_ONLY | Face |  
   | AUTH_EXT_MODE_FACE_FINGERPRINT | Face + Fingerprint | 
@@ -122,7 +122,7 @@ faceAuthExtMode
   | 0xFF | Undefined. Use the settings of [AuthConfig]({{'/api/auth/' | relative_url }}#AuthConfig) | 
 
 fingerAuthExtMode
-: FaceStation F2 and BioStation 3 only
+: Only for RGB-based visual face authentication devices
 
   | AUTH_EXT_MODE_FINGERPRINT_ONLY | Fingerprint |  
   | AUTH_EXT_MODE_FINGERPRINT_FACE | Fingerprint + Face | 
@@ -133,7 +133,7 @@ fingerAuthExtMode
   | 0xFF | Undefined. Use the settings of [AuthConfig]({{'/api/auth/' | relative_url }}#AuthConfig) | 
 
 cardAuthExtMode
-: FaceStation F2 and BioStation 3 only
+: Only for RGB-based visual face authentication devices
 
   | AUTH_EXT_MODE_CARD_ONLY | Card |  
   | AUTH_EXT_MODE_CARD_FACE | Card + Face | 
@@ -154,7 +154,7 @@ cardAuthExtMode
   | 0xFF | Undefined. Use the settings of [AuthConfig]({{'/api/auth/' | relative_url }}#AuthConfig) | 
 
 IDAuthExtMode
-: FaceStation F2 and BioStation 3 only
+: Only for RGB-based visual face authentication devices
 
   | AUTH_EXT_MODE_ID_FACE | ID + Face | 
   | AUTH_EXT_MODE_ID_FINGERPRINT | ID + Fingerprint  | 

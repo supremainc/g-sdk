@@ -130,6 +130,8 @@ enum Type {
   BIOENTRY_W3 = 0x2A;
   CORESTATION_20 = 0x2B;
   DOOR_INTERFACE_24 = 0x2C;
+  BIOSTATION_3_MAX = 0x2D;
+  BIOSTATION_3_MAX_FP = 0x2E;
   XPASS_Q2 = 0x2F;
 }
 ```
@@ -188,7 +190,7 @@ enum BuzzerTone {
 
 ### GetCapability
 
-Each device type has its own functionalities. For example, "Extended Auth" is supported by BioStation 3 and FaceStation F2, but not by BioStation 2 and FaceStation 2. 
+Each device type has its own functionalities. For example, "Extended Auth" is supported by RGB-based visual face authentication devices, but not by BioStation 2 and FaceStation 2. 
 
 ```protobuf
 message DeviceCapability {

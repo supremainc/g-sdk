@@ -3,7 +3,7 @@ title: "RTSP API"
 toc_label: "RTSP"
 ---
 
-With BioStation 3, you can use RTSP.
+With BioStation 3, BioStation 3 Max, you can use RTSP.
 
 ## Config
 
