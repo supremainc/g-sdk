@@ -58,7 +58,7 @@ timeZone
 : Timezone in seconds. For example, if the timezone is GMT-5, it should be -18,000. 
 
 syncWithServer
-: If true, try to synchronize the time of the device with the BioStar server or the device gateway. 
+: If true, try to synchronize the time of the device with the device gateway. 
 
 ### GetConfig
 

@@ -5,7 +5,7 @@ title: "Master Gateway: Installation"
 
 ## Download
 
-1. Download the latest version of the master gateway from [github]({{ site.last_ver }})
+1. Download the latest version of the master gateway from [Suprema Download Center](https://download.supremainc.com/download-center/pages/login.asp)
 2. Unzip the archive file
 
 ## Get a license

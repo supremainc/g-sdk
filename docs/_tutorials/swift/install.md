@@ -9,7 +9,7 @@ title: "Swift Installation"
 
 ## Swift Library
 
-1. Download the latest version of Swift library from [github]({{ site.last_ver }}).
+1. Download the latest version of Client example from [Suprema Download Center](https://download.supremainc.com/download-center/pages/login.asp).
 2. Unzip the archive file.
 
 ## Examples

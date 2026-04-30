@@ -28,13 +28,10 @@ message AuthConfig {
 : Authentication modes available for the device. 
 
 useGlobalAPB
-: If true, ask the BioStar server whether to allow access to a user after successful authentication.
-
-You need BioStar V2.x for global APB.
-{: .notice--warning}
+: If true, ask the gateway whether to allow access to a user after successful authentication.
 
 [globalAPBFailAction](#GlobalAPBFailActionType)
-: Specify what to do when the BioStar server is unreachable when __useGlobalAPB__ is true.
+: Specify what to do when the gateway is unreachable when __useGlobalAPB__ is true.
 
 useGroupMatching
 : If true, use group matching for face authentication. Valid only for FaceStation 2 and FaceLite. See [AuthGroup]({{'/api/face/' | relative_url }}#auth-group)
@@ -46,11 +43,7 @@ usePrivateAuth
 : If it is not FACE_DETECTION_NONE, the device will try to detect a face after a user authenticates successfully. Valid only for BioStation A2.
 
 useServerMatching
-: If true, defer the authentication to the BioStar server. When a user scans a fingerprint or a card, the device will send the information to the BioStar server and wait for the authentication result.
-
-You need BioStar V2.x for server matching.
-{: .notice--warning}
-
+: If true, defer the authentication to the gateway. When a user scans a fingerprint or a card, the device will send the information to the gateway and wait for the authentication result.
 
 useFullAccess
 : If true, allow access to all registered users regardless of their access groups.
@@ -337,7 +330,7 @@ enum GlobalAPBFailActionType {
 ```
 {: #GlobalAPBFailActionType}
 
-Global APB needs a BioStar server to determine whether the user is allowed to enter the door. If the device cannot connect to the server, it will decide by itself according to this parameter.
+Global APB needs a gateway to determine whether the user is allowed to enter the door. If the device cannot connect to the server, it will decide by itself according to this parameter.
 
 GLOBAL_APB_FAIL_ACTION_NONE
 : Allow access.
