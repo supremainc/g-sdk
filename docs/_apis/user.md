@@ -14,6 +14,7 @@ Specify the most basic information of a user.
 ```protobuf
 message UserHdr {
   string ID;
+  uint32 userFlag;
   int32 numOfCard;
   int32 numOfFinger;
   int32 numOfFace;
@@ -25,6 +26,18 @@ message UserHdr {
 
 ID
 : Maximum 32 bytes. 0 is not allowed as an ID. For alphanumeric ID, check if it is supported by the device using [CapabilityInfo.alphanumericIDSupported]({{'/api/device/' | relative_url}}#CapabilityInfo), and configure it using [SystemConfig.useAlphanumericID]({{'/api/system/' | relative_url}}#SystemConfig).
+
+userFlag
+: User state flags stored in the user header. This value is a bitmask.
+
+  | Value | Name | Description |
+  | ----- | ---- | ----------- |
+  | 0x00 | USER_FLAG_NONE | Default state |
+  | 0x01 | USER_FLAG_CREATED | User is created on device |
+  | 0x02 | USER_FLAG_UPDATED | User is updated on device |
+  | 0x04 | USER_FLAG_DELETED | User is deleted from device (reserved / not used yet) |
+  | 0x80 | USER_FLAG_DISABLED | User is disabled |
+  | 0xFF | USER_FLAG_ALL | All flags (used by internal user query commands) |
 
 numOfCard
 : Maximum 8 cards can be assigned to a user. 
@@ -40,6 +53,35 @@ authGroupID
 
 updateMask
 : Used only for UpdateRequest/UpdateMultiRequest.
+
+### UpdateMask
+```protobuf
+enum UpdateMask {
+  KEEP_NONE = 0x00;          // Update all fields (keep none)
+  KEEP_USER_PHRASE = 0x01;   // Keep user phrase
+  KEEP_USER_JOB_CODE = 0x02; // Keep user job code
+  KEEP_USER_NAME = 0x04;     // Keep user name
+  KEEP_USER_PHOTO = 0x08;    // Keep user photo
+  KEEP_USER_PIN = 0x10;      // Keep user PIN
+  KEEP_USER_CARD = 0x20;     // Keep user card data
+  KEEP_USER_FINGER = 0x40;   // Keep user fingerprint data
+  KEEP_USER_FACE = 0x80;     // Keep user face data
+  KEEP_ALL = 0xFF;           // Keep all optional user fields
+}
+```
+
+| Value | Name | Description |
+| ----- | ---- | ----------- |
+| 0x00 | KEEP_NONE | Update all fields |
+| 0x01 | KEEP_USER_PHRASE | Keep phrase unchanged |
+| 0x02 | KEEP_USER_JOB_CODE | Keep job code unchanged |
+| 0x04 | KEEP_USER_NAME | Keep name unchanged |
+| 0x08 | KEEP_USER_PHOTO | Keep photo unchanged |
+| 0x10 | KEEP_USER_PIN | Keep PIN unchanged |
+| 0x20 | KEEP_USER_CARD | Keep card data unchanged |
+| 0x40 | KEEP_USER_FINGER | Keep fingerprint data unchanged |
+| 0x80 | KEEP_USER_FACE | Keep face data unchanged |
+| 0xFF | KEEP_ALL | Keep all optional fields unchanged |
 
 ### User Setting
 
@@ -262,20 +304,41 @@ Get the partial user information with specific user IDs. For example, if you nee
 
 ```protobuf
 enum InfoMask {
-  USER_MASK_ID_ONLY = 0x0000;
-  USER_MASK_HDR	= 0x0001;
-  USER_MASK_SETTING = 0x0002;
-  USER_MASK_NAME = 0x0004;
-  USER_MASK_PHOTO	= 0x0008;
-  USER_MASK_PIN = 0x0010;
-  USER_MASK_CARD = 0x0020;
-  USER_MASK_FINGER = 0x0040;
-  USER_MASK_FACE = 0x0080;
-  USER_MASK_ACCESS_GROUP = 0x0100;
-  USER_MASK_JOB = 0x0200;
-  USER_MASK_ALL	= 0xFFFF;
+  USER_MASK_ID_ONLY = 0x0000;      // User ID only
+  USER_MASK_HDR = 0x0001;          // User header
+  USER_MASK_SETTING = 0x0002;      // User setting
+  USER_MASK_NAME = 0x0004;         // User name
+  USER_MASK_PHOTO = 0x0008;        // User photo
+  USER_MASK_PIN = 0x0010;          // User PIN hash
+  USER_MASK_CARD = 0x0020;         // Card credentials
+  USER_MASK_FINGER = 0x0040;       // Fingerprint credentials
+  USER_MASK_FACE = 0x0080;         // Face credentials
+  USER_MASK_ACCESS_GROUP = 0x0100; // Access group IDs
+  USER_MASK_JOB = 0x0200;          // Job codes
+  USER_MASK_PHRASE = 0x0400;       // User phrase
+  USER_MASK_FACE_EX = 0x0800;      // FaceEx credentials
+  USER_MASK_SETTING_EX = 0x1000;   // Extended user setting
+  USER_MASK_ALL = 0xFFFF;          // All user information
 }
 ```
+
+| Value | Name | Description |
+| ----- | ---- | ----------- |
+| 0x0000 | USER_MASK_ID_ONLY | Returns only user IDs |
+| 0x0001 | USER_MASK_HDR | Includes [UserHdr](#UserHdr) |
+| 0x0002 | USER_MASK_SETTING | Includes [UserSetting](#UserSetting) |
+| 0x0004 | USER_MASK_NAME | Includes user name |
+| 0x0008 | USER_MASK_PHOTO | Includes user photo |
+| 0x0010 | USER_MASK_PIN | Includes user PIN hash |
+| 0x0020 | USER_MASK_CARD | Includes card data |
+| 0x0040 | USER_MASK_FINGER | Includes fingerprint data |
+| 0x0080 | USER_MASK_FACE | Includes face data |
+| 0x0100 | USER_MASK_ACCESS_GROUP | Includes access group IDs |
+| 0x0200 | USER_MASK_JOB | Includes job codes |
+| 0x0400 | USER_MASK_PHRASE | Includes user phrase |
+| 0x0800 | USER_MASK_FACE_EX | Includes FaceEx data |
+| 0x1000 | USER_MASK_SETTING_EX | Includes extended user setting |
+| 0xFFFF | USER_MASK_ALL | Includes all user information |
 
 | Request |
 
@@ -319,24 +382,6 @@ Enroll users to multiple devices.
 
 ## Update
 Set the partial user information with specific user IDs. For example, if you want update only the card and PIN, you should specify [updateMask](#UpdateMask) as KEEP_USER_PHRASE | KEEP_USER_JOB_CODE | KEEP_USER_NAME | KEEP_USER_PHOTO | KEEP_USER_FINGER | KEEP_USER_FACE. If the [updateMask](#UpdateMask) is KEEP_NONE, it is works as [Enroll](#Enroll) with overwrite option.
-
-### UpdateMask
-```protobuf
-enum UpdateMask {
-  KEEP_NONE = 0x00;
-
-  KEEP_USER_PHRASE = 0x01;
-  KEEP_USER_JOB_CODE = 0x02;
-  KEEP_USER_NAME = 0x04;
-  KEEP_USER_PHOTO = 0x08;
-  KEEP_USER_PIN = 0x10;
-  KEEP_USER_CARD = 0x20;
-  KEEP_USER_FINGER = 0x40;
-  KEEP_USER_FACE = 0x80;
-
-  KEEP_ALL = 0xFF;
-}
-```
 
 ### Update
 
