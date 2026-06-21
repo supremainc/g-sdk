@@ -59,7 +59,7 @@ DNSServer
 : The IP address of a DNS server.
 
 serverURL
-: The URL of the device gateway.
+: The URL of the device gateway. serverUrl must be a valid URL string (e.g., https://example.com). Invalid or non-URL values may result in unexpected behavior.
 
 ```protobuf
 enum EthernetBaseband {
