@@ -139,7 +139,11 @@ Only supported by RGB-based visual face authentication devices. If the image fil
 
 ### Normalize
 
-Extract warped images from unwarped images. 
+Extract warped images from unwarped images.   
+PNG and JPG formats are supported. JPG is recommended. The maximum resolution for an unwarped image is 4000 pixels in both width and height. However, a resolution of 1920 pixels or less is recommended. The recommended file size is 10 MB or less.  
+This function detects the face location in the image provided by the user and generates a Warped Image suitable for authentication through post-processing. Therefore, please use a clear and high-quality image with the face directly facing the camera. If the original image is blurred or distorted, Warped Image generation may fail.
+Whether Warped Image generation succeeds depends on the resolution and size of the face area in the original image. The face area in the original image should be at least 224 × 224 pixels, and it is recommended to use an image where the total image width is at least 190% of the face width. If the face in the original image is too small or too large, Warped Image generation may fail.  
+If generation still fails even though the resolution and file size requirements are met, please adjust the image resolution or the face ratio so that the face area is included at an appropriate size, and then try again.
 
 | Request |
 
