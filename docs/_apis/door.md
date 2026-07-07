@@ -89,9 +89,11 @@ unconditionalLock
 
 forcedOpenActions
 : When the sensor detects the door is open by force, i.e., not by normal operations, the __FORCED_OPEN__ alarm will be generated. You can configure which actions should be triggered by this alarm. See [Action]({{'/api/action/' | relative_url}}#action) for the available actions.
+{: #forcedOpenActions }
 
 heldOpenActions
 : When the sensor detects that the door is open longer than the [heldOpenTimeout](#HeldOpenTimeout), the __HELD_OPEN__ alarm will be generated. You can configure which actions should be triggered by this alarm. See [Action]({{'/api/action/' | relative_url}}#action) for the available actions.
+{: #heldOpenActions }
 
 dualAuthScheduleID
 : If it is not 0, the dual authentication will be enabled for the specified schedule. For the dual authentication, two users should authenticate themselves to access the door. 
@@ -262,9 +264,31 @@ enum AlarmFlag {
   FORCED_OPEN = 0x01;
   HELD_OPEN = 0x02;
   APB_VIOLATION = 0x04;
+  LOCK_OVERRIDE = 0x08;
+  FIRE = 0x10;
 }
 ```
 {: #AlarmFlag }
+
+__alarmFlags__ is a bit mask. Multiple alarms can be active on a door at the same time.
+
+NO_ALARM
+: No alarm is active on the door.
+
+FORCED_OPEN
+: The door was opened by force, i.e., not by normal operations. The door sensor has to be configured to detect this alarm. See [forcedOpenActions](#forcedOpenActions).
+
+HELD_OPEN
+: The door has been kept open longer than [heldOpenTimeout](#HeldOpenTimeout). The door sensor has to be configured to detect this alarm. See [heldOpenActions](#heldOpenActions).
+
+APB_VIOLATION
+: An anti-passback violation occurred at the door.
+
+LOCK_OVERRIDE
+: The door is under a lock override state set by a lock override credential. See [Lock Override]({{'/api/card/' | relative_url}}#LockOverride).
+
+FIRE
+: A fire alarm is active on the door, e.g., triggered by a [Fire Alarm Zone]({{'/api/zone/fire' | relative_url}}).
 
 | Request |
 
