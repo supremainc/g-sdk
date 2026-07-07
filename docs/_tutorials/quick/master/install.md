@@ -111,6 +111,7 @@ master-gateway
 | -li    | show the license information | 
 | -la    | activate the license using a license key | 
 | -ld    | deactivate the license. After deactivation, you can use the license key on another computer |
+| -lr    | release the license when the master gateway receives SIGTERM/SIGINT |
 | -lco   | create an offline activation request using a license key. As for offline activation, please contact us on [the Suprema website](https://www.supremainc.com/) |
 | -lao   | activate the license using an offline activation response file |
 | -lat   | activate a trial license | 
