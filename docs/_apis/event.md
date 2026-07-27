@@ -40,8 +40,8 @@ eventCode
 
   | Category | Code | Value | Description |
   | -------- | ---- | ------| ----------- |
-  | Auth | BS2_EVENT_VERIFY_SUCCESS | 0x1000 | 1:1 authentication success | 
-  || BS2_EVENT_VERIFY_FAIL | 0x1100 | 1:1 authentication failure | 
+  | Auth | BS2_EVENT_VERIFY_SUCCESS | 0x1000 | 1:1 authentication success |
+  || BS2_EVENT_VERIFY_FAIL | 0x1100 | 1:1 authentication failure |
   || BS2_EVENT_VERIFY_DURESS | 0x1200 | 1:1 authentication success under duress |
   || BS2_EVENT_IDENTIFY_SUCCESS | 0x1300 | 1:N authentication success |
   || BS2_EVENT_IDENTIFY_FAIL | 0x1400 | 1:N authentication failure |
@@ -51,6 +51,10 @@ eventCode
   || BS2_EVENT_AUTH_FAILED | 0x1800 | unregistered credential |
   || BS2_EVENT_ACCESS_DENIED | 0x1900 | user without access privileges or violation of zone rules |
   || BS2_EVENT_FAKE_FINGER_DETECTED | 0x1A00 | fake finger detected |
+  || BS2_EVENT_BYPASS_SUCCESS | 0x1B00 | Access granted after checking mask or temperature |
+  || BS2_EVENT_BYPASS_FAIL | 0x1C00 | Access denied after checking mask or temperature |
+  || BS2_EVENT_ABNORMAL_TEMPERATURE_DETECTED | 0x1D00 | Abnormal temperature detected |
+  || BS2_EVENT_UNMASKED_FACE_DETECTED | 0x1E00 | No mask detected |
   | User | BS2_EVENT_USER_ENROLL_SUCCESS | 0x2000 | user enrollment success |
   || BS2_EVENT_USER_ENROLL_FAIL | 0x2100 | user enrollment failure |
   || BS2_EVENT_USER_UPDATE_SUCCESS | 0x2200 | user update success |
@@ -58,9 +62,13 @@ eventCode
   || BS2_EVENT_USER_DELETE_SUCCESS | 0x2400 | user delete success |
   || BS2_EVENT_USER_DELETE_FAIL | 0x2500 | user delete failure |
   || BS2_EVENT_USER_DELETE_ALL_SUCCESS | 0x2600 | delete all user success |
-  || BS2_EVENT_USER_ISSUE_AOC_SUCCESS | 0x2700 | issuance of an AOC card success | 
+  || BS2_EVENT_USER_ISSUE_AOC_SUCCESS | 0x2700 | issuance of an AOC card success |
   || BS2_EVENT_USER_DUPLICATE_CREDENTIAL | 0x2800 | duplicate credential |
+  || BS2_EVENT_USER_UPDATE_PARTIAL_SUCCESS | 0x2900 | User partial update success |
+  || BS2_EVENT_USER_UPDATE_PARTIAL_FAIL | 0x2A00 | User partial update failure |
+  || BS2_EVENT_USER_RELOADED | 0x2B00 | User reloaded |
   | Device | BS2_EVENT_DEVICE_SYSTEM_RESET | 0x3000 | system reset |
+  || BS2_EVENT_DEVICE_SYSTEM_ERROR_OPENGL | 0x3050 | OpenGL error |
   || BS2_EVENT_DEVICE_SYSTEM_STARTED | 0x3100 | system started |
   || BS2_EVENT_DEVICE_TIME_SET | 0x3200 | system time set |
   || BS2_EVENT_DEVICE_TIMEZONE_SET | 0x3201 | timezone changed |
@@ -69,13 +77,17 @@ eventCode
   || BS2_EVENT_DEVICE_LINK_DISCONNECTED | 0x3400 | LAN cable disconnected |
   || BS2_EVENT_DEVICE_DHCP_SUCCESS | 0x3500 | IP address acquired by DHCP |
   || BS2_EVENT_DEVICE_ADMIN_MENU | 0x3600 | enter administrator menu |
+  || BS2_EVENT_DEVICE_ADMIN_LOGIN_FAIL | 0x3601 | Administrator login failure |
+  || BS2_EVENT_DEVICE_ADMIN_LOGIN_FAIL_NOCREDENTIAL | 0x3602 | Administrator login failure - no credential |
   || BS2_EVENT_DEVICE_UI_LOCKED | 0x3700 | device locked |
   || BS2_EVENT_DEVICE_UI_UNLOCKED | 0x3800 | device unlocked |
   || BS2_EVENT_DEVICE_TCP_CONNECTED | 0x3B00 | TCP connected |
   || BS2_EVENT_DEVICE_TCP_DISCONNECTED | 0x3C00 | TCP disconnected |
+  || BS2_EVENT_DEVICE_RTSP_CONNECTED | 0x3B10 | RTSP connected |
+  || BS2_EVENT_DEVICE_RTSP_DISCONNECTED | 0x3C10 | RTSP disconnected |
   || BS2_EVENT_DEVICE_RS485_CONNECTED | 0x3D00 | RS485 connected |
   || BS2_EVENT_DEVICE_RS485_DISCONNECTED | 0x3E00 | RS485 disconnected |
-  || BS2_EVENT_DEVICE_INPUT_DETECTED | 0x3F00 | input signal detected |
+  || BS2_EVENT_DEVICE_IO_DETECTED | 0x3F00 | IO signal detected |
   || BS2_EVENT_DEVICE_TAMPER_ON | 0x4000 | tamper SW is on |
   || BS2_EVENT_DEVICE_TAMPER_OFF | 0x4100 | tamper SW is off |
   || BS2_EVENT_DEVICE_EVENT_LOG_CLEARED | 0x4200 | log records cleared |
@@ -85,8 +97,22 @@ eventCode
   || BS2_EVENT_DEVICE_DATABASE_RESET | 0x4501 | database initialized |
   || BS2_EVENT_DEVICE_FACTORY_RESET | 0x4502 | factory reset |
   || BS2_EVENT_DEVICE_CONFIG_RESET_EX | 0x4503 | system configurations initialized (excluding network) |
+  || BS2_EVENT_DEVICE_FACTORY_RESET_WITHOUT_ETHERNET | 0x4504 | Factory reset - excluding network |
   || BS2_EVENT_SUPERVISED_INPUT_SHORT | 0x4600 | short circuit of a supervised input detected |
   || BS2_EVENT_SUPERVISED_INPUT_OPEN | 0x4700 | disconnection of a supervised input detected |
+  || BS2_EVENT_DEVICE_AC_FAIL | 0x4800 | Access control failure |
+  || BS2_EVENT_DEVICE_AC_SUCCESS | 0x4900 | Access control success |
+  || BS2_EVENT_EXIT_BUTTON | 0x4A00 | Exit button |
+  || BS2_EVENT_SIMULATED_EXIT_BUTTON | 0x4A01 | Simulated exit button |
+  || BS2_EVENT_OPERATOR_OPEN | 0x4B00 | Operator open |
+  || BS2_EVENT_VOIP_OPEN | 0x4C00 | Interphone open |
+  || BS2_EVENT_LICENSE_ENABLE_SUCCESS | 0x4D00 | Device license enable success |
+  || BS2_EVENT_LICENSE_ENABLE_FAIL | 0x4D01 | Device license enable failure |
+  || BS2_EVENT_LICENSE_DISABLE_SUCCESS | 0x4D02 | Device license disable success |
+  || BS2_EVENT_LICENSE_DISABLE_FAIL | 0x4D03 | Device license disable failure |
+  || BS2_EVENT_LICENSE_EXPIRED | 0x4D04 | Device license expired |
+  || BS2_EVENT_RELAY_ACTIVATE_REQUESTED_BY_OPERATOR | 0x4F10 | Relay activate requested by operator |
+  || BS2_EVENT_RELAY_DEACTIVATE_REQUESTED_BY_OPERATOR | 0x4F20 | Relay deactivate requested by operator |
   | Door | BS2_EVENT_DOOR_UNLOCKED | 0x5000 | door unlocked |
   || BS2_EVENT_DOOR_LOCKED | 0x5100 | door locked |
   || BS2_EVENT_DOOR_OPENED | 0x5200 | door open detected by sensor |
@@ -94,14 +120,31 @@ eventCode
   || BS2_EVENT_DOOR_FORCED_OPEN | 0x5400 | door forced open |
   || BS2_EVENT_DOOR_HELD_OPEN | 0x5500 | door held open too long |
   || BS2_EVENT_DOOR_FORCED_OPEN_ALARM | 0x5600 | forced open alarm |
+  || BS2_EVENT_DOOR_OPEN_LOCKOVERRIDE_ALARM | 0x5601 | Door open (lock override) |
   || BS2_EVENT_DOOR_FORCED_OPEN_ALARM_CLEAR | 0x5700 | forced open alarm cleared |
-  || BS2_EVENT_DOOR_HELD_OPEN_ALARM | 0x5800 | held open alarm | 
-  || BS2_EVENT_DOOR_HELD_OPEN_ALARM_CLEAR | 0x5900 | held open alarm cleared | 
+  || BS2_EVENT_DOOR_OPEN_LOCKOVERRIDE_ALARM_CLEAR | 0x5702 | Door open (lock override) cleared |
+  || BS2_EVENT_DOOR_HELD_OPEN_ALARM | 0x5800 | held open alarm |
+  || BS2_EVENT_DOOR_HELD_OPEN_ALARM_CLEAR | 0x5900 | held open alarm cleared |
   || BS2_EVENT_DOOR_APB_ALARM | 0x5A00 | anti-passback alarm on a door |
   || BS2_EVENT_DOOR_APB_ALARM_CLEAR | 0x5B00 | anti-passback alarm on a door cleared |
   || BS2_EVENT_DOOR_RELEASE | 0x5C00 | door status reset |
   || BS2_EVENT_DOOR_LOCK | 0x5D00 | lock door |
+  || BS2_EVENT_DOOR_LOCK_REQUEST_BY_SCHEDULE | 0x5D01 | Door lock requested by schedule |
+  || BS2_EVENT_DOOR_LOCK_REQUEST_BY_FIRE_ALARM | 0x5D02 | Door lock requested by fire alarm |
+  || BS2_EVENT_DOOR_LOCK_REQUEST_BY_OPERATOR | 0x5D04 | Door lock requested by operator |
   || BS2_EVENT_DOOR_UNLOCK | 0x5E00 | unlock door |
+  || BS2_EVENT_DOOR_UNLOCK_REQUEST_BY_SCHEDULE | 0x5E01 | Door unlock requested by schedule |
+  || BS2_EVENT_DOOR_UNLOCK_REQUEST_BY_FIRE_ALARM | 0x5E02 | Door unlock requested by emergency |
+  || BS2_EVENT_DOOR_UNLOCK_REQUEST_BY_OPERATOR | 0x5E04 | Door unlock requested by operator |
+  || BS2_EVENT_DOOR_UNLOCK_REQUEST_BY_LOCKOVERRIDE | 0x5E05 | Door unlock requested by lock override |
+  || BS2_EVENT_DOOR_SEND_UNLOCK_TIMER | 0x5F00 | Send unlock by timer |
+  || BS2_EVENT_DOOR_SEND_UNLOCK | 0x5F01 | Send unlock command |
+  || BS2_EVENT_DOOR_SEND_LOCK | 0x5F02 | Send lock command |
+  || BS2_EVENT_DOOR_SEND_RELEASE | 0x5F03 | Send door release command |
+  || BS2_EVENT_DOOR_FIRE_BUTTON_INPUT | 0x5F04 | Fire button input detected |
+  || BS2_EVENT_DOOR_FIRE_ALARM | 0x5F05 | Lock override alarm activated |
+  || BS2_EVENT_DOOR_FIRE_ALARM_CLEAR | 0x5F06 | Lock override alarm cleared |
+  || BS2_EVENT_DOOR_NORMALIZED | 0x5F07 | Door status normalized |
   | Zone | BS2_EVENT_ZONE_APB_VIOLATION | 0x6000 | APB zone violated |
   || BS2_EVENT_ZONE_APB_ALARM | 0x6100 | APB zone alarm |
   || BS2_EVENT_ZONE_APB_ALARM_CLEAR | 0x6200 | APB zone alarm cleared |
@@ -129,6 +172,30 @@ eventCode
   || BS2_EVENT_ZONE_INTRUSION_ALARM_CLEAR | 0x9900 | intrusion alarm  cleared |
   || BS2_EVENT_ZONE_INTRUSION_ALARM_ARM_DENIED | 0x9A00 | arming intrusion zone denied |
   || BS2_EVENT_ZONE_INTRUSION_ALARM_DISARM_DENIED | 0x9B00 | disarming intrusion zone denied |
+  || BS2_EVENT_ZONE_INTERLOCK_VIOLATION | 0xA000 | Interlock zone violated |
+  || BS2_EVENT_ZONE_INTERLOCK_ALARM | 0xA100 | Interlock alarm |
+  || BS2_EVENT_ZONE_INTERLOCK_ALARM_DOOR_OPEN_DENIED | 0xA200 | Interlock alarm(door open) |
+  || BS2_EVENT_ZONE_INTERLOCK_ALARM_INDOOR_DENIED | 0xA300 | Interlock alarm(man in door) |
+  || BS2_EVENT_ZONE_INTERLOCK_ALARM_CLEAR | 0xA400 | Interlock alarm cleared |
+  || BS2_EVENT_ZONE_AUTH_LIMIT_VIOLATION | 0xA500 | Authentication limit zone violated |
+  || BS2_EVENT_GLOBAL_AUTH_LIMIT_EXCUSED | 0xA600 | Global Authentication limit excused |
+  || BS2_EVENT_ZONE_OCCUPANCY_LIMIT_VIOLATION | 0xA700 | Occupancy limit zone violated |
+  || BS2_EVENT_GLOBAL_OCCUPANCY_LIMIT_EXCUSED | 0xA800 | Global Occupancy limit excused |
+  || BS2_EVENT_ZONE_OCCUPANCY_LIMIT_ALARM | 0xA900 | Occupancy limit zone alarm |
+  || BS2_EVENT_ZONE_OCCUPANCY_LIMIT_ALARM_CLEAR | 0xAA00 | Occupancy limit zone alarm cleared |
+  || BS2_EVENT_ZONE_MUSTER_VIOLATION | 0xB000 | Muster zone violated |
+  || BS2_EVENT_ZONE_MUSTER_ALARM | 0xB100 | Muster zone alarm |
+  || BS2_EVENT_ZONE_MUSTER_ALARM_CLEAR | 0xB200 | Muster zone alarm cleared |
+  || BS2_EVENT_ZONE_LIFT_LOCK_VIOLATION | 0xB500 | Lift lock zone violated |
+  || BS2_EVENT_ZONE_LIFT_LOCK_START | 0xB600 | Start of lift lock schedule |
+  || BS2_EVENT_ZONE_LIFT_LOCK_END | 0xB700 | End of lift lock schedule |
+  || BS2_EVENT_ZONE_LIFT_UNLOCK_START | 0xB800 | Start of lift unlock schedule |
+  || BS2_EVENT_ZONE_LIFT_UNLOCK_END | 0xB900 | End of lift unlock schedule |
+  || BS2_EVENT_ZONE_LIFT_LOCK_ALARM | 0xBA00 | Lift lock zone alarm |
+  || BS2_EVENT_ZONE_LIFT_LOCK_ALARM_CLEAR | 0xBB00 | Lift lock zone alarm cleared |
+  || BS2_EVENT_DEVICE_USER_SYNC_TO_SERVER_FAIL | 0xC000 | User sync to server failure |
+  || BS2_EVENT_BREAK_GLASS | 0xC100 | Break glass |
+  || BS2_EVENT_MEMORY_FULL_MIGRATION | 0xC200 | Memory full migration |
   | Lift | BS2_EVENT_FLOOR_ACTIVATED | 0x7000 | floor activated |
   || BS2_EVENT_FLOOR_DEACTIVATED | 0x7100 | floor deactivated |
   || BS2_EVENT_FLOOR_RELEASE | 0x7200 | floor status reset |
@@ -139,6 +206,9 @@ eventCode
   || BS2_EVENT_LIFT_ALARM_CLEAR | 0x7700 | lift alarm cleared |
   || BS2_EVENT_ALL_FLOOR_ACTIVATED | 0x7800 | all floor activated |
   || BS2_EVENT_ALL_FLOOR_DEACTIVATED | 0x7900 | all floor deactivated |
+  || BS2_EVENT_RELAY_ACTION_ON | 0xC300 | Relay action switch-on |
+  || BS2_EVENT_RELAY_ACTION_OFF | 0xC400 | Relay action switch-off |
+  || BS2_EVENT_RELAY_ACTION_KEEP | 0xC500 | Relay action keep signal |
   {: #EventCode}
 
 subCode
@@ -165,6 +235,23 @@ subCode
   || BS2_SUB_EVENT_VERIFY_CARD_FINGER_FACE | 0x11 | card + fingerprint + face |
   || BS2_SUB_EVENT_VERIFY_ID_FACE_FINGER | 0x12 | ID + face + fingerprint |
   || BS2_SUB_EVENT_VERIFY_ID_FINGER_FACE | 0x13 | ID + fingerprint + face |
+  || BS2_SUB_EVENT_VERIFY_MOBLIE_CARD | 0x16 | mobile |
+  || BS2_SUB_EVENT_VERIFY_MOBILE_CARD_PIN | 0x17 | mobile + PIN |
+  || BS2_SUB_EVENT_VERIFY_MOBILE_CARD_FINGER | 0x18 | mobile + finger |
+  || BS2_SUB_EVENT_VERIFY_MOBILE_CARD_FINGER_PIN | 0x19 | mobile + finger + PIN |
+  || BS2_SUB_EVENT_VERIFY_MOBILE_CARD_FACE | 0x1A | mobile + face |
+  || BS2_SUB_EVENT_VERIFY_MOBILE_CARD_FACE_PIN | 0x1B | mobile + face + PIN |
+  || BS2_SUB_EVENT_VERIFY_MOBILE_CARD_FACE_FINGER | 0x20 | mobile + face + finger |
+  || BS2_SUB_EVENT_VERIFY_MOBILE_CARD_FINGER_FACE | 0x21 | mobile + finger + face |
+  || BS2_SUB_EVENT_VERIFY_QR | 0x25 | QR |
+  || BS2_SUB_EVENT_VERIFY_QR_PIN | 0x26 | QR + PIN |
+  || BS2_SUB_EVENT_VERIFY_QR_FINGER | 0x27 | QR + finger |
+  || BS2_SUB_EVENT_VERIFY_QR_FINGER_PIN | 0x28 | QR + finger + PIN |
+  || BS2_SUB_EVENT_VERIFY_QR_FACE | 0x29 | QR + face |
+  || BS2_SUB_EVENT_VERIFY_QR_FACE_PIN | 0x2A | QR + face + PIN |
+  || BS2_SUB_EVENT_VERIFY_QR_FACE_FINGER | 0x2B | QR + face + finger |
+  || BS2_SUB_EVENT_VERIFY_QR_FINGER_FACE | 0x2C | QR + finger + face |
+  || BS2_SUB_EVENT_VERIFY_LOCKOVERRIDE_CARD | 0x31 | Lock override |
   | Identify | BS2_SUB_EVENT_IDENTIFY_FINGER | 0x01 | fingerprint only |
   || BS2_SUB_EVENT_IDENTIFY_FINGER_PIN | 0x02 | fingerprint + PIN |
   || BS2_SUB_EVENT_IDENTIFY_FACE | 0x03 | face only |
@@ -182,9 +269,18 @@ subCode
   || BS2_SUB_EVENT_CREDENTIAL_FACE | 0x05 | invalid face |
   || BS2_SUB_EVENT_CREDENTIAL_AOC_PIN | 0x06 | invalid AOC PIN |
   || BS2_SUB_EVENT_CREDENTIAL_AOC_FINGER | 0x07 | invalid AOC fingerprint |
+  || BS2_SUB_EVENT_CREDENTIAL_MOBILE_CARD | 0x08 | mobile |
+  || BS2_SUB_EVENT_NON_NUMERIC_QR | 0x09 | None numeric QR |
+  || BS2_SUB_EVENT_NON_PRINTABLE_QR | 0x0A | None printable QR |
+  || BS2_SUB_EVENT_TOO_LONG_QR | 0x0B | Too long QR |
+  || BS2_SUB_EVENT_CREDENTIAL_QR | 0x0C | QR |
+  || BS2_SUB_EVENT_CREDENTIAL_ACCESS_PIN | 0x0D | Access PIN |
   | Auth Fail | BS2_SUB_EVENT_AUTH_FAIL_INVALID_AUTH_MODE | 0x01 | invalid authentication mode |
   || BS2_SUB_EVENT_AUTH_FAIL_INVALID_CREDENTIAL | 0x02 | invalid credential |
   || BS2_SUB_EVENT_AUTH_FAIL_TIMEOUT | 0x03 | authentication timeout |
+  || BS2_SUB_EVENT_AUTH_FAIL_MATCHING_REFUSAL | 0x04 | server matching refused |
+  || BS2_SUB_EVENT_AUTH_FAIL_DOOR_LOCKED | 0x06 | Door locked |
+  || BS2_SUB_EVENT_AUTH_FAIL_EV2SM_REQUIRED | 0x07 | EV2 Secure Messaging required for the DESFire card |
   | Access Denied | BS2_SUB_EVENT_ACCESS_DENIED_ACCESS_GROUP | 0x01 | invalid access group |
   || BS2_SUB_EVENT_ACCESS_DENIED_DISABLED | 0x02 | disabled user |
   || BS2_SUB_EVENT_ACCESS_DENIED_EXPIRED | 0x03 | expired user |
@@ -192,13 +288,61 @@ subCode
   || BS2_SUB_EVENT_ACCESS_DENIED_APB | 0x05 | denied by APB rule |
   || BS2_SUB_EVENT_ACCESS_DENIED_TIMED_APB | 0x06 | denied by timed APB rule |
   || BS2_SUB_EVENT_ACCESS_DENIED_SCHEDULED_LOCK | 0x07 | denied by scheduled lock zone |
+  || BS2_SUB_EVENT_ACCESS_EXCUSED_APB | 0x08 | APB violation excused |
+  || BS2_SUB_EVENT_ACCESS_EXCUSED_TIMED_APB | 0x09 | timed APB violation excused |
   || BS2_SUB_EVENT_ACCESS_DENIED_FACE_DETECTION | 0x0A | face not detected |
+  || BS2_SUB_EVENT_ACCESS_DENIED_CAMERA_CAPTURE | 0x0B | image not captured |
   || BS2_SUB_EVENT_ACCESS_DENIED_FAKE_FINGER | 0x0C | fake finger detected |
-  || BS2_SUB_EVENT_ACCESS_DENIED_INTRUSION_ALARM | 0x0E | denied by intrusion alarm zone |
+  || BS2_SUB_EVENT_ACCESS_DENIED_DEVICE_ZONE_ENTRANCE_LIMIT | 0x0D | entrance limit |
   || BS2_SUB_EVENT_ACCESS_DENIED_INTRUSION_ALARM | 0x0E | denied by intrusion alarm zone |
   || BS2_SUB_EVENT_ACCESS_DENIED_INTERLOCK | 0x0F | denied by interlock zone |
+  || BS2_SUB_EVENT_ACCESS_EXCUSED_AUTH_LIMIT | 0x10 | authentication limit excused |
+  || BS2_SUB_EVENT_ACCESS_DENIED_AUTH_LIMIT | 0x11 | authentication limit |
+  || BS2_SUB_EVENT_ACCESS_DENIED_ANTI_TAILGATE | 0x12 | anti tailgate violation |
   || BS2_SUB_EVENT_ACCESS_DENIED_HIGH_TEMPERATURE | 0x13 | too high temperature |
+  || BS2_SUB_EVENT_ACCESS_DENIED_NO_TEMPERATURE | 0x14 | temperature not detected |
   || BS2_SUB_EVENT_ACCESS_DENIED_UNMASKED_FACE | 0x15 | no mask |
+  || BS2_SUB_EVENT_ACCESS_DENIED_OCCUPANCY_LIMIT | 0x16 | Occupancy limit |
+  || BS2_SUB_EVENT_ACCESS_DENIED_DOOR_LOCKED | 0x17 | Door locked |
+  || BS2_SUB_EVENT_ACCESS_DENIED_DISABLED_ACCESS_GROUP | 0x19 | disabled access group |
+  || BS2_SUB_EVENT_ACCESS_DENIED_DISABLED_ACCESS_LEVEL | 0x1A | disabled access level |
+  || BS2_SUB_EVENT_ACCESS_DENIED_DISABLED_FLOOR_LEVEL | 0x1B | disabled floor level |
+  | Bypass | BS2_SUB_EVENT_BYPASS_THERMAL | 0x01 | temperature |
+  || BS2_SUB_EVENT_BYPASS_MASK | 0x02 | mask |
+  || BS2_SUB_EVENT_BYPASS_MASK_THERMAL | 0x03 | mask & temperature |
+  | Bypass Fail | BS2_SUB_EVENT_HIGH_TEMPERATURE | 0x00 | high temperature |
+  || BS2_SUB_EVENT_NO_TEMPERATURE | 0x01 | temperature not detected |
+  || BS2_SUB_EVENT_UNMASKED_FACE | 0x02 | mask not detected |
+  | Door Flag | BS2_SUB_EVENT_DOOR_FLAG_SCHEDULE | 0x01 | schedule |
+  || BS2_SUB_EVENT_DOOR_FLAG_EMERGENCY | 0x02 | emergency |
+  || BS2_SUB_EVENT_DOOR_FLAG_OPERATOR | 0x04 | operator |
+  || BS2_SUB_EVENT_DOOR_FLAG_LOCKOVERRIDE | 0x05 | lock override |
+  | APB | BS2_SUB_EVENT_ZONE_HARD_APB | 0x01 | access denied |
+  || BS2_SUB_EVENT_ZONE_SOFT_APB | 0x02 | access allowed |
+  | Floor Flag | BS2_SUB_EVENT_FLOOR_FLAG_SCHEDULE | 0x01 | schedule |
+  || BS2_SUB_EVENT_FLOOR_FLAG_EMERGENCY | 0x02 | emergency |
+  || BS2_SUB_EVENT_FLOOR_FLAG_OPERATOR | 0x04 | operator |
+  || BS2_SUB_EVENT_FLOOR_FLAG_ACTION | 0x08 | action |
+  | Update Fail | BS2_SUB_EVENT_UPDATE_FAIL_INVALID_FACE | 0x01 | invalid face |
+  || BS2_SUB_EVENT_UPDATE_FAIL_MISMATCHED_FORMAT | 0x02 | mismatched format |
+  || BS2_SUB_EVENT_UPDATE_FAIL_FULL_CREDENTIAL | 0x03 | full credential |
+  || BS2_SUB_EVENT_UPDATE_FAIL_INVALID_USER | 0x04 | invalid user |
+  || BS2_SUB_EVENT_UPDATE_FAIL_INTERNAL_ERROR | 0x09 | internal error |
+  | By Where | BS2_SUB_EVENT_USER_BY_SERVER | 0x01 | by server |
+  || BS2_SUB_EVENT_USER_BY_DEVICE | 0x02 | by device |
+  | Device IO | BS2_SUB_EVENT_DEVICE_IO_INPUT_ON | 0x00 | Input on |
+  || BS2_SUB_EVENT_DEVICE_IO_INPUT_OFF | 0x01 | Input off |
+  || BS2_SUB_EVENT_DEVICE_IO_OUTPUT_ON | 0x10 | Output on |
+  || BS2_SUB_EVENT_DEVICE_IO_OUTPUT_OFF | 0x11 | Output off |
+  | Relay Action | BS2_SUB_EVENT_RELAY_ACTION_INPUT_OFF | 0x00 | Input off |
+  || BS2_SUB_EVENT_RELAY_ACTION_INPUT_ON | 0x01 | Input on |
+  || BS2_SUB_EVENT_RELAY_ACTION_SUPERVISED_INPUT_SHORT | 0x02 | Supervised input short |
+  || BS2_SUB_EVENT_RELAY_ACTION_SUPERVISED_INPUT_OPEN | 0x03 | Supervised input open |
+  || BS2_SUB_EVENT_RELAY_ACTION_TAMPER_ON | 0x05 | Tamper on |
+  || BS2_SUB_EVENT_RELAY_ACTION_TAMPER_OFF | 0x06 | Tamper off |
+  || BS2_SUB_EVENT_RELAY_ACTION_RS485_CONNECTION | 0x07 | RS485 connected |
+  || BS2_SUB_EVENT_RELAY_ACTION_RS485_DISCONNECTION | 0x08 | RS485 disconnected |
+  || BS2_SUB_EVENT_RELAY_ACTION_REQ_BY_OPERATOR | 0x09 | Requested by operator |
    {: #SubCode}
 
 TNAKey
