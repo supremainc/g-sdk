@@ -389,6 +389,7 @@ message DESFireConfig {
   uint32 fileID;
   DESFireEncryptionType encryptionType;
   DESFireOperationMode operationMode;
+  DESFireLockEV2SM lockEV2SM;
 }
 ```
 {: #DESFireConfig }
@@ -426,6 +427,17 @@ enum DESFireOperationMode {
 }
 ```
 {: #DESFireOperationMode }
+
+[lockEV2SM](#DESFireLockEV2SM)
+: Restricts the DESFire card to EV2 Secure Messaging. With __LOCK_EV2SM_DEFAULT__, the device follows the card's default messaging mode. With __LOCK_EV2SM_ONLY__, only EV2 Secure Messaging is allowed. Available only on devices that support DESFire EV2 Secure Messaging.
+
+```protobuf
+enum DESFireLockEV2SM {
+  LOCK_EV2SM_DEFAULT = 0;
+  LOCK_EV2SM_ONLY = 1;
+}
+```
+{: #DESFireLockEV2SM }
 
 ```protobuf
 message SEOSConfig {
