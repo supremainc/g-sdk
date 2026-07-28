@@ -51,6 +51,8 @@ api:
         url: /api/connectMaster/
       - title: Device
         url: /api/device/
+      - title: DeviceNotify
+        url: /api/deviceNotify/
       - title: Display
         url: /api/display/
       - title: Door
