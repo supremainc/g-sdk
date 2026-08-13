@@ -69,7 +69,7 @@ The gateway consists of two servers, the device server and the gRPC server. The 
 ```json
 {
   "rpc_server": {
-    "ip": "localhost",
+    "ip": "0.0.0.0",
     "port": 4000,
     "max_recv_size": 75497472
   }
@@ -78,7 +78,7 @@ The gateway consists of two servers, the device server and the gRPC server. The 
 
 | Name | Description |
 | -----| ----------- |
-| ip  | The address of the gRPC server. If it is "", it means the same as INADDR_ANY |
+| ip  | __[+ V1.9.2]__ The network interface the gRPC server binds to. `""` or `"0.0.0.0"` listens on all interfaces (the default), so Client SDKs running on other hosts can connect. Set a specific NIC address (e.g. `"192.168.0.2"`) or `"127.0.0.1"` to restrict which interface accepts connections. In earlier versions this value was ignored and the server always listened on all interfaces. All gRPC traffic is protected by SSL and certificate verification regardless of this setting |
 | port | The port of the gRPC server. The default is 4000. Since all communication with gRPC clients use SSL, there is no separate SSL port |
 | max_recv_size | The largest size of gRPC packet in bytes. If you are to use [the UpgradeFirmware API]({{'/api/device/' | relative_url}}#upgradefirmware), it should be larger than the size of the firmware file | 
 
