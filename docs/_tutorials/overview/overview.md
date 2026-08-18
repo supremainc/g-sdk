@@ -42,3 +42,14 @@ G-SDK consists of the device gateway and the client libraries. The device gatewa
 The master gateway makes it easier to handle thousands of devices across multiple sites. It is supported in V1.1 or later.
 
   ![Master Gateway]({{'/assets/images/master.PNG' | relative_url}})  
+
+## Security and CRA compliance
+
+Every G-SDK release is packaged with the security evidence you need to support your own obligations under the EU Cyber Resilience Act (CRA):
+
+* **SBOM** — a CycloneDX Software Bill of Materials for each component (device gateway, master gateway and every Client SDK language).
+* **Vulnerability report** — a Grype scan of each SBOM; releases ship with zero known matches.
+* **Security policy** — `SECURITY.md`, describing how to report a vulnerability and the support scope.
+* **Integrity** — a `SHA256SUMS.txt` checksum for every archive so you can verify what you received.
+
+These files are included in the release package from the [Download Center]({{ site.last_ver }}).
