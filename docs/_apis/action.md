@@ -306,7 +306,7 @@ offDuration
 delay
 : The starting delay of the signal in milliseconds. 
 
-__Playing a sound: SoundAction vs. BuzzerAction__
+__※ Playing a sound: SoundAction vs. BuzzerAction__
 
 To make a device emit a sound, you have to choose between [SoundAction](#SoundAction) and [BuzzerAction](#BuzzerAction) depending on the device type. Station series devices, which have a speaker, use [SoundAction](#SoundAction) to play a sound file. Non-Station series devices, which have only a buzzer, use [BuzzerAction](#BuzzerAction) to play a buzzer tone. Using the wrong action for a device type will have no effect.
 
