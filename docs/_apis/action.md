@@ -331,7 +331,7 @@ count
 : The index of the sound to be played. 
 
 delay
-: The starting delay of the sound in milliseconds. 
+: __[Deprecated]__ The starting delay of the sound in milliseconds. This field is no longer referenced by the device, so any value set here is ignored.
 
 ```protobuf
 message LEDAction {
