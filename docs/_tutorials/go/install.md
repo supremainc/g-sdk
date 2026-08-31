@@ -4,7 +4,7 @@ title: "Go Installation"
 
 ## Prerequisites
 
-* Go version 1.6 or higher
+* Go version 1.25 or higher
 * Install gRPC
    ```
    go get -u google.golang.org/grpc

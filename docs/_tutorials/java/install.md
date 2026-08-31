@@ -4,7 +4,7 @@ title: "Java Installation"
 
 ## Prerequisites
 
-* JDK 7 or higher
+* JDK 8 or higher
 * [Gradle](https://gradle.org/)
 
 ## Download

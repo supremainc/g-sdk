@@ -4,7 +4,7 @@ title: "C++ Installation"
 
 ## Prerequisites
 
-* [CMake](https://cmake.org/) V3.13 or higher
+* [CMake](https://cmake.org/) V3.16 or higher
 
 ## Download
 

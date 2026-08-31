@@ -4,7 +4,7 @@ title: "Swift Installation"
 
 ## Prerequisites
 
-* Swift version 5.2 or higher
+* Swift version 5.8 or higher
 * Xcode 11 or later
 
 ## Swift Library

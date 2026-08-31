@@ -4,7 +4,7 @@ title: "C# Installation"
 
 ## Prerequisites
 
-* [.NET Core](https://dotnet.microsoft.com/learn/dotnet/hello-world-tutorial/intro)
+* [.NET](https://dotnet.microsoft.com/) 8.0 or higher (the bundled examples target .NET 10.0)
 * [grpc-dotnet](https://grpc.io/docs/quickstart/csharp-dotnet/)
 
 ## Download

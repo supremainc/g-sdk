@@ -4,7 +4,7 @@ title: "Node.js Installation"
 
 ## Prerequisites
 
-* Node.js 4.0.0 or higher
+* Node.js 18 or higher
 * __npm__
 * Install gRPC
    ```
