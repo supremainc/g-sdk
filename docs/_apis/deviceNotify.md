@@ -3,7 +3,7 @@ title: "Device Notify API"
 toc_label: "Device Notify"
 ---
 
-The Device Notify API streams notifications that devices push to the server on their own (the __BS2_CMD_NOTIFY_*__ commands), as opposed to responses to requests from the server. It currently delivers QR/barcode scans; other device-initiated notifications can be added in later releases.
+The Device Notify API streams notifications that devices push to the server on their own (the `BS2_CMD_NOTIFY_*` commands), as opposed to responses to requests from the server. It currently delivers QR/barcode scans; other device-initiated notifications can be added in later releases.
 
 ## QRScan
 
