@@ -21,7 +21,7 @@ message WiegandFormat {
 {: #WiegandFormat}
 
 formatID
-: The index of the format, which can be used for managing multiple formats in your applications.
+: Identifies the format on the device. The device keeps a table of format slots and looks each one up by this ID, so it has to be unique within __formats__ and within __slaveFormats__. Reusing the same ID across __formats__, __slaveFormats__ and __CSNFormat__ is how you apply one format to more than one of them: they will share a single slot on the device. Use 1 ~ 15, and do not use 0.
 
 length
 : The bit length of the format. The maximum is 256 bit.
@@ -107,7 +107,7 @@ format := &wiegandSvc.WiegandFormat{
 
 ## Config
 
-Up to 16 Wiegand formats can be configured for a device. In other words, the total number of __formats__, __slaveFormats__, and __CSNFormat__ should not exceed 16. 
+Up to 15 Wiegand formats can be configured for a device. In other words, the number of distinct __formatID__ values across __formats__, __slaveFormats__, and __CSNFormat__ should not exceed 15. Formats that share a __formatID__ count once. 
 
 ```protobuf
 message WiegandConfig {
@@ -150,7 +150,7 @@ slaveFormats
 : The Wiegand formats to be applied to its slave devices.
 
 CSNFormat
-: The Wiegand format to be applied with [CARD_TYPE_CSN]({{'/api/card/' | relative_url}}#Type).
+: The Wiegand format to be applied with [CARD_TYPE_CSN]({{'/api/card/' | relative_url}}#Type). The device ignores it until you also enable [CardConfig.useWiegandFormat]({{'/api/card/' | relative_url}}#CardConfig) using [Card.SetConfig]({{'/api/card/' | relative_url}}#setconfig), which is a separate call.
 
 [useWiegandUserID](#WiegandOutType)
 : 
