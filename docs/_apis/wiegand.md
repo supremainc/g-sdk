@@ -5,6 +5,9 @@ toc_label: "Wiegand"
 
 To interface with 3rd party readers or controllers, you have to configure the [WiegandConfig](#WiegandConfig) correctly. 
 
+A device handles two separate paths, and each has its own list of formats. The signals arriving at its Wiegand input port, from a wired slave reader or a 3rd party controller, are decoded with [slaveFormats](#WiegandConfig). The cards it reads with its own reader are decoded with [formats](#WiegandConfig). Configuring Wiegand input means filling in __slaveFormats__.
+{: .notice--warning}
+
 For the general questions about Wiegand configuration, refer to the [FAQ](https://support.supremainc.com/en/support/solutions/articles/24000027804--biostar-2-wiegand-configuration-faq). 
 {: .notice--info}
 
@@ -144,10 +147,11 @@ outPulseInterval
 : The interval between two pulses in microseconds. 
 
 formats
-: The Wiegand formats to be applied to the device itself.
+: The Wiegand formats for the cards that the device reads with its own reader. They are not used for the signals arriving at its Wiegand input port.
 
 slaveFormats
-: The Wiegand formats to be applied to its slave devices.
+: The Wiegand formats for the signals arriving at the Wiegand input port of the device, which is where a slave reader or a 3rd party controller is wired. **This is the field to set when you configure Wiegand input**, and it is only meaningful while __mode__ is WIEGAND_IN_ONLY or WIEGAND_IN_OUT.
+: To accept the same format on both paths, put it in __formats__ and __slaveFormats__ with the same __formatID__ so that they share one slot on the device.
 
 CSNFormat
 : The Wiegand format to be applied with [CARD_TYPE_CSN]({{'/api/card/' | relative_url}}#Type). The device ignores it until you also enable [CardConfig.useWiegandFormat]({{'/api/card/' | relative_url}}#CardConfig) using [Card.SetConfig]({{'/api/card/' | relative_url}}#setconfig), which is a separate call.
@@ -165,13 +169,13 @@ enum WiegandMode {
 {: #WiegandMode}
 
 WIEGAND_IN_ONLY
-: The port will be used for receiving Wiegand input. 
+: The port will be used for receiving Wiegand input. The incoming signals are decoded with __slaveFormats__.
 
 WIEGAND_OUT_ONLY
-: The port will be used for sending Wiegand output.
+: The port will be used for sending Wiegand output. __slaveFormats__ is not used in this mode.
 
 WIEGAND_IN_OUT
-: The port will be used both for receiving and sending Wiegand signals. 
+: The port will be used both for receiving and sending Wiegand signals. The incoming ones are decoded with __slaveFormats__.
 
 
 ```protobuf
