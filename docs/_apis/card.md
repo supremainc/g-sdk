@@ -279,7 +279,7 @@ message CardConfig {
 : The byte ordering of the data stored on the card. The default is __MSB__.
 
 useWiegandFormat
-: If true, use the [Wiegand format]({{'/api/wiegand/' | relative_url}}#WiegandFormat) to decode the card ID data.
+: If true, use the [Wiegand format]({{'/api/wiegand/' | relative_url}}#WiegandFormat) to decode the card ID data. This is what activates [WiegandConfig.CSNFormat]({{'/api/wiegand/' | relative_url}}#WiegandConfig): setting that format alone has no effect until this flag is enabled, since the two live in different configurations and are written by separate calls.
 
 [dataType](#CardDataType)
 : The encoding type of the data stored on the card. The default is __DATA_BINARY__.
