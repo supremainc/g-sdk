@@ -27,12 +27,14 @@ message DisplayConfig {
   bool useUserPhrase;
   bool queryUserPhrase;
 
-  bool useScreenSaver;
+  bool useScreenSaver; // deprecated, use standbyType
   ShowOSDPResult showOSDPResult;
 
   ShowOptionUserInfo showOptionUserName;
   ShowOptionUserInfo showOptionUserId;
   KeypadType keypadType;
+
+  StandbyType standbyType;
 }
 ```
 {: #DisplayConfig }
@@ -77,7 +79,7 @@ queryUserPhrase
 : If __useUserPhrase__ is true, ask the device gateway of the phrase to be displayed. Refer to [Server API]({{'/api/server/' | relative_url}}) for details.
 
 useScreenSaver
-: If true, the screen saver will be used.
+: If true, the screen saver will be used. Deprecated since 1.10.0: use __standbyType__ instead, which also covers the home screen and video. Devices that support __standbyType__ follow it rather than this flag.
 
 [showOSDPResult](#ShowOSDPResult)
 : [+ 1.7.0] In environments where Suprema devices are connected as peripheral devices to Intelligent Slaves or third-party controllers, this option allows authentication results to be displayed on the device screen.
@@ -107,6 +109,16 @@ useScreenSaver
 | --------- | ----------- |
 | BS2_KEYPAD_TYPE_SCRAMBLE | Scramble Keypad on. (Security first) |
 | BS2_KEYPAD_TYPE_NORMAL | Scramble Keypad off. (Usability first) |
+
+[standbyType](#StandbyType)
+: [+ 1.10.0] What the screen shows after __backlightTimeout__ expires. It replaces __useScreenSaver__: the device keeps the two consistent, so reading the configuration back returns __useScreenSaver__ true only when __standbyType__ is __BS2_STANDBY_SCREENSAVER__.
+
+| Value | Description |
+| --------- | ----------- |
+| BS2_STANDBY_NONE | Not set: the device falls back to useScreenSaver (false: home screen, true: screen saver) and reports the type it chose |
+| BS2_STANDBY_HOME | Stay on the home screen |
+| BS2_STANDBY_SCREENSAVER | Play the slide images. See [UpdateSlideImages](#updateslideimages) |
+| BS2_STANDBY_VIDEO | Play the video stored on the device |
 
 
 ```protobuf
@@ -179,6 +191,16 @@ enum KeypadType {
 }
 ```
 {: #KeypadType }
+
+```protobuf
+enum StandbyType {
+  BS2_STANDBY_NONE = 0;
+  BS2_STANDBY_HOME = 1;
+  BS2_STANDBY_SCREENSAVER = 2;
+  BS2_STANDBY_VIDEO = 3;
+}
+```
+{: #StandbyType }
 
 
 ### GetConfig
