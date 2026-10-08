@@ -19,6 +19,8 @@ Below is information on devices and versions that support Master Admin.
 | BS2a | V1.2.0 or later |
 | BEW3 | On schedule |
 
+The device owns the master admin's user ID: whatever __hdr.ID__ is sent with __Set__, __Get__ reports the ID the device assigned (`0` on BioStation 3). __name__, __cards__ and __PIN__ are stored as sent. Devices outside the table above may accept __Set__ without storing anything; __Get__ then fails with BS_ERR_CANNOT_FIND_USER.
+
 ## Get
 
 ### Get
