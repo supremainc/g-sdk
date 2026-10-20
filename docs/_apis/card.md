@@ -997,6 +997,115 @@ Change the facility code configurations of multiple devices.
 | deviceIDs | uint32[] | The IDs of the devices |
 | config | [FacilityCodeConfig](#FacilityCodeConfig) | The facility code configuration to be written to the devices |
 
+## CustomFelicaConfig
+
+[+ 1.10.0] Custom FeliCa smart card configuration. The device reads the configured service/block entries of a FeliCa card and uses the data as the card ID. The device must support it: check [DeviceCapability.customSmartCardFelicaSupported]({{'/api/device/' | relative_url}}#DeviceCapability) first, and enable __CARD_OPERATION_MASK_CUSTOM_FELICA__ in [SystemConfig.useCardOperationMask]({{'/api/system/' | relative_url}}#SystemConfig).
+
+```protobuf
+message CustomFelicaConfig {
+  uint32 systemCode;
+  repeated CustomFelicaBlock blocks;
+  bytes serviceKey;
+  bytes groupKey;
+  repeated uint32 areaCodes;
+  bytes diversificationCode;
+  bytes liteMasterKey;
+}
+```
+{: #CustomFelicaConfig }
+
+systemCode
+: The system code of the card (2 bytes).
+
+[blocks](#CustomFelicaBlock)
+: Up to __[8](#CustomFelicaConfigEnum)__ service/block entries the device reads, in order.
+
+serviceKey
+: The service key (16 bytes).
+
+groupKey
+: The group key (16 bytes).
+
+areaCodes
+: Up to __[16](#CustomFelicaConfigEnum)__ area codes (2 bytes each).
+
+diversificationCode
+: The key diversification code (16 bytes).
+
+liteMasterKey
+: The master key of FeliCa Lite cards (24 bytes).
+
+The device never returns the keys. [GetCustomFelicaConfig](#GetCustomFelicaConfig) reports __serviceKey__, __groupKey__, __diversificationCode__ and __liteMasterKey__ masked as 0xFF, so enter every key again whenever you call [SetCustomFelicaConfig](#SetCustomFelicaConfig); writing a configuration read from the device back unchanged would store the mask as the keys.
+{: .notice--warning}
+
+```protobuf
+message CustomFelicaBlock {
+  uint32 serviceCode;
+  uint32 blockNum;
+  uint32 skipBytes;
+  uint32 dataSize;
+}
+```
+{: #CustomFelicaBlock }
+
+serviceCode
+: The service code (2 bytes).
+
+blockNum
+: The block number to read (0 ~ 255).
+
+skipBytes
+: The number of bytes skipped from the start of the block (0 ~ 255).
+
+dataSize
+: The number of bytes used after __skipBytes__ (0 ~ 255).
+
+```protobuf
+enum Enum {
+  MAX_FELICA_BLOCKS = 8;
+  MAX_FELICA_AREA_CODES = 16;
+}
+```
+{: #CustomFelicaConfigEnum }
+
+### GetCustomFelicaConfig
+
+[+ 1.10.0] Get the custom FeliCa configuration of a device. The keys are masked.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+
+| Response |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| config | [CustomFelicaConfig](#CustomFelicaConfig) | The custom FeliCa configuration of the device |
+
+### SetCustomFelicaConfig
+
+[+ 1.10.0] Change the custom FeliCa configuration of a device.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+| config | [CustomFelicaConfig](#CustomFelicaConfig) | The custom FeliCa configuration to be written to the device |
+
+### SetCustomFelicaConfigMulti
+
+[+ 1.10.0] Change the custom FeliCa configurations of multiple devices.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceIDs | uint32[] | The IDs of the devices |
+| config | [CustomFelicaConfig](#CustomFelicaConfig) | The custom FeliCa configuration to be written to the devices |
+
 ## LockOverride
 
 [+ 1.9.0] Normally, when a door is locked, authentication attempts will not open the door.  

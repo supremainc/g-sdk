@@ -58,6 +58,7 @@ For example, useCardOperationMask needs to be configured 0x80000001 when EM card
 | --------- | ----------- | ----------- |
 | 0xFFFFFFFF | CARD_OPERATION_MASK_DEFAULT | Please define and use it in your codes |
 | 0x80000000 | CARD_OPERATION_MASK_USE | Please define and use it in your codes |
+| 0x00004000 | CARD_OPERATION_MASK_CUSTOM_FELICA | [+ 1.10.0] Custom FeliCa smart cards, see [CustomFelicaConfig]({{'/api/card/' | relative_url}}#CustomFelicaConfig) |
 | 0x00000800 | CARD_OPERATION_MASK_CUSTOM_DESFIRE_EV1 | |
 | 0x00000400 | CARD_OPERATION_MASK_CUSTOM_CLASSIC_PLUS | |
 | 0x00000200 | CARD_OPERATION_MASK_BLE | |
