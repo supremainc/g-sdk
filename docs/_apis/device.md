@@ -133,6 +133,8 @@ enum Type {
   BIOSTATION_3_MAX = 0x2D;
   BIOSTATION_3_MAX_FP = 0x2E;
   XPASS_Q2 = 0x2F;
+  XPASS2_V2 = 0x30;
+  XPASS2_KEYPAD_V2 = 0x31;
 }
 ```
 {: #Type }
