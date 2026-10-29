@@ -5,6 +5,8 @@ toc_label: "Authentication"
 
 With [AuthConfig](#AuthConfig), you can specify the options related to authenticating credentials. The most important option is __authSchedules__, which sets the authentication modes available to a device. 
 
+[AuthFailLockoutConfig](#AuthFailLockoutConfig) protects the PIN against brute-force attacks: after too many failures the device blocks PIN input for a while. [GetAuthFailStatus](#getauthfailstatus) reads the failure counters and [ReleaseAuthFailLockout](#releaseauthfaillockout) ends a lockout early.
+
 ## Config
 
 ```protobuf
@@ -20,6 +22,7 @@ message AuthConfig {
   uint32 matchTimeout;
   uint32 authTimeout;
   repeated Operator operators;
+  AuthFailLockoutConfig authFailLockoutConfig;
 }
 ```
 {: #AuthConfig}
@@ -56,6 +59,9 @@ authTimeout
 
 [operators](#Operator)
 : Up to 10 administrators can be assigned to a device. 
+
+[authFailLockoutConfig](#AuthFailLockoutConfig)
+: Lock PIN input after repeated authentication failures. Valid only for the devices with [DeviceCapability.authFailLockoutSupported]({{'/api/device/' | relative_url}}#DeviceCapability); other devices ignore it.
 
 
 ```protobuf
@@ -372,6 +378,153 @@ message Operator {
 ```
 {: #Operator}
 
+## Auth fail lockout
+
+To block brute-force attacks on the PIN, the device counts the PIN failures within a time window. When the count reaches __countAuthFail__, the device locks PIN input for __accumulatedLockoutTimeLevel1__. If it is locked again before __accumulatedLockoutTimeReset__ has passed without a failure, the second lockout lasts __accumulatedLockoutTimeLevel2__. A successful authentication or the end of the time window clears the counter.
+
+The device keeps two independent counters, one per [LockoutType](#LockoutType): the lockout for access authentication does not block the administrator or intrusion (arm, disarm) authentication, and vice versa. A lock override user can authenticate while the device is locked.
+
+The device writes __BS2_EVENT_DEVICE_AUTHFAIL_LOCKOUT__ when it locks and __BS2_EVENT_DEVICE_AUTHFAIL_LOCKOUT_RESET__ when the lockout ends. See [the Event API]({{'/api/event/' | relative_url}}).
+
+Only the devices with [DeviceCapability.authFailLockoutSupported]({{'/api/device/' | relative_url}}#DeviceCapability) support the lockout.
+{: .notice--warning}
+
+```protobuf
+message AuthFailLockoutConfig {
+  bool useAuthFailLockout;
+  uint32 countAuthFail;
+  uint32 timeWindowOfAuthFail;
+  uint32 accumulatedLockoutTimeReset;
+  uint32 accumulatedLockoutTimeLevel1;
+  uint32 accumulatedLockoutTimeLevel2;
+}
+```
+{: #AuthFailLockoutConfig}
+
+useAuthFailLockout
+: If true, lock PIN input after repeated failures.
+
+countAuthFail
+: The number of failures within __timeWindowOfAuthFail__ that locks the device. 3 - 15, default 5.
+
+timeWindowOfAuthFail
+: The time window in seconds in which the failures are counted. Failures older than this are not counted. 30 - 300, default 60.
+
+accumulatedLockoutTimeReset
+: If no failure occurs for this many seconds after a lockout ends, the next lockout starts again at the first level. 600 - 3600, default 1800.
+
+accumulatedLockoutTimeLevel1
+: The duration in seconds of the first lockout. 30 - 900, default 60.
+
+accumulatedLockoutTimeLevel2
+: The duration in seconds of the second lockout, which applies when the device is locked again before __accumulatedLockoutTimeReset__ has passed. 900 - 3600, default 900. 0 means no second-level lockout.
+
+```protobuf
+enum LockoutType {
+  LOCKOUT_TYPE_NONE = 0;
+  LOCKOUT_TYPE_AUTH = 1;
+  LOCKOUT_TYPE_OTHERS = 2;
+}
+```
+{: #LockoutType}
+
+LOCKOUT_TYPE_AUTH
+: The lockout for access authentication.
+
+LOCKOUT_TYPE_OTHERS
+: The lockout for administrator and intrusion (arm, disarm) authentication.
+
+```protobuf
+enum LockoutLevel {
+  LOCKOUT_LEVEL_NONE = 0;
+  LOCKOUT_LEVEL_1 = 1;
+  LOCKOUT_LEVEL_2 = 2;
+}
+```
+{: #LockoutLevel}
+
+LOCKOUT_LEVEL_1
+: The first lockout. __accumulatedLockoutTimeLevel1__ applies.
+
+LOCKOUT_LEVEL_2
+: A lockout recurring before __accumulatedLockoutTimeReset__ has passed. __accumulatedLockoutTimeLevel2__ applies.
+
+```protobuf
+enum LockoutMask {
+  LOCKOUT_MASK_NONE = 0;
+  LOCKOUT_MASK_AUTH = 1;
+  LOCKOUT_MASK_OTHERS = 2;
+  LOCKOUT_MASK_ALL = 3;
+}
+```
+{: #LockoutMask}
+
+The [LockoutType](#LockoutType) values as bit flags for [ReleaseAuthFailLockout](#ReleaseAuthFailLockout).
+
+LOCKOUT_MASK_AUTH
+: The lockout for access authentication (LOCKOUT_TYPE_AUTH).
+
+LOCKOUT_MASK_OTHERS
+: The lockout for administrator and intrusion (arm, disarm) authentication (LOCKOUT_TYPE_OTHERS).
+
+LOCKOUT_MASK_ALL
+: Both lockouts.
+
+LOCKOUT_MASK_NONE
+: No lockout type. Not accepted by [ReleaseAuthFailLockout](#ReleaseAuthFailLockout).
+
+```protobuf
+message AuthFailStatus {
+  uint32 deviceID;
+  repeated AuthFailStatusDetail details;
+}
+```
+{: #AuthFailStatus}
+
+deviceID
+: The ID of the device or the slave device.
+
+[details](#AuthFailStatusDetail)
+: One entry per [LockoutType](#LockoutType) the device tracks.
+
+```protobuf
+message AuthFailStatusDetail {
+  LockoutType lockoutType;
+  uint32 remainingCount;
+  bool isLockedOut;
+  LockoutLevel lockoutLevel;
+  uint32 lastLockoutStartTime;
+  uint32 lastLockoutEndTime;
+  uint32 numOfOccurred;
+  repeated uint32 authFailTimes;
+}
+```
+{: #AuthFailStatusDetail}
+
+[lockoutType](#LockoutType)
+: The counter this entry describes.
+
+remainingCount
+: The number of failures still allowed before the lockout.
+
+isLockedOut
+: True while the device is locked.
+
+[lockoutLevel](#LockoutLevel)
+: The level of the current or last lockout.
+
+lastLockoutStartTime
+: The start time of the last lockout in Unix time (seconds since the epoch, UTC).
+
+lastLockoutEndTime
+: The time the last lockout ends or ended in Unix time.
+
+numOfOccurred
+: The accumulated number of failures.
+
+authFailTimes
+: The times of the counted failures in Unix time.
+
 
 ### GetConfig
 
@@ -414,3 +567,31 @@ Since RGB-based visual face authentication devices has its own authentication mo
 | deviceIDs | uint32[] | The IDs of the devices |
 | config | [AuthConfig](#AuthConfig) | The authentication configuration to be set to the devices |
 
+### GetAuthFailStatus
+
+Get the authentication failure counters and the lockout state of a device and its slave devices.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+| slaveIDs | uint32[] | The IDs of the slave devices to read. If empty, the device and all of its slave devices are read |
+
+| Response |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| status | [AuthFailStatus[]](#AuthFailStatus) | The status of each device |
+
+### ReleaseAuthFailLockout
+
+Release the lockout of a device and its slave devices before the lockout time runs out. The failure counters of the released lockout types are cleared.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+| slaveIDs | uint32[] | The IDs of the slave devices to release. If empty, the device and all of its slave devices are released |
+| lockoutMask | uint32 | The [LockoutMask](#LockoutMask) values to release, combined with bitwise OR. LOCKOUT_MASK_NONE (0) is rejected with INVALID_ARGUMENT |

@@ -353,6 +353,8 @@ message DeviceCapability {
 	bool facilityCodeSupported;
 	bool masterAdminSupported;
 	bool adminTwoStepAuthSupported;
+
+	bool authFailLockoutSupported;
 }
 ```
 {: #DeviceCapability }

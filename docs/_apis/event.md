@@ -98,6 +98,9 @@ eventCode
   || BS2_EVENT_DEVICE_FACTORY_RESET | 0x4502 | factory reset |
   || BS2_EVENT_DEVICE_CONFIG_RESET_EX | 0x4503 | system configurations initialized (excluding network) |
   || BS2_EVENT_DEVICE_FACTORY_RESET_WITHOUT_ETHERNET | 0x4504 | Factory reset - excluding network |
+  || BS2_EVENT_DEVICE_AUTHFAIL_LOCKOUT | 0x4505 | Device locked out by authentication failures |
+  || BS2_EVENT_DEVICE_AUTHFAIL_LOCKOUT_RESET | 0x4506 | Authentication failure lockout released |
+  || BS2_EVENT_DEVICE_LOCKOUT_REQUEST_BY_OPERATOR | 0x4507 | Lockout released by an operator on a slave device (logged by the master) |
   || BS2_EVENT_SUPERVISED_INPUT_SHORT | 0x4600 | short circuit of a supervised input detected |
   || BS2_EVENT_SUPERVISED_INPUT_OPEN | 0x4700 | disconnection of a supervised input detected |
   || BS2_EVENT_DEVICE_AC_FAIL | 0x4800 | Access control failure |
