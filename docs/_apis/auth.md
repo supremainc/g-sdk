@@ -5,7 +5,7 @@ toc_label: "Authentication"
 
 With [AuthConfig](#AuthConfig), you can specify the options related to authenticating credentials. The most important option is __authSchedules__, which sets the authentication modes available to a device. 
 
-[AuthFailLockoutConfig](#AuthFailLockoutConfig) protects the PIN against brute-force attacks: after too many failures the device blocks PIN input for a while. [GetAuthFailStatus](#getauthfailstatus) reads the failure counters and [ReleaseAuthFailLockout](#releaseauthfaillockout) ends a lockout early.
+[AuthFailLockoutConfig](#AuthFailLockoutConfig) protects the PIN against brute-force attacks: after too many failures the device blocks PIN input for a while. [GetAuthFailStatus](#getauthfailstatus) or [GetAllAuthFailStatus](#getallauthfailstatus) reads the failure counters, and [ReleaseAuthFailLockout](#releaseauthfaillockout) or [ReleaseAllAuthFailLockout](#releaseallauthfaillockout) ends a lockout early.
 
 ## Config
 
@@ -380,9 +380,11 @@ message Operator {
 
 ## Auth fail lockout
 
-To block brute-force attacks on the PIN, the device counts the PIN failures within a time window. When the count reaches __countAuthFail__, the device locks PIN input for __accumulatedLockoutTimeLevel1__. If it is locked again before __accumulatedLockoutTimeReset__ has passed without a failure, the second lockout lasts __accumulatedLockoutTimeLevel2__. A successful authentication or the end of the time window clears the counter.
+The lockout protects two kinds of authentication against brute-force attacks on the PIN: the access authentication (__LOCKOUT_TYPE_AUTH__), and the administrator and intrusion (arm, disarm) authentication (__LOCKOUT_TYPE_OTHERS__). The device keeps an independent failure counter and lockout for each [LockoutType](#LockoutType), so the lockout for access authentication does not block the administrator or intrusion authentication, and vice versa. A lock override user can authenticate while the device is locked.
 
-The device keeps two independent counters, one per [LockoutType](#LockoutType): the lockout for access authentication does not block the administrator or intrusion (arm, disarm) authentication, and vice versa. A lock override user can authenticate while the device is locked.
+When the PIN failures of one kind within __timeWindowOfAuthFail__ reach __countAuthFail__, the device locks the PIN input of that kind for __accumulatedLockoutTimeLevel1__. If the same kind is locked again before __accumulatedLockoutTimeReset__ has passed since the previous lockout ended, the second lockout lasts __accumulatedLockoutTimeLevel2__, and so does every further lockout within the reset time. A successful authentication clears the failure counter but not the lockout level: only __accumulatedLockoutTimeReset__ seconds without a new lockout brings the next lockout back to the first level.
+
+A lockout ends when its time runs out, when an administrator releases it on the device, or when it is released with [ReleaseAuthFailLockout](#releaseauthfaillockout) or [ReleaseAllAuthFailLockout](#releaseallauthfaillockout). The [LockoutMask](#LockoutMask) selects what to release: __LOCKOUT_MASK_AUTH__ for the access authentication, __LOCKOUT_MASK_OTHERS__ for the administrator and intrusion authentication, or __LOCKOUT_MASK_ALL__ for both. Releasing a lockout also clears its failure counter and resets its lockout level.
 
 The device writes __BS2_EVENT_DEVICE_AUTHFAIL_LOCKOUT__ when it locks and __BS2_EVENT_DEVICE_AUTHFAIL_LOCKOUT_RESET__ when the lockout ends. See [the Event API]({{'/api/event/' | relative_url}}).
 
@@ -411,7 +413,7 @@ timeWindowOfAuthFail
 : The time window in seconds in which the failures are counted. Failures older than this are not counted. 30 - 300, default 60.
 
 accumulatedLockoutTimeReset
-: If no failure occurs for this many seconds after a lockout ends, the next lockout starts again at the first level. 600 - 3600, default 1800.
+: If the device is not locked again for this many seconds after a lockout ends, the next lockout starts again at the first level. A successful authentication in between does not reset the level. 600 - 3600, default 1800.
 
 accumulatedLockoutTimeLevel1
 : The duration in seconds of the first lockout. 30 - 900, default 60.
@@ -569,14 +571,30 @@ Since RGB-based visual face authentication devices has its own authentication mo
 
 ### GetAuthFailStatus
 
-Get the authentication failure counters and the lockout state of a device and its slave devices.
+Get the authentication failure counters and the lockout state of the specified devices. To read the device and all of its slave devices at once, use [GetAllAuthFailStatus](#getallauthfailstatus).
 
 | Request |
 
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
 | deviceID | uint32 | The ID of the device |
-| slaveIDs | uint32[] | The IDs of the slave devices to read. If empty, the device and all of its slave devices are read |
+| deviceIDs | uint32[] | The IDs of the devices to read: the device itself and/or its slave devices. Must not be empty |
+
+| Response |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| status | [AuthFailStatus[]](#AuthFailStatus) | The status of each device |
+
+### GetAllAuthFailStatus
+
+Get the authentication failure counters and the lockout state of a device and all of its slave devices. The device reports only the devices with a failure history; a device without any failure is left out.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
 
 | Response |
 
@@ -586,12 +604,23 @@ Get the authentication failure counters and the lockout state of a device and it
 
 ### ReleaseAuthFailLockout
 
-Release the lockout of a device and its slave devices before the lockout time runs out. The failure counters of the released lockout types are cleared.
+Release the lockout of the specified devices before the lockout time runs out. The failure counters of the released lockout types are cleared. To release the device and all of its slave devices at once, use [ReleaseAllAuthFailLockout](#releaseallauthfaillockout).
 
 | Request |
 
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
 | deviceID | uint32 | The ID of the device |
-| slaveIDs | uint32[] | The IDs of the slave devices to release. If empty, the device and all of its slave devices are released |
+| deviceIDs | uint32[] | The IDs of the devices to release: the device itself and/or its slave devices. Must not be empty |
+| lockoutMask | uint32 | The [LockoutMask](#LockoutMask) values to release, combined with bitwise OR. LOCKOUT_MASK_NONE (0) is rejected with INVALID_ARGUMENT |
+
+### ReleaseAllAuthFailLockout
+
+Release the lockout of a device and all of its slave devices before the lockout time runs out. The failure counters of the released lockout types are cleared.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
 | lockoutMask | uint32 | The [LockoutMask](#LockoutMask) values to release, combined with bitwise OR. LOCKOUT_MASK_NONE (0) is rejected with INVALID_ARGUMENT |
