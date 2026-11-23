@@ -83,9 +83,13 @@ enum DeviceLicenseType {
     TYPE_NONE                = 0x0000;
     TYPE_VISUAL_QR           = 0x0001;
     TYPE_UZ_WIRELESS_LOCK    = 0x0002;
+    TYPE_MULTI_AUTH          = 0x0004;
 }
 ```
 {: #DeviceLicenseType }
+
+TYPE_MULTI_AUTH
+: __[+ 1.10.0]__ Elevator cabin authentication. [FaceConfig.mfdOperationMode]({{'/api/face/' | relative_url}}#FaceConfig) can be set to __BS2_MFD_OPERATION_MODE_ELEVATOR_CABIN_AUTH__ only on a master device with this license enabled; the device stores __BS2_MFD_OPERATION_MODE_RAPID_FACE_AUTH__ otherwise. Supported devices report [DeviceCapability.elevatorCabinAuthSupported]({{'/api/device/' | relative_url}}#DeviceCapability).
 
 ```protobuf
 enum DeviceLicenseSubType {

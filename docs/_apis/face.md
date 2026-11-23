@@ -184,6 +184,10 @@ message FaceConfig {
   uint32 detectDistanceMax;
   bool wideSearch;
   bool unableToSaveImageOfVisualFace;
+  MFDOperationMode mfdOperationMode;
+  uint32 reAuthPreventionSec;
+  uint32 mfdMaxFaceCount;
+  MFDSortType mfdSortType;
 }
 ```
 {: #FaceConfig}
@@ -315,6 +319,29 @@ Enabling this setting will immediately delete image information from all user's 
 Additionally, even if face information containing user images is obtained through the [User.Enroll]({{'/api/user/' | relative_url}}#enroll) API, the device will ignore it.
 The default value is false, which means both facial data and images are stored.
 
+__Rapid face authentication__ (__[+ 1.10.0]__, BioStation 3 and BioStation 3 Max)
+: The device authenticates the faces in view one by one, nearest first, and skips a user who has just been authenticated for the re-authentication prevention time, so people walking past the device in a row are authenticated without waiting. This is the baseline behaviour of face authentication on these devices and cannot be turned off. The four fields below tune it and select one of two optional modes. Check [DeviceCapability.reAuthPreventionSupported, antiTailgatingSupported and elevatorCabinAuthSupported]({{'/api/device/' | relative_url}}#DeviceCapability) first; devices without the capability ignore the fields and return 0.
+
+  The device corrects a value it does not accept instead of rejecting it, and [SetConfig](#setconfig) still succeeds: __reAuthPreventionSec__ 0 and 1 are stored as 2, values above 60 as 60, an unknown __mfdOperationMode__ as __BS2_MFD_OPERATION_MODE_RAPID_FACE_AUTH__, and __BS2_MFD_OPERATION_MODE_ELEVATOR_CABIN_AUTH__ as __BS2_MFD_OPERATION_MODE_RAPID_FACE_AUTH__ when the device has no __TYPE_MULTI_AUTH__ license or is a slave device. The gateway rejects the values it can tell apart in advance (__mfdOperationMode__ above 2, __reAuthPreventionSec__ 1 or above 60, __mfdMaxFaceCount__ above 5, __mfdSortType__ above 2) with INVALID_ARGUMENT. Read the configuration back with [GetConfig](#getconfig) to confirm what was applied.
+
+[mfdOperationMode](#MFDOperationMode)
+: Selects the optional behaviour on top of rapid face authentication. The default is __BS2_MFD_OPERATION_MODE_RAPID_FACE_AUTH__. Anti-tailgating and elevator cabin authentication are values of the same field, so they cannot be enabled together.
+
+| Value | Mode | Description |
+| ----- | ---- | ----------- |
+| 0 | BS2_MFD_OPERATION_MODE_RAPID_FACE_AUTH | Rapid face authentication only (default). |
+| 1 | BS2_MFD_OPERATION_MODE_ANTI_TAILGATE | Face authentication stops as soon as two or more faces are in view, and the device shows and announces why. Other credentials are not affected. The device logs __BS2_EVENT_ACCESS_DENIED__ with sub code __BS2_SUB_EVENT_ACCESS_DENIED_ANTI_TAILGATE__ (0x1912). |
+| 2 | BS2_MFD_OPERATION_MODE_ELEVATOR_CABIN_AUTH | Every passenger in view is authenticated in turn, the results are listed on the screen and each authenticated user's name stays on the screen. Requires the [TYPE_MULTI_AUTH]({{'/api/devicelicense/' | relative_url}}#DeviceLicenseType) device license and a master device; the device stores 0 otherwise. Server matching is suspended while this mode is active. |
+
+reAuthPreventionSec
+: Seconds during which a user who has just been authenticated is skipped, so that the device moves on to the next person even if the first one stays in view. 2 (__REAUTH_PREVENTION_TIME_DISABLED__) means "not used"; the device still skips a just-authenticated face for 2 seconds. 3 ~ 60 (__MIN_REAUTH_PREVENTION_TIME__ ~ __MAX_REAUTH_PREVENTION_TIME__) enables it. 0 leaves the device default (2). A master device propagates its value to its slave devices, so a value written to a slave is overwritten by the master's value. The skipped authentication is reported to a server matching handler as __BS_ERR_REAUTH_PREVENTION__ (-1139) or __BS_ERR_ECA_SAME_FACE_IN_TIME__ (-333); neither is a user-visible failure.
+
+mfdMaxFaceCount
+: Number of faces authenticated per pass. This is a fixed per-device value (BioStation 3: __MAX_MFD_FACE_COUNT_DEFAULT_BS3__, BioStation 3 Max: __MAX_MFD_FACE_COUNT_DEFAULT_BS3M__, other devices: __MAX_MFD_FACE_COUNT_DEFAULT__); 0 makes the device use its default and the device clamps other values to 1 ~ 5 (__MIN_MFD_FACE_COUNT__ ~ __MAX_MFD_FACE_COUNT_DEFAULT_BS3M__). Leave the device default unless told otherwise.
+
+[mfdSortType](#MFDSortType)
+: Order in which the detected faces are authenticated. The default is __BS2_MFD_SORT_BY_SIZE__, the nearest (largest) face first.
+
 
 ```protobuf
 enum FaceSecurityLevel {
@@ -344,6 +371,24 @@ enum FaceDetectSensitivity {
 }
 ```
 {: #FaceDetectSensitivity}
+
+```protobuf
+enum MFDOperationMode {
+  BS2_MFD_OPERATION_MODE_RAPID_FACE_AUTH = 0x00;
+  BS2_MFD_OPERATION_MODE_ANTI_TAILGATE = 0x01;
+  BS2_MFD_OPERATION_MODE_ELEVATOR_CABIN_AUTH = 0x02;
+}
+```
+{: #MFDOperationMode}
+
+```protobuf
+enum MFDSortType {
+  BS2_MFD_SORT_BY_SCORE = 0x00;
+  BS2_MFD_SORT_BY_SIZE = 0x01;
+  BS2_MFD_SORT_BY_CENTER = 0x02;
+}
+```
+{: #MFDSortType}
 
 
 ### GetConfig

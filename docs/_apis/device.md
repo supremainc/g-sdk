@@ -355,9 +355,16 @@ message DeviceCapability {
 	bool adminTwoStepAuthSupported;
 
 	bool authFailLockoutSupported;
+
+	bool antiTailgatingSupported;
+	bool elevatorCabinAuthSupported;
+	bool reAuthPreventionSupported;
 }
 ```
 {: #DeviceCapability }
+
+antiTailgatingSupported, elevatorCabinAuthSupported, reAuthPreventionSupported
+: __[+ 1.10.0]__ Rapid face authentication (BioStation 3, BioStation 3 Max). __reAuthPreventionSupported__ means [FaceConfig.reAuthPreventionSec]({{'/api/face/' | relative_url}}#FaceConfig) is honoured, __antiTailgatingSupported__ that __mfdOperationMode__ accepts __BS2_MFD_OPERATION_MODE_ANTI_TAILGATE__, and __elevatorCabinAuthSupported__ that it accepts __BS2_MFD_OPERATION_MODE_ELEVATOR_CABIN_AUTH__ once the [TYPE_MULTI_AUTH]({{'/api/devicelicense/' | relative_url}}#DeviceLicenseType) license is enabled on a master device.
 
 | Request |
 
