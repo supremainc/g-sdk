@@ -306,7 +306,22 @@ FIRE
 
 [+ 1.10.0] Get the status of doors together with the context of the last control: who changed it (__operatorID__), when (__actionTime__), why (__origin__), from where (__byServer__) and for how long (__normalizeTimer__). [Status](#Status) alone tells that a door is locked by an operator; this tells which operator, at what time and until when, so that the current state of a door can be explained without searching the event log.
 
-The device keeps the context only for controls that name an operator: [Lock](#lock), [Unlock](#unlock) and [Release](#release) with __operatorID__, or the administrator menu of the device. A control without __operatorID__ changes the door but leaves __origin__ as __CONTROL_ORIGIN_NONE__. A fire alarm, fireman card or fire button adds its origin bit without discarding an operator context, and the context is cleared (origin NONE, empty __operatorID__) when the door returns to normal by [Release](#release) or when a timed control expires (the device logs __BS2_EVENT_DOOR_NORMALIZED_EXPIRED__). Every change is also pushed to [DeviceNotify.SubscribeDoorControlStatus]({{'/api/deviceNotify/' | relative_url}}#SubscribeDoorControlStatus). Supported devices report [DeviceCapability.doorUnlockLockImproveSupported]({{'/api/device/' | relative_url}}#DeviceCapability); other devices return the status with an empty context.
+__The control status is not about operators only.__ It is the record of the *last control* of the door, whatever performed it, and the device fills it from several places. What a G-SDK client can produce itself is the operator case; the other cases happen inside the device, and the same [GetControlStatus](#getcontrolstatus) and [DeviceNotify.SubscribeDoorControlStatus]({{'/api/deviceNotify/' | relative_url}}#SubscribeDoorControlStatus) report them.
+
+| origin bit | Filled by | operatorID | byServer |
+| ---------- | --------- | ---------- | -------- |
+| CONTROL_ORIGIN_OPERATOR | [Lock](#lock), [Unlock](#unlock) or [Release](#release) with __operatorID__, the administrator menu of the device, a double-badge toggle on the device | the operator | true from the gateway, false from the device |
+| CONTROL_ORIGIN_FIRE_ALARM | the fire alarm input of a [Fire Alarm Zone]({{'/api/zone/fire' | relative_url}}); __fireAlarmZoneID__ is set | kept as it was | false, unless an operator context remains |
+| CONTROL_ORIGIN_FIRE_BUTTON | the fire button | kept as it was | false, unless an operator context remains |
+| CONTROL_ORIGIN_FIREMAN_CARD | a fireman card authentication | the card holder's user ID | false, unless an operator context remains |
+| (no change) | a schedule newly locks or unlocks the door: the current context is pushed once, nothing is changed | kept as it was | kept as it was |
+| CONTROL_ORIGIN_NONE | [Release](#release) that returns the door to normal, or the expiry of a timed control (the device logs __BS2_EVENT_DOOR_NORMALIZED_EXPIRED__): the context is cleared | empty | false |
+
+The fire origins are added as bits, so an operator timed unlock and a fire alarm can be present together; when only the emergency is released, its bit and __fireAlarmZoneID__ are removed and the operator context stays.
+
+__The operator case needs an operatorID.__ A [Lock](#lock), [Unlock](#unlock) or [Release](#release) without __operatorID__ changes the door exactly as before, but the device records nothing and pushes nothing: __origin__ stays __CONTROL_ORIGIN_NONE__. The __doorFlag__ of the request does not take part in this decision. It is the lock-priority flag that [Lock](#lock) has always had (__OPERATOR__ outranks __SCHEDULED__, __EMERGENCY__ outranks both); the context is recorded for any __doorFlag__ as long as __operatorID__ is given, and __OPERATOR__ is simply the usual flag for a manual control from the gateway.
+
+Supported devices report [DeviceCapability.doorUnlockLockImproveSupported]({{'/api/device/' | relative_url}}#DeviceCapability); other devices return the status with an empty context.
 
 ```protobuf
 message ControlStatus {
@@ -363,7 +378,7 @@ CONTROL_ORIGIN_FIRE_ALARM
 : Changed by a [Fire Alarm Zone]({{'/api/zone/fire' | relative_url}}). __fireAlarmZoneID__ is valid.
 
 CONTROL_ORIGIN_FIREMAN_CARD
-: Changed by a fireman card.
+: Changed by a fireman card. __operatorID__ becomes the user ID of the card holder.
 
 CONTROL_ORIGIN_FIRE_BUTTON
 : Changed by the fire button.
@@ -418,7 +433,7 @@ Delete all doors configured on a device.
 
 ## Lock/Unlock
 
-[+ 1.10.0] __operatorID__: name the operator who issues the control. The device then records the control context, which [GetControlStatus](#getcontrolstatus) returns and [DeviceNotify.SubscribeDoorControlStatus]({{'/api/deviceNotify/' | relative_url}}#SubscribeDoorControlStatus) pushes, and logs __BS2_EVENT_DOOR_OPERATOR_ID__ (0x5D10) with the operator as __userID__. Without __operatorID__ the door is controlled as before, but no context is kept. 1 to 32 bytes in UTF-8; a longer value is rejected as an invalid argument.
+[+ 1.10.0] __operatorID__: name the operator who issues the control. The device then records the control context, which [GetControlStatus](#getcontrolstatus) returns and [DeviceNotify.SubscribeDoorControlStatus]({{'/api/deviceNotify/' | relative_url}}#SubscribeDoorControlStatus) pushes, and logs __BS2_EVENT_DOOR_OPERATOR_ID__ (0x5D10) with the operator as __userID__. Without __operatorID__ the door is controlled as before, but no context is kept. 1 to 32 bytes in UTF-8; a longer value is rejected as an invalid argument. __operatorID__ is independent of __doorFlag__: the flag only sets the lock priority, and the context is recorded with any flag. The __normalizeTimer__ still requires __OPERATOR__.
 
 You can manually lock, unlock, or release doors.  
 [+ 1.9.0] Door mode override support.
