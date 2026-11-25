@@ -22,6 +22,7 @@ message EventLog {
   DetectInputInfo inputInfo;
   AlarmZoneInfo alarmZoneInfo;
   InterlockZoneInfo interlockZoneInfo;
+  DoorOperatorInfo doorOperatorInfo;
 }
 ```
 {: #EventLog}
@@ -135,6 +136,7 @@ eventCode
   || BS2_EVENT_DOOR_LOCK_REQUEST_BY_SCHEDULE | 0x5D01 | Door lock requested by schedule |
   || BS2_EVENT_DOOR_LOCK_REQUEST_BY_FIRE_ALARM | 0x5D02 | Door lock requested by fire alarm |
   || BS2_EVENT_DOOR_LOCK_REQUEST_BY_OPERATOR | 0x5D04 | Door lock requested by operator |
+  || BS2_EVENT_DOOR_OPERATOR_ID | 0x5D10 | [+ 1.10.0] Door or floor controlled by an operator. __userID__ is the operator; see [doorOperatorInfo](#DoorOperatorInfo) |
   || BS2_EVENT_DOOR_UNLOCK | 0x5E00 | unlock door |
   || BS2_EVENT_DOOR_UNLOCK_REQUEST_BY_SCHEDULE | 0x5E01 | Door unlock requested by schedule |
   || BS2_EVENT_DOOR_UNLOCK_REQUEST_BY_FIRE_ALARM | 0x5E02 | Door unlock requested by emergency |
@@ -148,6 +150,7 @@ eventCode
   || BS2_EVENT_DOOR_FIRE_ALARM | 0x5F05 | Lock override alarm activated |
   || BS2_EVENT_DOOR_FIRE_ALARM_CLEAR | 0x5F06 | Lock override alarm cleared |
   || BS2_EVENT_DOOR_NORMALIZED | 0x5F07 | Door status normalized |
+  || BS2_EVENT_DOOR_NORMALIZED_EXPIRED | 0x5F08 | [+ 1.10.0] Door status normalized because a timed lock/unlock expired |
   | Zone | BS2_EVENT_ZONE_APB_VIOLATION | 0x6000 | APB zone violated |
   || BS2_EVENT_ZONE_APB_ALARM | 0x6100 | APB zone alarm |
   || BS2_EVENT_ZONE_APB_ALARM_CLEAR | 0x6200 | APB zone alarm cleared |
@@ -371,6 +374,30 @@ cardData
 
 [interlockZoneInfo](#InterlockZoneInfo)
 : If [eventCode](#EventCode) is BS2_EVENT_ZONE_INTERLOCK_VIOLATION, it will have additional information about the interlock zone.
+
+[doorOperatorInfo](#DoorOperatorInfo)
+: [+ 1.10.0] If the event is BS2_EVENT_DOOR_OPERATOR_ID (eventCode BS2_EVENT_DOOR_LOCK, subCode 0x10), it tells where the operator control came from. The __userID__ of the event is the operator (the __operatorID__ of [Door.Lock]({{'/api/door/' | relative_url}}#lock), [Unlock]({{'/api/door/' | relative_url}}#unlock), [Release]({{'/api/door/' | relative_url}}#release) or the floor controls), not a door ID. The device writes this event once per door or floor controlled with an operator, before the resulting lock/unlock event.
+
+```protobuf
+message DoorOperatorInfo {
+  DoorOperatorSource source;
+}
+```
+{: #DoorOperatorInfo}
+
+```protobuf
+enum DoorOperatorSource {
+  DOOR_OPERATOR_SOURCE_DEVICE = 0;
+  DOOR_OPERATOR_SOURCE_PROTOCOL = 1;
+}
+```
+{: #DoorOperatorSource}
+
+DOOR_OPERATOR_SOURCE_DEVICE
+: The control was done on the device itself, e.g. in the administrator menu.
+
+DOOR_OPERATOR_SOURCE_PROTOCOL
+: The control came from the gateway (G-SDK or BioStar X).
 
 ```protobuf
 message DetectInputInfo {

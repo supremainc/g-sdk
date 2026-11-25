@@ -302,6 +302,85 @@ FIRE
 | --------- | ---- | ----------- |
 | status | [Status[]](#Status) | The status of the doors configured on the device |  
 
+### GetControlStatus
+
+[+ 1.10.0] Get the status of doors together with the context of the last control: who changed it (__operatorID__), when (__actionTime__), why (__origin__), from where (__byServer__) and for how long (__normalizeTimer__). [Status](#Status) alone tells that a door is locked by an operator; this tells which operator, at what time and until when, so that the current state of a door can be explained without searching the event log.
+
+The device keeps the context only for controls that name an operator: [Lock](#lock), [Unlock](#unlock) and [Release](#release) with __operatorID__, or the administrator menu of the device. A control without __operatorID__ changes the door but leaves __origin__ as __CONTROL_ORIGIN_NONE__. A fire alarm, fireman card or fire button adds its origin bit without discarding an operator context, and the context is cleared (origin NONE, empty __operatorID__) when the door returns to normal by [Release](#release) or when a timed control expires (the device logs __BS2_EVENT_DOOR_NORMALIZED_EXPIRED__). Every change is also pushed to [DeviceNotify.SubscribeDoorControlStatus]({{'/api/deviceNotify/' | relative_url}}#SubscribeDoorControlStatus). Supported devices report [DeviceCapability.doorUnlockLockImproveSupported]({{'/api/device/' | relative_url}}#DeviceCapability); other devices return the status with an empty context.
+
+```protobuf
+message ControlStatus {
+  Status status;
+  uint32 origin;
+  bool byServer;
+  string operatorID;
+  uint32 actionTime;
+  uint32 normalizeTimer;
+  uint32 fireAlarmZoneID;
+}
+```
+{: #ControlStatus }
+
+[status](#Status)
+: The current status of the door.
+
+[origin](#ControlOrigin)
+: What changed the door state last. A bit mask of [ControlOrigin](#ControlOrigin): an operator timed unlock and a fire alarm can be set at the same time.
+
+byServer
+: True if the control came from the gateway (G-SDK or BioStar X), false if it came from the device itself, e.g. the administrator menu.
+
+operatorID
+: The user ID of the operator who controlled the door last, or empty if none.
+
+actionTime
+: The time of the last control. In Unix time format.
+
+normalizeTimer
+: The __normalizeTimer__ of the operator lock/unlock in seconds, 0 if it was not timed. Together with __actionTime__ it tells when the door returns to normal.
+
+fireAlarmZoneID
+: The fire alarm zone that changed the door when __origin__ has __CONTROL_ORIGIN_FIRE_ALARM__, 0 otherwise.
+
+```protobuf
+enum ControlOrigin {
+  CONTROL_ORIGIN_NONE = 0x00;
+  CONTROL_ORIGIN_OPERATOR = 0x01;
+  CONTROL_ORIGIN_FIRE_ALARM = 0x02;
+  CONTROL_ORIGIN_FIREMAN_CARD = 0x04;
+  CONTROL_ORIGIN_FIRE_BUTTON = 0x10;
+}
+```
+{: #ControlOrigin }
+
+CONTROL_ORIGIN_NONE
+: No control context: the door is in its normal state, or it was controlled without an __operatorID__.
+
+CONTROL_ORIGIN_OPERATOR
+: Locked, unlocked or released by an operator through [Lock](#lock), [Unlock](#unlock) or [Release](#release) with __operatorID__, or through the administrator menu of the device.
+
+CONTROL_ORIGIN_FIRE_ALARM
+: Changed by a [Fire Alarm Zone]({{'/api/zone/fire' | relative_url}}). __fireAlarmZoneID__ is valid.
+
+CONTROL_ORIGIN_FIREMAN_CARD
+: Changed by a fireman card.
+
+CONTROL_ORIGIN_FIRE_BUTTON
+: Changed by the fire button.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+| doorIDs | uint32[] | The IDs of the doors. If empty, every door configured on the device |
+
+| Response |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| status | [ControlStatus[]](#ControlStatus) | The control status of the doors |
+
 ## Management
 
 ### Add
@@ -339,6 +418,8 @@ Delete all doors configured on a device.
 
 ## Lock/Unlock
 
+[+ 1.10.0] __operatorID__: name the operator who issues the control. The device then records the control context, which [GetControlStatus](#getcontrolstatus) returns and [DeviceNotify.SubscribeDoorControlStatus]({{'/api/deviceNotify/' | relative_url}}#SubscribeDoorControlStatus) pushes, and logs __BS2_EVENT_DOOR_OPERATOR_ID__ (0x5D10) with the operator as __userID__. Without __operatorID__ the door is controlled as before, but no context is kept. 1 to 32 bytes in UTF-8; a longer value is rejected as an invalid argument.
+
 You can manually lock, unlock, or release doors.  
 [+ 1.9.0] Door mode override support.
 
@@ -359,6 +440,7 @@ Lock doors. If the __doorFlag__ has lower priority than [DoorStatus.unlockFlags]
 | doorIDs | uint32[] | The IDs of the doors to be locked |
 | doorFlag | uint32 | One of [DoorFlag](#DoorFlag) |
 | normalizeTimer | uint32 | [+ 1.9.0] Wait time until transition to normalize state. Can be set in seconds from 1 to 86400(24h), 0 is infinite. |
+| operatorID | string | [+ 1.10.0] The user ID of the operator (1 ~ 32 bytes). Empty: no control context is kept |
 
 ### Unlock
 
@@ -377,6 +459,7 @@ Unlock doors. If the __doorFlag__ has lower priority than [DoorStatus.lockFlags]
 | doorIDs | uint32[] | The IDs of the doors to be unlocked |
 | doorFlag | uint32 | One of [DoorFlag](#DoorFlag) |
 | normalizeTimer | uint32 | [+ 1.9.0] Wait time until transition to normalize state. Can be set in seconds from 1 to 86400(24h), 0 is infinite. |
+| operatorID | string | [+ 1.10.0] The user ID of the operator (1 ~ 32 bytes). Empty: no control context is kept |
 
 ### Release
 
@@ -388,6 +471,7 @@ Reset the door status. If the __doorFlag__ has lower priority than [DoorStatus.l
 | deviceID | uint32 | The ID of the device |
 | doorIDss | uint32[] | The IDs of the doors to be reset |
 | doorFlag | uint32 | One of [DoorFlag](#DoorFlag) |
+| operatorID | string | [+ 1.10.0] The user ID of the operator (1 ~ 32 bytes). Logged in __BS2_EVENT_DOOR_OPERATOR_ID__; the control context is cleared when the door returns to normal |
 
 ### SetAlarm
 

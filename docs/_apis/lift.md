@@ -303,7 +303,65 @@ Delete all lifts configured on a device.
 | --------- | ---- | ----------- |
 | deviceID | uint32 | The ID of the device |
 
+### GetFloorControlStatus
+
+[+ 1.10.0] Get the status of every floor of the lifts together with the context of its last control: who changed it (__operatorID__), when (__actionTime__), why (__origin__), from where (__byServer__) and for how long (__normalizeTimer__). It is the lift counterpart of [Door.GetControlStatus]({{'/api/door/' | relative_url}}#getcontrolstatus) and follows the same rules: the device keeps the context only for [Activate](#activate), [Deactivate](#deactivate) and [Release](#release) with __operatorID__ or for the administrator menu of the device, a fire alarm adds its origin bit, and the context is cleared when the floor returns to normal or a timed control expires. Every change is pushed to [DeviceNotify.SubscribeFloorControlStatus]({{'/api/deviceNotify/' | relative_url}}#SubscribeFloorControlStatus). Supported devices report [DeviceCapability.doorUnlockLockImproveSupported]({{'/api/device/' | relative_url}}#DeviceCapability).
+
+```protobuf
+message FloorControlStatus {
+  uint32 liftID;
+  uint32 floorIndex;
+  FloorStatus status;
+  uint32 origin;
+  bool byServer;
+  string operatorID;
+  uint32 actionTime;
+  uint32 normalizeTimer;
+  uint32 fireAlarmZoneID;
+}
+```
+{: #FloorControlStatus }
+
+liftID / floorIndex
+: The lift and the index of the floor in [LiftInfo.floors](#LiftInfo).
+
+[status](#FloorStatus)
+: The current status of the floor.
+
+[origin]({{'/api/door/' | relative_url}}#ControlOrigin)
+: What changed the floor state last. A bit mask of [Door.ControlOrigin]({{'/api/door/' | relative_url}}#ControlOrigin).
+
+byServer
+: True if the control came from the gateway (G-SDK or BioStar X), false if it came from the device itself.
+
+operatorID
+: The user ID of the operator who controlled the floor last, or empty if none.
+
+actionTime
+: The time of the last control. In Unix time format.
+
+normalizeTimer
+: The __normalizeTimer__ of the operator activate/deactivate in seconds, 0 if it was not timed.
+
+fireAlarmZoneID
+: The fire alarm zone that changed the floor when __origin__ has __CONTROL_ORIGIN_FIRE_ALARM__, 0 otherwise.
+
+| Request |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| deviceID | uint32 | The ID of the device |
+| liftIDs | uint32[] | The IDs of the lifts. If empty, every lift configured on the device |
+
+| Response |
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| status | [FloorControlStatus[]](#FloorControlStatus) | One record per floor of each lift |
+
 ## Activate/Deactivate
+
+[+ 1.10.0] __normalizeTimer__ and __operatorID__: a timed control returns the floors to normal after the given seconds (only with __OPERATOR__, 0 is infinite), and naming the operator makes the device record the control context returned by [GetFloorControlStatus](#getfloorcontrolstatus), pushed by [DeviceNotify.SubscribeFloorControlStatus]({{'/api/deviceNotify/' | relative_url}}#SubscribeFloorControlStatus) and logged as __BS2_EVENT_DOOR_OPERATOR_ID__ (0x5D10). Without __operatorID__ the floors are controlled as before, but no context is kept. 1 to 32 bytes in UTF-8.
 
 You can manually activate, deactivate, or release the specified floors of a lift.
 
@@ -319,6 +377,8 @@ Activate floors on a lift. If the __activateFlag__ has lower priority than [Floo
 | liftID | uint32 | The ID of the lift |
 | floorIndexes | uint32[] | The indexes of floors to be activated |
 | activateFlag | uint32 | One of [FloorFlag](#FloorFlag) |
+| operatorID | string | [+ 1.10.0] The user ID of the operator (1 ~ 32 bytes). Empty: no control context is kept |
+| normalizeTimer | uint32 | [+ 1.10.0] Seconds until the floors return to normal, 1 to 86400(24h), 0 is infinite. Only with __OPERATOR__ |
 
 ### Deactivate
 
@@ -332,6 +392,8 @@ Deactivate floors on a lift. If the __deactivateFlag__ has lower priority than [
 | liftID | uint32 | The ID of the lift |
 | floorIndexes | uint32[] | The indexes of floors to be deactivated |
 | deactivateFlag | uint32 | One of [FloorFlag](#FloorFlag) |
+| operatorID | string | [+ 1.10.0] The user ID of the operator (1 ~ 32 bytes). Empty: no control context is kept |
+| normalizeTimer | uint32 | [+ 1.10.0] Seconds until the floors return to normal, 1 to 86400(24h), 0 is infinite. Only with __OPERATOR__ |
 
 ### Release
 
@@ -344,6 +406,7 @@ Reset the floor status. If the __floorFlag__ has lower priority than [FloorStatu
 | liftID | uint32 | The ID of the lift |
 | floorIndexes | uint32[] | The indexes of floors to be released |
 | floorFlag | uint32 | One of [FloorFlag](#FloorFlag) |
+| operatorID | string | [+ 1.10.0] The user ID of the operator (1 ~ 32 bytes). Logged in __BS2_EVENT_DOOR_OPERATOR_ID__; the control context is cleared when the floor returns to normal |
 
 ### SetAlarm
 
